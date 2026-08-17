@@ -9,50 +9,1773 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedAchievementVaultRouteImport } from './routes/_authenticated/achievement-vault'
+import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authenticated/achievements'
+import { Route as AuthenticatedAiRouteImport } from './routes/_authenticated/ai'
+import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
+import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
+import { Route as AuthenticatedAuthorProgressionRouteImport } from './routes/_authenticated/author-progression'
+import { Route as AuthenticatedAwardVaultRouteImport } from './routes/_authenticated/award-vault'
+import { Route as AuthenticatedBadgeVaultRouteImport } from './routes/_authenticated/badge-vault'
+import { Route as AuthenticatedBadgesRouteImport } from './routes/_authenticated/badges'
+import { Route as AuthenticatedCertificateVaultRouteImport } from './routes/_authenticated/certificate-vault'
+import { Route as AuthenticatedCertificatesRouteImport } from './routes/_authenticated/certificates'
+import { Route as AuthenticatedChallengesRouteImport } from './routes/_authenticated/challenges'
+import { Route as AuthenticatedChatRouteImport } from './routes/_authenticated/chat'
+import { Route as AuthenticatedClaimsRouteImport } from './routes/_authenticated/claims'
+import { Route as AuthenticatedCollectionsRouteImport } from './routes/_authenticated/collections'
+import { Route as AuthenticatedDeveloperProgressionRouteImport } from './routes/_authenticated/developer-progression'
+import { Route as AuthenticatedFounderSealVaultRouteImport } from './routes/_authenticated/founder-seal-vault'
+import { Route as AuthenticatedHallOfFameRouteImport } from './routes/_authenticated/hall-of-fame'
+import { Route as AuthenticatedHallOfFameVaultRouteImport } from './routes/_authenticated/hall-of-fame-vault'
+import { Route as AuthenticatedHonorCoinVaultRouteImport } from './routes/_authenticated/honor-coin-vault'
+import { Route as AuthenticatedIdentityRouteImport } from './routes/_authenticated/identity'
+import { Route as AuthenticatedIdentityCardVaultRouteImport } from './routes/_authenticated/identity-card-vault'
+import { Route as AuthenticatedLeaderboardsRouteImport } from './routes/_authenticated/leaderboards'
+import { Route as AuthenticatedLegacyRouteImport } from './routes/_authenticated/legacy'
+import { Route as AuthenticatedLegacyMedalVaultRouteImport } from './routes/_authenticated/legacy-medal-vault'
+import { Route as AuthenticatedLevelsRouteImport } from './routes/_authenticated/levels'
+import { Route as AuthenticatedLicenseCardVaultRouteImport } from './routes/_authenticated/license-card-vault'
+import { Route as AuthenticatedMembershipVaultRouteImport } from './routes/_authenticated/membership-vault'
+import { Route as AuthenticatedMissionsRouteImport } from './routes/_authenticated/missions'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
+import { Route as AuthenticatedPassportVaultRouteImport } from './routes/_authenticated/passport-vault'
+import { Route as AuthenticatedQuestsRouteImport } from './routes/_authenticated/quests'
+import { Route as AuthenticatedRankVaultRouteImport } from './routes/_authenticated/rank-vault'
+import { Route as AuthenticatedRanksRouteImport } from './routes/_authenticated/ranks'
+import { Route as AuthenticatedRecognitionCoinVaultRouteImport } from './routes/_authenticated/recognition-coin-vault'
+import { Route as AuthenticatedReputationVaultRouteImport } from './routes/_authenticated/reputation-vault'
+import { Route as AuthenticatedRewardChestVaultRouteImport } from './routes/_authenticated/reward-chest-vault'
+import { Route as AuthenticatedRewardsRouteImport } from './routes/_authenticated/rewards'
+import { Route as AuthenticatedRoleManagerRouteImport } from './routes/_authenticated/role-manager'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedTrophiesRouteImport } from './routes/_authenticated/trophies'
+import { Route as AuthenticatedTrophyGalleryRouteImport } from './routes/_authenticated/trophy-gallery'
+import { Route as AuthenticatedTrophyVaultRouteImport } from './routes/_authenticated/trophy-vault'
+import { Route as AuthenticatedTrustSealVaultRouteImport } from './routes/_authenticated/trust-seal-vault'
+import { Route as AuthenticatedVendorProgressionRouteImport } from './routes/_authenticated/vendor-progression'
+import { Route as AuthenticatedVerificationVaultRouteImport } from './routes/_authenticated/verification-vault'
+import { Route as AuthenticatedXpRouteImport } from './routes/_authenticated/xp'
+import { Route as AuthenticatedXpCrystalVaultRouteImport } from './routes/_authenticated/xp-crystal-vault'
+import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
+import { Route as AuthenticatedAmsIndexRouteImport } from './routes/_authenticated/ams.index'
+import { Route as AuthenticatedAmsIdRouteImport } from './routes/_authenticated/ams.$id'
+import { Route as AuthenticatedAmsNewRouteImport } from './routes/_authenticated/ams.new'
+import { Route as AuthenticatedAwardsIndexRouteImport } from './routes/_authenticated/awards.index'
+import { Route as AuthenticatedAwardsIdRouteImport } from './routes/_authenticated/awards.$id'
+import { Route as AuthenticatedAwardsAuditRouteImport } from './routes/_authenticated/awards.audit'
+import { Route as AuthenticatedAwardsCategoriesRouteImport } from './routes/_authenticated/awards.categories'
+import { Route as AuthenticatedAwardsEffectsRouteImport } from './routes/_authenticated/awards.effects'
+import { Route as AuthenticatedAwardsNewRouteImport } from './routes/_authenticated/awards.new'
+import { Route as AuthenticatedCollectionIndexRouteImport } from './routes/_authenticated/collection.index'
+import { Route as AuthenticatedCollectionTypeRouteImport } from './routes/_authenticated/collection.$type'
+import { Route as AuthenticatedMuseumIndexRouteImport } from './routes/_authenticated/museum.index'
+import { Route as AuthenticatedMuseumShowcaseRouteImport } from './routes/_authenticated/museum.$showcase'
+import { Route as AuthenticatedRoleManagerIndexRouteImport } from './routes/_authenticated/role-manager.index'
+import { Route as AuthenticatedRoleManagerSlugRouteImport } from './routes/_authenticated/role-manager.$slug'
+import { Route as AuthenticatedRoleShowcaseIndexRouteImport } from './routes/_authenticated/role-showcase.index'
+import { Route as AuthenticatedRoleShowcaseSlugRouteImport } from './routes/_authenticated/role-showcase.$slug'
+import { Route as AuthenticatedAwardsIdEditRouteImport } from './routes/_authenticated/awards.$id.edit'
+import { Route as AuthenticatedAwardsLibrariesAchievementsRouteImport } from './routes/_authenticated/awards.libraries.achievements'
+import { Route as AuthenticatedAwardsLibrariesBadgesRouteImport } from './routes/_authenticated/awards.libraries.badges'
+import { Route as AuthenticatedAwardsLibrariesRanksRouteImport } from './routes/_authenticated/awards.libraries.ranks'
+import { Route as AuthenticatedAwardsLibrariesTrophiesRouteImport } from './routes/_authenticated/awards.libraries.trophies'
+import { Route as AuthenticatedAwardsRulesLevelsRouteImport } from './routes/_authenticated/awards.rules.levels'
+import { Route as AuthenticatedAwardsRulesMilestonesRouteImport } from './routes/_authenticated/awards.rules.milestones'
+import { Route as AuthenticatedAwardsRulesRewardsRouteImport } from './routes/_authenticated/awards.rules.rewards'
+import { Route as AuthenticatedAwardsRulesStreaksRouteImport } from './routes/_authenticated/awards.rules.streaks'
+import { Route as AuthenticatedAwardsRulesXpRouteImport } from './routes/_authenticated/awards.rules.xp'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAchievementVaultRoute =
+  AuthenticatedAchievementVaultRouteImport.update({
+    id: '/achievement-vault',
+    path: '/achievement-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAchievementsRoute =
+  AuthenticatedAchievementsRouteImport.update({
+    id: '/achievements',
+    path: '/achievements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAiRoute = AuthenticatedAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAuthorProgressionRoute =
+  AuthenticatedAuthorProgressionRouteImport.update({
+    id: '/author-progression',
+    path: '/author-progression',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardVaultRoute = AuthenticatedAwardVaultRouteImport.update({
+  id: '/award-vault',
+  path: '/award-vault',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBadgeVaultRoute = AuthenticatedBadgeVaultRouteImport.update({
+  id: '/badge-vault',
+  path: '/badge-vault',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBadgesRoute = AuthenticatedBadgesRouteImport.update({
+  id: '/badges',
+  path: '/badges',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCertificateVaultRoute =
+  AuthenticatedCertificateVaultRouteImport.update({
+    id: '/certificate-vault',
+    path: '/certificate-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCertificatesRoute =
+  AuthenticatedCertificatesRouteImport.update({
+    id: '/certificates',
+    path: '/certificates',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedChallengesRoute = AuthenticatedChallengesRouteImport.update({
+  id: '/challenges',
+  path: '/challenges',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedClaimsRoute = AuthenticatedClaimsRouteImport.update({
+  id: '/claims',
+  path: '/claims',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCollectionsRoute =
+  AuthenticatedCollectionsRouteImport.update({
+    id: '/collections',
+    path: '/collections',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDeveloperProgressionRoute =
+  AuthenticatedDeveloperProgressionRouteImport.update({
+    id: '/developer-progression',
+    path: '/developer-progression',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedFounderSealVaultRoute =
+  AuthenticatedFounderSealVaultRouteImport.update({
+    id: '/founder-seal-vault',
+    path: '/founder-seal-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedHallOfFameRoute = AuthenticatedHallOfFameRouteImport.update({
+  id: '/hall-of-fame',
+  path: '/hall-of-fame',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHallOfFameVaultRoute =
+  AuthenticatedHallOfFameVaultRouteImport.update({
+    id: '/hall-of-fame-vault',
+    path: '/hall-of-fame-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedHonorCoinVaultRoute =
+  AuthenticatedHonorCoinVaultRouteImport.update({
+    id: '/honor-coin-vault',
+    path: '/honor-coin-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedIdentityRoute = AuthenticatedIdentityRouteImport.update({
+  id: '/identity',
+  path: '/identity',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIdentityCardVaultRoute =
+  AuthenticatedIdentityCardVaultRouteImport.update({
+    id: '/identity-card-vault',
+    path: '/identity-card-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLeaderboardsRoute =
+  AuthenticatedLeaderboardsRouteImport.update({
+    id: '/leaderboards',
+    path: '/leaderboards',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLegacyRoute = AuthenticatedLegacyRouteImport.update({
+  id: '/legacy',
+  path: '/legacy',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLegacyMedalVaultRoute =
+  AuthenticatedLegacyMedalVaultRouteImport.update({
+    id: '/legacy-medal-vault',
+    path: '/legacy-medal-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLevelsRoute = AuthenticatedLevelsRouteImport.update({
+  id: '/levels',
+  path: '/levels',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLicenseCardVaultRoute =
+  AuthenticatedLicenseCardVaultRouteImport.update({
+    id: '/license-card-vault',
+    path: '/license-card-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMembershipVaultRoute =
+  AuthenticatedMembershipVaultRouteImport.update({
+    id: '/membership-vault',
+    path: '/membership-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMissionsRoute = AuthenticatedMissionsRouteImport.update({
+  id: '/missions',
+  path: '/missions',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPassportVaultRoute =
+  AuthenticatedPassportVaultRouteImport.update({
+    id: '/passport-vault',
+    path: '/passport-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedQuestsRoute = AuthenticatedQuestsRouteImport.update({
+  id: '/quests',
+  path: '/quests',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRankVaultRoute = AuthenticatedRankVaultRouteImport.update({
+  id: '/rank-vault',
+  path: '/rank-vault',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRanksRoute = AuthenticatedRanksRouteImport.update({
+  id: '/ranks',
+  path: '/ranks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRecognitionCoinVaultRoute =
+  AuthenticatedRecognitionCoinVaultRouteImport.update({
+    id: '/recognition-coin-vault',
+    path: '/recognition-coin-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReputationVaultRoute =
+  AuthenticatedReputationVaultRouteImport.update({
+    id: '/reputation-vault',
+    path: '/reputation-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRewardChestVaultRoute =
+  AuthenticatedRewardChestVaultRouteImport.update({
+    id: '/reward-chest-vault',
+    path: '/reward-chest-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRewardsRoute = AuthenticatedRewardsRouteImport.update({
+  id: '/rewards',
+  path: '/rewards',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRoleManagerRoute =
+  AuthenticatedRoleManagerRouteImport.update({
+    id: '/role-manager',
+    path: '/role-manager',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTrophiesRoute = AuthenticatedTrophiesRouteImport.update({
+  id: '/trophies',
+  path: '/trophies',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTrophyGalleryRoute =
+  AuthenticatedTrophyGalleryRouteImport.update({
+    id: '/trophy-gallery',
+    path: '/trophy-gallery',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTrophyVaultRoute =
+  AuthenticatedTrophyVaultRouteImport.update({
+    id: '/trophy-vault',
+    path: '/trophy-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTrustSealVaultRoute =
+  AuthenticatedTrustSealVaultRouteImport.update({
+    id: '/trust-seal-vault',
+    path: '/trust-seal-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedVendorProgressionRoute =
+  AuthenticatedVendorProgressionRouteImport.update({
+    id: '/vendor-progression',
+    path: '/vendor-progression',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedVerificationVaultRoute =
+  AuthenticatedVerificationVaultRouteImport.update({
+    id: '/verification-vault',
+    path: '/verification-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedXpRoute = AuthenticatedXpRouteImport.update({
+  id: '/xp',
+  path: '/xp',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedXpCrystalVaultRoute =
+  AuthenticatedXpCrystalVaultRouteImport.update({
+    id: '/xp-crystal-vault',
+    path: '/xp-crystal-vault',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const VerifyCodeRoute = VerifyCodeRouteImport.update({
+  id: '/verify/$code',
+  path: '/verify/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAmsIndexRoute = AuthenticatedAmsIndexRouteImport.update({
+  id: '/ams/',
+  path: '/ams/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAmsIdRoute = AuthenticatedAmsIdRouteImport.update({
+  id: '/ams/$id',
+  path: '/ams/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAmsNewRoute = AuthenticatedAmsNewRouteImport.update({
+  id: '/ams/new',
+  path: '/ams/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAwardsIndexRoute =
+  AuthenticatedAwardsIndexRouteImport.update({
+    id: '/awards/',
+    path: '/awards/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsIdRoute = AuthenticatedAwardsIdRouteImport.update({
+  id: '/awards/$id',
+  path: '/awards/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAwardsAuditRoute =
+  AuthenticatedAwardsAuditRouteImport.update({
+    id: '/awards/audit',
+    path: '/awards/audit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsCategoriesRoute =
+  AuthenticatedAwardsCategoriesRouteImport.update({
+    id: '/awards/categories',
+    path: '/awards/categories',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsEffectsRoute =
+  AuthenticatedAwardsEffectsRouteImport.update({
+    id: '/awards/effects',
+    path: '/awards/effects',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsNewRoute = AuthenticatedAwardsNewRouteImport.update({
+  id: '/awards/new',
+  path: '/awards/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCollectionIndexRoute =
+  AuthenticatedCollectionIndexRouteImport.update({
+    id: '/collection/',
+    path: '/collection/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCollectionTypeRoute =
+  AuthenticatedCollectionTypeRouteImport.update({
+    id: '/collection/$type',
+    path: '/collection/$type',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMuseumIndexRoute =
+  AuthenticatedMuseumIndexRouteImport.update({
+    id: '/museum/',
+    path: '/museum/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMuseumShowcaseRoute =
+  AuthenticatedMuseumShowcaseRouteImport.update({
+    id: '/museum/$showcase',
+    path: '/museum/$showcase',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRoleManagerIndexRoute =
+  AuthenticatedRoleManagerIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedRoleManagerRoute,
+  } as any)
+const AuthenticatedRoleManagerSlugRoute =
+  AuthenticatedRoleManagerSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => AuthenticatedRoleManagerRoute,
+  } as any)
+const AuthenticatedRoleShowcaseIndexRoute =
+  AuthenticatedRoleShowcaseIndexRouteImport.update({
+    id: '/role-showcase/',
+    path: '/role-showcase/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRoleShowcaseSlugRoute =
+  AuthenticatedRoleShowcaseSlugRouteImport.update({
+    id: '/role-showcase/$slug',
+    path: '/role-showcase/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsIdEditRoute =
+  AuthenticatedAwardsIdEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => AuthenticatedAwardsIdRoute,
+  } as any)
+const AuthenticatedAwardsLibrariesAchievementsRoute =
+  AuthenticatedAwardsLibrariesAchievementsRouteImport.update({
+    id: '/awards/libraries/achievements',
+    path: '/awards/libraries/achievements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsLibrariesBadgesRoute =
+  AuthenticatedAwardsLibrariesBadgesRouteImport.update({
+    id: '/awards/libraries/badges',
+    path: '/awards/libraries/badges',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsLibrariesRanksRoute =
+  AuthenticatedAwardsLibrariesRanksRouteImport.update({
+    id: '/awards/libraries/ranks',
+    path: '/awards/libraries/ranks',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsLibrariesTrophiesRoute =
+  AuthenticatedAwardsLibrariesTrophiesRouteImport.update({
+    id: '/awards/libraries/trophies',
+    path: '/awards/libraries/trophies',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsRulesLevelsRoute =
+  AuthenticatedAwardsRulesLevelsRouteImport.update({
+    id: '/awards/rules/levels',
+    path: '/awards/rules/levels',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsRulesMilestonesRoute =
+  AuthenticatedAwardsRulesMilestonesRouteImport.update({
+    id: '/awards/rules/milestones',
+    path: '/awards/rules/milestones',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsRulesRewardsRoute =
+  AuthenticatedAwardsRulesRewardsRouteImport.update({
+    id: '/awards/rules/rewards',
+    path: '/awards/rules/rewards',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsRulesStreaksRoute =
+  AuthenticatedAwardsRulesStreaksRouteImport.update({
+    id: '/awards/rules/streaks',
+    path: '/awards/rules/streaks',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAwardsRulesXpRoute =
+  AuthenticatedAwardsRulesXpRouteImport.update({
+    id: '/awards/rules/xp',
+    path: '/awards/rules/xp',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/achievement-vault': typeof AuthenticatedAchievementVaultRoute
+  '/achievements': typeof AuthenticatedAchievementsRoute
+  '/ai': typeof AuthenticatedAiRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/audit': typeof AuthenticatedAuditRoute
+  '/author-progression': typeof AuthenticatedAuthorProgressionRoute
+  '/award-vault': typeof AuthenticatedAwardVaultRoute
+  '/badge-vault': typeof AuthenticatedBadgeVaultRoute
+  '/badges': typeof AuthenticatedBadgesRoute
+  '/certificate-vault': typeof AuthenticatedCertificateVaultRoute
+  '/certificates': typeof AuthenticatedCertificatesRoute
+  '/challenges': typeof AuthenticatedChallengesRoute
+  '/chat': typeof AuthenticatedChatRoute
+  '/claims': typeof AuthenticatedClaimsRoute
+  '/collections': typeof AuthenticatedCollectionsRoute
+  '/developer-progression': typeof AuthenticatedDeveloperProgressionRoute
+  '/founder-seal-vault': typeof AuthenticatedFounderSealVaultRoute
+  '/hall-of-fame': typeof AuthenticatedHallOfFameRoute
+  '/hall-of-fame-vault': typeof AuthenticatedHallOfFameVaultRoute
+  '/honor-coin-vault': typeof AuthenticatedHonorCoinVaultRoute
+  '/identity': typeof AuthenticatedIdentityRoute
+  '/identity-card-vault': typeof AuthenticatedIdentityCardVaultRoute
+  '/leaderboards': typeof AuthenticatedLeaderboardsRoute
+  '/legacy': typeof AuthenticatedLegacyRoute
+  '/legacy-medal-vault': typeof AuthenticatedLegacyMedalVaultRoute
+  '/levels': typeof AuthenticatedLevelsRoute
+  '/license-card-vault': typeof AuthenticatedLicenseCardVaultRoute
+  '/membership-vault': typeof AuthenticatedMembershipVaultRoute
+  '/missions': typeof AuthenticatedMissionsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/passport': typeof AuthenticatedPassportRoute
+  '/passport-vault': typeof AuthenticatedPassportVaultRoute
+  '/quests': typeof AuthenticatedQuestsRoute
+  '/rank-vault': typeof AuthenticatedRankVaultRoute
+  '/ranks': typeof AuthenticatedRanksRoute
+  '/recognition-coin-vault': typeof AuthenticatedRecognitionCoinVaultRoute
+  '/reputation-vault': typeof AuthenticatedReputationVaultRoute
+  '/reward-chest-vault': typeof AuthenticatedRewardChestVaultRoute
+  '/rewards': typeof AuthenticatedRewardsRoute
+  '/role-manager': typeof AuthenticatedRoleManagerRouteWithChildren
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/trophies': typeof AuthenticatedTrophiesRoute
+  '/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
+  '/trophy-vault': typeof AuthenticatedTrophyVaultRoute
+  '/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
+  '/vendor-progression': typeof AuthenticatedVendorProgressionRoute
+  '/verification-vault': typeof AuthenticatedVerificationVaultRoute
+  '/xp': typeof AuthenticatedXpRoute
+  '/xp-crystal-vault': typeof AuthenticatedXpCrystalVaultRoute
+  '/verify/$code': typeof VerifyCodeRoute
+  '/ams/$id': typeof AuthenticatedAmsIdRoute
+  '/ams/new': typeof AuthenticatedAmsNewRoute
+  '/awards/$id': typeof AuthenticatedAwardsIdRouteWithChildren
+  '/awards/audit': typeof AuthenticatedAwardsAuditRoute
+  '/awards/categories': typeof AuthenticatedAwardsCategoriesRoute
+  '/awards/effects': typeof AuthenticatedAwardsEffectsRoute
+  '/awards/new': typeof AuthenticatedAwardsNewRoute
+  '/collection/$type': typeof AuthenticatedCollectionTypeRoute
+  '/museum/$showcase': typeof AuthenticatedMuseumShowcaseRoute
+  '/role-manager/$slug': typeof AuthenticatedRoleManagerSlugRoute
+  '/role-showcase/$slug': typeof AuthenticatedRoleShowcaseSlugRoute
+  '/ams/': typeof AuthenticatedAmsIndexRoute
+  '/awards/': typeof AuthenticatedAwardsIndexRoute
+  '/collection/': typeof AuthenticatedCollectionIndexRoute
+  '/museum/': typeof AuthenticatedMuseumIndexRoute
+  '/role-manager/': typeof AuthenticatedRoleManagerIndexRoute
+  '/role-showcase/': typeof AuthenticatedRoleShowcaseIndexRoute
+  '/awards/$id/edit': typeof AuthenticatedAwardsIdEditRoute
+  '/awards/libraries/achievements': typeof AuthenticatedAwardsLibrariesAchievementsRoute
+  '/awards/libraries/badges': typeof AuthenticatedAwardsLibrariesBadgesRoute
+  '/awards/libraries/ranks': typeof AuthenticatedAwardsLibrariesRanksRoute
+  '/awards/libraries/trophies': typeof AuthenticatedAwardsLibrariesTrophiesRoute
+  '/awards/rules/levels': typeof AuthenticatedAwardsRulesLevelsRoute
+  '/awards/rules/milestones': typeof AuthenticatedAwardsRulesMilestonesRoute
+  '/awards/rules/rewards': typeof AuthenticatedAwardsRulesRewardsRoute
+  '/awards/rules/streaks': typeof AuthenticatedAwardsRulesStreaksRoute
+  '/awards/rules/xp': typeof AuthenticatedAwardsRulesXpRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/achievement-vault': typeof AuthenticatedAchievementVaultRoute
+  '/achievements': typeof AuthenticatedAchievementsRoute
+  '/ai': typeof AuthenticatedAiRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/audit': typeof AuthenticatedAuditRoute
+  '/author-progression': typeof AuthenticatedAuthorProgressionRoute
+  '/award-vault': typeof AuthenticatedAwardVaultRoute
+  '/badge-vault': typeof AuthenticatedBadgeVaultRoute
+  '/badges': typeof AuthenticatedBadgesRoute
+  '/certificate-vault': typeof AuthenticatedCertificateVaultRoute
+  '/certificates': typeof AuthenticatedCertificatesRoute
+  '/challenges': typeof AuthenticatedChallengesRoute
+  '/chat': typeof AuthenticatedChatRoute
+  '/claims': typeof AuthenticatedClaimsRoute
+  '/collections': typeof AuthenticatedCollectionsRoute
+  '/developer-progression': typeof AuthenticatedDeveloperProgressionRoute
+  '/founder-seal-vault': typeof AuthenticatedFounderSealVaultRoute
+  '/hall-of-fame': typeof AuthenticatedHallOfFameRoute
+  '/hall-of-fame-vault': typeof AuthenticatedHallOfFameVaultRoute
+  '/honor-coin-vault': typeof AuthenticatedHonorCoinVaultRoute
+  '/identity': typeof AuthenticatedIdentityRoute
+  '/identity-card-vault': typeof AuthenticatedIdentityCardVaultRoute
+  '/leaderboards': typeof AuthenticatedLeaderboardsRoute
+  '/legacy': typeof AuthenticatedLegacyRoute
+  '/legacy-medal-vault': typeof AuthenticatedLegacyMedalVaultRoute
+  '/levels': typeof AuthenticatedLevelsRoute
+  '/license-card-vault': typeof AuthenticatedLicenseCardVaultRoute
+  '/membership-vault': typeof AuthenticatedMembershipVaultRoute
+  '/missions': typeof AuthenticatedMissionsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/passport': typeof AuthenticatedPassportRoute
+  '/passport-vault': typeof AuthenticatedPassportVaultRoute
+  '/quests': typeof AuthenticatedQuestsRoute
+  '/rank-vault': typeof AuthenticatedRankVaultRoute
+  '/ranks': typeof AuthenticatedRanksRoute
+  '/recognition-coin-vault': typeof AuthenticatedRecognitionCoinVaultRoute
+  '/reputation-vault': typeof AuthenticatedReputationVaultRoute
+  '/reward-chest-vault': typeof AuthenticatedRewardChestVaultRoute
+  '/rewards': typeof AuthenticatedRewardsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/trophies': typeof AuthenticatedTrophiesRoute
+  '/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
+  '/trophy-vault': typeof AuthenticatedTrophyVaultRoute
+  '/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
+  '/vendor-progression': typeof AuthenticatedVendorProgressionRoute
+  '/verification-vault': typeof AuthenticatedVerificationVaultRoute
+  '/xp': typeof AuthenticatedXpRoute
+  '/xp-crystal-vault': typeof AuthenticatedXpCrystalVaultRoute
+  '/verify/$code': typeof VerifyCodeRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/ams/$id': typeof AuthenticatedAmsIdRoute
+  '/ams/new': typeof AuthenticatedAmsNewRoute
+  '/awards/$id': typeof AuthenticatedAwardsIdRouteWithChildren
+  '/awards/audit': typeof AuthenticatedAwardsAuditRoute
+  '/awards/categories': typeof AuthenticatedAwardsCategoriesRoute
+  '/awards/effects': typeof AuthenticatedAwardsEffectsRoute
+  '/awards/new': typeof AuthenticatedAwardsNewRoute
+  '/collection/$type': typeof AuthenticatedCollectionTypeRoute
+  '/museum/$showcase': typeof AuthenticatedMuseumShowcaseRoute
+  '/role-manager/$slug': typeof AuthenticatedRoleManagerSlugRoute
+  '/role-showcase/$slug': typeof AuthenticatedRoleShowcaseSlugRoute
+  '/ams': typeof AuthenticatedAmsIndexRoute
+  '/awards': typeof AuthenticatedAwardsIndexRoute
+  '/collection': typeof AuthenticatedCollectionIndexRoute
+  '/museum': typeof AuthenticatedMuseumIndexRoute
+  '/role-manager': typeof AuthenticatedRoleManagerIndexRoute
+  '/role-showcase': typeof AuthenticatedRoleShowcaseIndexRoute
+  '/awards/$id/edit': typeof AuthenticatedAwardsIdEditRoute
+  '/awards/libraries/achievements': typeof AuthenticatedAwardsLibrariesAchievementsRoute
+  '/awards/libraries/badges': typeof AuthenticatedAwardsLibrariesBadgesRoute
+  '/awards/libraries/ranks': typeof AuthenticatedAwardsLibrariesRanksRoute
+  '/awards/libraries/trophies': typeof AuthenticatedAwardsLibrariesTrophiesRoute
+  '/awards/rules/levels': typeof AuthenticatedAwardsRulesLevelsRoute
+  '/awards/rules/milestones': typeof AuthenticatedAwardsRulesMilestonesRoute
+  '/awards/rules/rewards': typeof AuthenticatedAwardsRulesRewardsRoute
+  '/awards/rules/streaks': typeof AuthenticatedAwardsRulesStreaksRoute
+  '/awards/rules/xp': typeof AuthenticatedAwardsRulesXpRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/achievement-vault': typeof AuthenticatedAchievementVaultRoute
+  '/_authenticated/achievements': typeof AuthenticatedAchievementsRoute
+  '/_authenticated/ai': typeof AuthenticatedAiRoute
+  '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
+  '/_authenticated/audit': typeof AuthenticatedAuditRoute
+  '/_authenticated/author-progression': typeof AuthenticatedAuthorProgressionRoute
+  '/_authenticated/award-vault': typeof AuthenticatedAwardVaultRoute
+  '/_authenticated/badge-vault': typeof AuthenticatedBadgeVaultRoute
+  '/_authenticated/badges': typeof AuthenticatedBadgesRoute
+  '/_authenticated/certificate-vault': typeof AuthenticatedCertificateVaultRoute
+  '/_authenticated/certificates': typeof AuthenticatedCertificatesRoute
+  '/_authenticated/challenges': typeof AuthenticatedChallengesRoute
+  '/_authenticated/chat': typeof AuthenticatedChatRoute
+  '/_authenticated/claims': typeof AuthenticatedClaimsRoute
+  '/_authenticated/collections': typeof AuthenticatedCollectionsRoute
+  '/_authenticated/developer-progression': typeof AuthenticatedDeveloperProgressionRoute
+  '/_authenticated/founder-seal-vault': typeof AuthenticatedFounderSealVaultRoute
+  '/_authenticated/hall-of-fame': typeof AuthenticatedHallOfFameRoute
+  '/_authenticated/hall-of-fame-vault': typeof AuthenticatedHallOfFameVaultRoute
+  '/_authenticated/honor-coin-vault': typeof AuthenticatedHonorCoinVaultRoute
+  '/_authenticated/identity': typeof AuthenticatedIdentityRoute
+  '/_authenticated/identity-card-vault': typeof AuthenticatedIdentityCardVaultRoute
+  '/_authenticated/leaderboards': typeof AuthenticatedLeaderboardsRoute
+  '/_authenticated/legacy': typeof AuthenticatedLegacyRoute
+  '/_authenticated/legacy-medal-vault': typeof AuthenticatedLegacyMedalVaultRoute
+  '/_authenticated/levels': typeof AuthenticatedLevelsRoute
+  '/_authenticated/license-card-vault': typeof AuthenticatedLicenseCardVaultRoute
+  '/_authenticated/membership-vault': typeof AuthenticatedMembershipVaultRoute
+  '/_authenticated/missions': typeof AuthenticatedMissionsRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/passport': typeof AuthenticatedPassportRoute
+  '/_authenticated/passport-vault': typeof AuthenticatedPassportVaultRoute
+  '/_authenticated/quests': typeof AuthenticatedQuestsRoute
+  '/_authenticated/rank-vault': typeof AuthenticatedRankVaultRoute
+  '/_authenticated/ranks': typeof AuthenticatedRanksRoute
+  '/_authenticated/recognition-coin-vault': typeof AuthenticatedRecognitionCoinVaultRoute
+  '/_authenticated/reputation-vault': typeof AuthenticatedReputationVaultRoute
+  '/_authenticated/reward-chest-vault': typeof AuthenticatedRewardChestVaultRoute
+  '/_authenticated/rewards': typeof AuthenticatedRewardsRoute
+  '/_authenticated/role-manager': typeof AuthenticatedRoleManagerRouteWithChildren
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/trophies': typeof AuthenticatedTrophiesRoute
+  '/_authenticated/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
+  '/_authenticated/trophy-vault': typeof AuthenticatedTrophyVaultRoute
+  '/_authenticated/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
+  '/_authenticated/vendor-progression': typeof AuthenticatedVendorProgressionRoute
+  '/_authenticated/verification-vault': typeof AuthenticatedVerificationVaultRoute
+  '/_authenticated/xp': typeof AuthenticatedXpRoute
+  '/_authenticated/xp-crystal-vault': typeof AuthenticatedXpCrystalVaultRoute
+  '/verify/$code': typeof VerifyCodeRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/ams/$id': typeof AuthenticatedAmsIdRoute
+  '/_authenticated/ams/new': typeof AuthenticatedAmsNewRoute
+  '/_authenticated/awards/$id': typeof AuthenticatedAwardsIdRouteWithChildren
+  '/_authenticated/awards/audit': typeof AuthenticatedAwardsAuditRoute
+  '/_authenticated/awards/categories': typeof AuthenticatedAwardsCategoriesRoute
+  '/_authenticated/awards/effects': typeof AuthenticatedAwardsEffectsRoute
+  '/_authenticated/awards/new': typeof AuthenticatedAwardsNewRoute
+  '/_authenticated/collection/$type': typeof AuthenticatedCollectionTypeRoute
+  '/_authenticated/museum/$showcase': typeof AuthenticatedMuseumShowcaseRoute
+  '/_authenticated/role-manager/$slug': typeof AuthenticatedRoleManagerSlugRoute
+  '/_authenticated/role-showcase/$slug': typeof AuthenticatedRoleShowcaseSlugRoute
+  '/_authenticated/ams/': typeof AuthenticatedAmsIndexRoute
+  '/_authenticated/awards/': typeof AuthenticatedAwardsIndexRoute
+  '/_authenticated/collection/': typeof AuthenticatedCollectionIndexRoute
+  '/_authenticated/museum/': typeof AuthenticatedMuseumIndexRoute
+  '/_authenticated/role-manager/': typeof AuthenticatedRoleManagerIndexRoute
+  '/_authenticated/role-showcase/': typeof AuthenticatedRoleShowcaseIndexRoute
+  '/_authenticated/awards/$id/edit': typeof AuthenticatedAwardsIdEditRoute
+  '/_authenticated/awards/libraries/achievements': typeof AuthenticatedAwardsLibrariesAchievementsRoute
+  '/_authenticated/awards/libraries/badges': typeof AuthenticatedAwardsLibrariesBadgesRoute
+  '/_authenticated/awards/libraries/ranks': typeof AuthenticatedAwardsLibrariesRanksRoute
+  '/_authenticated/awards/libraries/trophies': typeof AuthenticatedAwardsLibrariesTrophiesRoute
+  '/_authenticated/awards/rules/levels': typeof AuthenticatedAwardsRulesLevelsRoute
+  '/_authenticated/awards/rules/milestones': typeof AuthenticatedAwardsRulesMilestonesRoute
+  '/_authenticated/awards/rules/rewards': typeof AuthenticatedAwardsRulesRewardsRoute
+  '/_authenticated/awards/rules/streaks': typeof AuthenticatedAwardsRulesStreaksRoute
+  '/_authenticated/awards/rules/xp': typeof AuthenticatedAwardsRulesXpRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/achievement-vault'
+    | '/achievements'
+    | '/ai'
+    | '/analytics'
+    | '/audit'
+    | '/author-progression'
+    | '/award-vault'
+    | '/badge-vault'
+    | '/badges'
+    | '/certificate-vault'
+    | '/certificates'
+    | '/challenges'
+    | '/chat'
+    | '/claims'
+    | '/collections'
+    | '/developer-progression'
+    | '/founder-seal-vault'
+    | '/hall-of-fame'
+    | '/hall-of-fame-vault'
+    | '/honor-coin-vault'
+    | '/identity'
+    | '/identity-card-vault'
+    | '/leaderboards'
+    | '/legacy'
+    | '/legacy-medal-vault'
+    | '/levels'
+    | '/license-card-vault'
+    | '/membership-vault'
+    | '/missions'
+    | '/notifications'
+    | '/passport'
+    | '/passport-vault'
+    | '/quests'
+    | '/rank-vault'
+    | '/ranks'
+    | '/recognition-coin-vault'
+    | '/reputation-vault'
+    | '/reward-chest-vault'
+    | '/rewards'
+    | '/role-manager'
+    | '/settings'
+    | '/trophies'
+    | '/trophy-gallery'
+    | '/trophy-vault'
+    | '/trust-seal-vault'
+    | '/vendor-progression'
+    | '/verification-vault'
+    | '/xp'
+    | '/xp-crystal-vault'
+    | '/verify/$code'
+    | '/ams/$id'
+    | '/ams/new'
+    | '/awards/$id'
+    | '/awards/audit'
+    | '/awards/categories'
+    | '/awards/effects'
+    | '/awards/new'
+    | '/collection/$type'
+    | '/museum/$showcase'
+    | '/role-manager/$slug'
+    | '/role-showcase/$slug'
+    | '/ams/'
+    | '/awards/'
+    | '/collection/'
+    | '/museum/'
+    | '/role-manager/'
+    | '/role-showcase/'
+    | '/awards/$id/edit'
+    | '/awards/libraries/achievements'
+    | '/awards/libraries/badges'
+    | '/awards/libraries/ranks'
+    | '/awards/libraries/trophies'
+    | '/awards/rules/levels'
+    | '/awards/rules/milestones'
+    | '/awards/rules/rewards'
+    | '/awards/rules/streaks'
+    | '/awards/rules/xp'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/achievement-vault'
+    | '/achievements'
+    | '/ai'
+    | '/analytics'
+    | '/audit'
+    | '/author-progression'
+    | '/award-vault'
+    | '/badge-vault'
+    | '/badges'
+    | '/certificate-vault'
+    | '/certificates'
+    | '/challenges'
+    | '/chat'
+    | '/claims'
+    | '/collections'
+    | '/developer-progression'
+    | '/founder-seal-vault'
+    | '/hall-of-fame'
+    | '/hall-of-fame-vault'
+    | '/honor-coin-vault'
+    | '/identity'
+    | '/identity-card-vault'
+    | '/leaderboards'
+    | '/legacy'
+    | '/legacy-medal-vault'
+    | '/levels'
+    | '/license-card-vault'
+    | '/membership-vault'
+    | '/missions'
+    | '/notifications'
+    | '/passport'
+    | '/passport-vault'
+    | '/quests'
+    | '/rank-vault'
+    | '/ranks'
+    | '/recognition-coin-vault'
+    | '/reputation-vault'
+    | '/reward-chest-vault'
+    | '/rewards'
+    | '/settings'
+    | '/trophies'
+    | '/trophy-gallery'
+    | '/trophy-vault'
+    | '/trust-seal-vault'
+    | '/vendor-progression'
+    | '/verification-vault'
+    | '/xp'
+    | '/xp-crystal-vault'
+    | '/verify/$code'
+    | '/'
+    | '/ams/$id'
+    | '/ams/new'
+    | '/awards/$id'
+    | '/awards/audit'
+    | '/awards/categories'
+    | '/awards/effects'
+    | '/awards/new'
+    | '/collection/$type'
+    | '/museum/$showcase'
+    | '/role-manager/$slug'
+    | '/role-showcase/$slug'
+    | '/ams'
+    | '/awards'
+    | '/collection'
+    | '/museum'
+    | '/role-manager'
+    | '/role-showcase'
+    | '/awards/$id/edit'
+    | '/awards/libraries/achievements'
+    | '/awards/libraries/badges'
+    | '/awards/libraries/ranks'
+    | '/awards/libraries/trophies'
+    | '/awards/rules/levels'
+    | '/awards/rules/milestones'
+    | '/awards/rules/rewards'
+    | '/awards/rules/streaks'
+    | '/awards/rules/xp'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/_authenticated/achievement-vault'
+    | '/_authenticated/achievements'
+    | '/_authenticated/ai'
+    | '/_authenticated/analytics'
+    | '/_authenticated/audit'
+    | '/_authenticated/author-progression'
+    | '/_authenticated/award-vault'
+    | '/_authenticated/badge-vault'
+    | '/_authenticated/badges'
+    | '/_authenticated/certificate-vault'
+    | '/_authenticated/certificates'
+    | '/_authenticated/challenges'
+    | '/_authenticated/chat'
+    | '/_authenticated/claims'
+    | '/_authenticated/collections'
+    | '/_authenticated/developer-progression'
+    | '/_authenticated/founder-seal-vault'
+    | '/_authenticated/hall-of-fame'
+    | '/_authenticated/hall-of-fame-vault'
+    | '/_authenticated/honor-coin-vault'
+    | '/_authenticated/identity'
+    | '/_authenticated/identity-card-vault'
+    | '/_authenticated/leaderboards'
+    | '/_authenticated/legacy'
+    | '/_authenticated/legacy-medal-vault'
+    | '/_authenticated/levels'
+    | '/_authenticated/license-card-vault'
+    | '/_authenticated/membership-vault'
+    | '/_authenticated/missions'
+    | '/_authenticated/notifications'
+    | '/_authenticated/passport'
+    | '/_authenticated/passport-vault'
+    | '/_authenticated/quests'
+    | '/_authenticated/rank-vault'
+    | '/_authenticated/ranks'
+    | '/_authenticated/recognition-coin-vault'
+    | '/_authenticated/reputation-vault'
+    | '/_authenticated/reward-chest-vault'
+    | '/_authenticated/rewards'
+    | '/_authenticated/role-manager'
+    | '/_authenticated/settings'
+    | '/_authenticated/trophies'
+    | '/_authenticated/trophy-gallery'
+    | '/_authenticated/trophy-vault'
+    | '/_authenticated/trust-seal-vault'
+    | '/_authenticated/vendor-progression'
+    | '/_authenticated/verification-vault'
+    | '/_authenticated/xp'
+    | '/_authenticated/xp-crystal-vault'
+    | '/verify/$code'
+    | '/_authenticated/'
+    | '/_authenticated/ams/$id'
+    | '/_authenticated/ams/new'
+    | '/_authenticated/awards/$id'
+    | '/_authenticated/awards/audit'
+    | '/_authenticated/awards/categories'
+    | '/_authenticated/awards/effects'
+    | '/_authenticated/awards/new'
+    | '/_authenticated/collection/$type'
+    | '/_authenticated/museum/$showcase'
+    | '/_authenticated/role-manager/$slug'
+    | '/_authenticated/role-showcase/$slug'
+    | '/_authenticated/ams/'
+    | '/_authenticated/awards/'
+    | '/_authenticated/collection/'
+    | '/_authenticated/museum/'
+    | '/_authenticated/role-manager/'
+    | '/_authenticated/role-showcase/'
+    | '/_authenticated/awards/$id/edit'
+    | '/_authenticated/awards/libraries/achievements'
+    | '/_authenticated/awards/libraries/badges'
+    | '/_authenticated/awards/libraries/ranks'
+    | '/_authenticated/awards/libraries/trophies'
+    | '/_authenticated/awards/rules/levels'
+    | '/_authenticated/awards/rules/milestones'
+    | '/_authenticated/awards/rules/rewards'
+    | '/_authenticated/awards/rules/streaks'
+    | '/_authenticated/awards/rules/xp'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  VerifyCodeRoute: typeof VerifyCodeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/achievement-vault': {
+      id: '/_authenticated/achievement-vault'
+      path: '/achievement-vault'
+      fullPath: '/achievement-vault'
+      preLoaderRoute: typeof AuthenticatedAchievementVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/achievements': {
+      id: '/_authenticated/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AuthenticatedAchievementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai': {
+      id: '/_authenticated/ai'
+      path: '/ai'
+      fullPath: '/ai'
+      preLoaderRoute: typeof AuthenticatedAiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/analytics': {
+      id: '/_authenticated/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AuthenticatedAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/audit': {
+      id: '/_authenticated/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuthenticatedAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/author-progression': {
+      id: '/_authenticated/author-progression'
+      path: '/author-progression'
+      fullPath: '/author-progression'
+      preLoaderRoute: typeof AuthenticatedAuthorProgressionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/award-vault': {
+      id: '/_authenticated/award-vault'
+      path: '/award-vault'
+      fullPath: '/award-vault'
+      preLoaderRoute: typeof AuthenticatedAwardVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/badge-vault': {
+      id: '/_authenticated/badge-vault'
+      path: '/badge-vault'
+      fullPath: '/badge-vault'
+      preLoaderRoute: typeof AuthenticatedBadgeVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/badges': {
+      id: '/_authenticated/badges'
+      path: '/badges'
+      fullPath: '/badges'
+      preLoaderRoute: typeof AuthenticatedBadgesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/certificate-vault': {
+      id: '/_authenticated/certificate-vault'
+      path: '/certificate-vault'
+      fullPath: '/certificate-vault'
+      preLoaderRoute: typeof AuthenticatedCertificateVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/certificates': {
+      id: '/_authenticated/certificates'
+      path: '/certificates'
+      fullPath: '/certificates'
+      preLoaderRoute: typeof AuthenticatedCertificatesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/challenges': {
+      id: '/_authenticated/challenges'
+      path: '/challenges'
+      fullPath: '/challenges'
+      preLoaderRoute: typeof AuthenticatedChallengesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chat': {
+      id: '/_authenticated/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof AuthenticatedChatRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/claims': {
+      id: '/_authenticated/claims'
+      path: '/claims'
+      fullPath: '/claims'
+      preLoaderRoute: typeof AuthenticatedClaimsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/collections': {
+      id: '/_authenticated/collections'
+      path: '/collections'
+      fullPath: '/collections'
+      preLoaderRoute: typeof AuthenticatedCollectionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/developer-progression': {
+      id: '/_authenticated/developer-progression'
+      path: '/developer-progression'
+      fullPath: '/developer-progression'
+      preLoaderRoute: typeof AuthenticatedDeveloperProgressionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/founder-seal-vault': {
+      id: '/_authenticated/founder-seal-vault'
+      path: '/founder-seal-vault'
+      fullPath: '/founder-seal-vault'
+      preLoaderRoute: typeof AuthenticatedFounderSealVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/hall-of-fame': {
+      id: '/_authenticated/hall-of-fame'
+      path: '/hall-of-fame'
+      fullPath: '/hall-of-fame'
+      preLoaderRoute: typeof AuthenticatedHallOfFameRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/hall-of-fame-vault': {
+      id: '/_authenticated/hall-of-fame-vault'
+      path: '/hall-of-fame-vault'
+      fullPath: '/hall-of-fame-vault'
+      preLoaderRoute: typeof AuthenticatedHallOfFameVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/honor-coin-vault': {
+      id: '/_authenticated/honor-coin-vault'
+      path: '/honor-coin-vault'
+      fullPath: '/honor-coin-vault'
+      preLoaderRoute: typeof AuthenticatedHonorCoinVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/identity': {
+      id: '/_authenticated/identity'
+      path: '/identity'
+      fullPath: '/identity'
+      preLoaderRoute: typeof AuthenticatedIdentityRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/identity-card-vault': {
+      id: '/_authenticated/identity-card-vault'
+      path: '/identity-card-vault'
+      fullPath: '/identity-card-vault'
+      preLoaderRoute: typeof AuthenticatedIdentityCardVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/leaderboards': {
+      id: '/_authenticated/leaderboards'
+      path: '/leaderboards'
+      fullPath: '/leaderboards'
+      preLoaderRoute: typeof AuthenticatedLeaderboardsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/legacy': {
+      id: '/_authenticated/legacy'
+      path: '/legacy'
+      fullPath: '/legacy'
+      preLoaderRoute: typeof AuthenticatedLegacyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/legacy-medal-vault': {
+      id: '/_authenticated/legacy-medal-vault'
+      path: '/legacy-medal-vault'
+      fullPath: '/legacy-medal-vault'
+      preLoaderRoute: typeof AuthenticatedLegacyMedalVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/levels': {
+      id: '/_authenticated/levels'
+      path: '/levels'
+      fullPath: '/levels'
+      preLoaderRoute: typeof AuthenticatedLevelsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/license-card-vault': {
+      id: '/_authenticated/license-card-vault'
+      path: '/license-card-vault'
+      fullPath: '/license-card-vault'
+      preLoaderRoute: typeof AuthenticatedLicenseCardVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/membership-vault': {
+      id: '/_authenticated/membership-vault'
+      path: '/membership-vault'
+      fullPath: '/membership-vault'
+      preLoaderRoute: typeof AuthenticatedMembershipVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/missions': {
+      id: '/_authenticated/missions'
+      path: '/missions'
+      fullPath: '/missions'
+      preLoaderRoute: typeof AuthenticatedMissionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/passport': {
+      id: '/_authenticated/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof AuthenticatedPassportRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/passport-vault': {
+      id: '/_authenticated/passport-vault'
+      path: '/passport-vault'
+      fullPath: '/passport-vault'
+      preLoaderRoute: typeof AuthenticatedPassportVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/quests': {
+      id: '/_authenticated/quests'
+      path: '/quests'
+      fullPath: '/quests'
+      preLoaderRoute: typeof AuthenticatedQuestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rank-vault': {
+      id: '/_authenticated/rank-vault'
+      path: '/rank-vault'
+      fullPath: '/rank-vault'
+      preLoaderRoute: typeof AuthenticatedRankVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ranks': {
+      id: '/_authenticated/ranks'
+      path: '/ranks'
+      fullPath: '/ranks'
+      preLoaderRoute: typeof AuthenticatedRanksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition-coin-vault': {
+      id: '/_authenticated/recognition-coin-vault'
+      path: '/recognition-coin-vault'
+      fullPath: '/recognition-coin-vault'
+      preLoaderRoute: typeof AuthenticatedRecognitionCoinVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reputation-vault': {
+      id: '/_authenticated/reputation-vault'
+      path: '/reputation-vault'
+      fullPath: '/reputation-vault'
+      preLoaderRoute: typeof AuthenticatedReputationVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reward-chest-vault': {
+      id: '/_authenticated/reward-chest-vault'
+      path: '/reward-chest-vault'
+      fullPath: '/reward-chest-vault'
+      preLoaderRoute: typeof AuthenticatedRewardChestVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rewards': {
+      id: '/_authenticated/rewards'
+      path: '/rewards'
+      fullPath: '/rewards'
+      preLoaderRoute: typeof AuthenticatedRewardsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/role-manager': {
+      id: '/_authenticated/role-manager'
+      path: '/role-manager'
+      fullPath: '/role-manager'
+      preLoaderRoute: typeof AuthenticatedRoleManagerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/trophies': {
+      id: '/_authenticated/trophies'
+      path: '/trophies'
+      fullPath: '/trophies'
+      preLoaderRoute: typeof AuthenticatedTrophiesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/trophy-gallery': {
+      id: '/_authenticated/trophy-gallery'
+      path: '/trophy-gallery'
+      fullPath: '/trophy-gallery'
+      preLoaderRoute: typeof AuthenticatedTrophyGalleryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/trophy-vault': {
+      id: '/_authenticated/trophy-vault'
+      path: '/trophy-vault'
+      fullPath: '/trophy-vault'
+      preLoaderRoute: typeof AuthenticatedTrophyVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/trust-seal-vault': {
+      id: '/_authenticated/trust-seal-vault'
+      path: '/trust-seal-vault'
+      fullPath: '/trust-seal-vault'
+      preLoaderRoute: typeof AuthenticatedTrustSealVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/vendor-progression': {
+      id: '/_authenticated/vendor-progression'
+      path: '/vendor-progression'
+      fullPath: '/vendor-progression'
+      preLoaderRoute: typeof AuthenticatedVendorProgressionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/verification-vault': {
+      id: '/_authenticated/verification-vault'
+      path: '/verification-vault'
+      fullPath: '/verification-vault'
+      preLoaderRoute: typeof AuthenticatedVerificationVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/xp': {
+      id: '/_authenticated/xp'
+      path: '/xp'
+      fullPath: '/xp'
+      preLoaderRoute: typeof AuthenticatedXpRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/xp-crystal-vault': {
+      id: '/_authenticated/xp-crystal-vault'
+      path: '/xp-crystal-vault'
+      fullPath: '/xp-crystal-vault'
+      preLoaderRoute: typeof AuthenticatedXpCrystalVaultRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/verify/$code': {
+      id: '/verify/$code'
+      path: '/verify/$code'
+      fullPath: '/verify/$code'
+      preLoaderRoute: typeof VerifyCodeRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/ams/': {
+      id: '/_authenticated/ams/'
+      path: '/ams'
+      fullPath: '/ams/'
+      preLoaderRoute: typeof AuthenticatedAmsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ams/$id': {
+      id: '/_authenticated/ams/$id'
+      path: '/ams/$id'
+      fullPath: '/ams/$id'
+      preLoaderRoute: typeof AuthenticatedAmsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ams/new': {
+      id: '/_authenticated/ams/new'
+      path: '/ams/new'
+      fullPath: '/ams/new'
+      preLoaderRoute: typeof AuthenticatedAmsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/': {
+      id: '/_authenticated/awards/'
+      path: '/awards'
+      fullPath: '/awards/'
+      preLoaderRoute: typeof AuthenticatedAwardsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/$id': {
+      id: '/_authenticated/awards/$id'
+      path: '/awards/$id'
+      fullPath: '/awards/$id'
+      preLoaderRoute: typeof AuthenticatedAwardsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/audit': {
+      id: '/_authenticated/awards/audit'
+      path: '/awards/audit'
+      fullPath: '/awards/audit'
+      preLoaderRoute: typeof AuthenticatedAwardsAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/categories': {
+      id: '/_authenticated/awards/categories'
+      path: '/awards/categories'
+      fullPath: '/awards/categories'
+      preLoaderRoute: typeof AuthenticatedAwardsCategoriesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/effects': {
+      id: '/_authenticated/awards/effects'
+      path: '/awards/effects'
+      fullPath: '/awards/effects'
+      preLoaderRoute: typeof AuthenticatedAwardsEffectsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/new': {
+      id: '/_authenticated/awards/new'
+      path: '/awards/new'
+      fullPath: '/awards/new'
+      preLoaderRoute: typeof AuthenticatedAwardsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/collection/': {
+      id: '/_authenticated/collection/'
+      path: '/collection'
+      fullPath: '/collection/'
+      preLoaderRoute: typeof AuthenticatedCollectionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/collection/$type': {
+      id: '/_authenticated/collection/$type'
+      path: '/collection/$type'
+      fullPath: '/collection/$type'
+      preLoaderRoute: typeof AuthenticatedCollectionTypeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/museum/': {
+      id: '/_authenticated/museum/'
+      path: '/museum'
+      fullPath: '/museum/'
+      preLoaderRoute: typeof AuthenticatedMuseumIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/museum/$showcase': {
+      id: '/_authenticated/museum/$showcase'
+      path: '/museum/$showcase'
+      fullPath: '/museum/$showcase'
+      preLoaderRoute: typeof AuthenticatedMuseumShowcaseRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/role-manager/': {
+      id: '/_authenticated/role-manager/'
+      path: '/'
+      fullPath: '/role-manager/'
+      preLoaderRoute: typeof AuthenticatedRoleManagerIndexRouteImport
+      parentRoute: typeof AuthenticatedRoleManagerRoute
+    }
+    '/_authenticated/role-manager/$slug': {
+      id: '/_authenticated/role-manager/$slug'
+      path: '/$slug'
+      fullPath: '/role-manager/$slug'
+      preLoaderRoute: typeof AuthenticatedRoleManagerSlugRouteImport
+      parentRoute: typeof AuthenticatedRoleManagerRoute
+    }
+    '/_authenticated/role-showcase/': {
+      id: '/_authenticated/role-showcase/'
+      path: '/role-showcase'
+      fullPath: '/role-showcase/'
+      preLoaderRoute: typeof AuthenticatedRoleShowcaseIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/role-showcase/$slug': {
+      id: '/_authenticated/role-showcase/$slug'
+      path: '/role-showcase/$slug'
+      fullPath: '/role-showcase/$slug'
+      preLoaderRoute: typeof AuthenticatedRoleShowcaseSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/$id/edit': {
+      id: '/_authenticated/awards/$id/edit'
+      path: '/edit'
+      fullPath: '/awards/$id/edit'
+      preLoaderRoute: typeof AuthenticatedAwardsIdEditRouteImport
+      parentRoute: typeof AuthenticatedAwardsIdRoute
+    }
+    '/_authenticated/awards/libraries/achievements': {
+      id: '/_authenticated/awards/libraries/achievements'
+      path: '/awards/libraries/achievements'
+      fullPath: '/awards/libraries/achievements'
+      preLoaderRoute: typeof AuthenticatedAwardsLibrariesAchievementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/libraries/badges': {
+      id: '/_authenticated/awards/libraries/badges'
+      path: '/awards/libraries/badges'
+      fullPath: '/awards/libraries/badges'
+      preLoaderRoute: typeof AuthenticatedAwardsLibrariesBadgesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/libraries/ranks': {
+      id: '/_authenticated/awards/libraries/ranks'
+      path: '/awards/libraries/ranks'
+      fullPath: '/awards/libraries/ranks'
+      preLoaderRoute: typeof AuthenticatedAwardsLibrariesRanksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/libraries/trophies': {
+      id: '/_authenticated/awards/libraries/trophies'
+      path: '/awards/libraries/trophies'
+      fullPath: '/awards/libraries/trophies'
+      preLoaderRoute: typeof AuthenticatedAwardsLibrariesTrophiesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/rules/levels': {
+      id: '/_authenticated/awards/rules/levels'
+      path: '/awards/rules/levels'
+      fullPath: '/awards/rules/levels'
+      preLoaderRoute: typeof AuthenticatedAwardsRulesLevelsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/rules/milestones': {
+      id: '/_authenticated/awards/rules/milestones'
+      path: '/awards/rules/milestones'
+      fullPath: '/awards/rules/milestones'
+      preLoaderRoute: typeof AuthenticatedAwardsRulesMilestonesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/rules/rewards': {
+      id: '/_authenticated/awards/rules/rewards'
+      path: '/awards/rules/rewards'
+      fullPath: '/awards/rules/rewards'
+      preLoaderRoute: typeof AuthenticatedAwardsRulesRewardsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/rules/streaks': {
+      id: '/_authenticated/awards/rules/streaks'
+      path: '/awards/rules/streaks'
+      fullPath: '/awards/rules/streaks'
+      preLoaderRoute: typeof AuthenticatedAwardsRulesStreaksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/awards/rules/xp': {
+      id: '/_authenticated/awards/rules/xp'
+      path: '/awards/rules/xp'
+      fullPath: '/awards/rules/xp'
+      preLoaderRoute: typeof AuthenticatedAwardsRulesXpRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRoleManagerRouteChildren {
+  AuthenticatedRoleManagerSlugRoute: typeof AuthenticatedRoleManagerSlugRoute
+  AuthenticatedRoleManagerIndexRoute: typeof AuthenticatedRoleManagerIndexRoute
+}
+
+const AuthenticatedRoleManagerRouteChildren: AuthenticatedRoleManagerRouteChildren =
+  {
+    AuthenticatedRoleManagerSlugRoute: AuthenticatedRoleManagerSlugRoute,
+    AuthenticatedRoleManagerIndexRoute: AuthenticatedRoleManagerIndexRoute,
+  }
+
+const AuthenticatedRoleManagerRouteWithChildren =
+  AuthenticatedRoleManagerRoute._addFileChildren(
+    AuthenticatedRoleManagerRouteChildren,
+  )
+
+interface AuthenticatedAwardsIdRouteChildren {
+  AuthenticatedAwardsIdEditRoute: typeof AuthenticatedAwardsIdEditRoute
+}
+
+const AuthenticatedAwardsIdRouteChildren: AuthenticatedAwardsIdRouteChildren = {
+  AuthenticatedAwardsIdEditRoute: AuthenticatedAwardsIdEditRoute,
+}
+
+const AuthenticatedAwardsIdRouteWithChildren =
+  AuthenticatedAwardsIdRoute._addFileChildren(
+    AuthenticatedAwardsIdRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAchievementVaultRoute: typeof AuthenticatedAchievementVaultRoute
+  AuthenticatedAchievementsRoute: typeof AuthenticatedAchievementsRoute
+  AuthenticatedAiRoute: typeof AuthenticatedAiRoute
+  AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
+  AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
+  AuthenticatedAuthorProgressionRoute: typeof AuthenticatedAuthorProgressionRoute
+  AuthenticatedAwardVaultRoute: typeof AuthenticatedAwardVaultRoute
+  AuthenticatedBadgeVaultRoute: typeof AuthenticatedBadgeVaultRoute
+  AuthenticatedBadgesRoute: typeof AuthenticatedBadgesRoute
+  AuthenticatedCertificateVaultRoute: typeof AuthenticatedCertificateVaultRoute
+  AuthenticatedCertificatesRoute: typeof AuthenticatedCertificatesRoute
+  AuthenticatedChallengesRoute: typeof AuthenticatedChallengesRoute
+  AuthenticatedChatRoute: typeof AuthenticatedChatRoute
+  AuthenticatedClaimsRoute: typeof AuthenticatedClaimsRoute
+  AuthenticatedCollectionsRoute: typeof AuthenticatedCollectionsRoute
+  AuthenticatedDeveloperProgressionRoute: typeof AuthenticatedDeveloperProgressionRoute
+  AuthenticatedFounderSealVaultRoute: typeof AuthenticatedFounderSealVaultRoute
+  AuthenticatedHallOfFameRoute: typeof AuthenticatedHallOfFameRoute
+  AuthenticatedHallOfFameVaultRoute: typeof AuthenticatedHallOfFameVaultRoute
+  AuthenticatedHonorCoinVaultRoute: typeof AuthenticatedHonorCoinVaultRoute
+  AuthenticatedIdentityRoute: typeof AuthenticatedIdentityRoute
+  AuthenticatedIdentityCardVaultRoute: typeof AuthenticatedIdentityCardVaultRoute
+  AuthenticatedLeaderboardsRoute: typeof AuthenticatedLeaderboardsRoute
+  AuthenticatedLegacyRoute: typeof AuthenticatedLegacyRoute
+  AuthenticatedLegacyMedalVaultRoute: typeof AuthenticatedLegacyMedalVaultRoute
+  AuthenticatedLevelsRoute: typeof AuthenticatedLevelsRoute
+  AuthenticatedLicenseCardVaultRoute: typeof AuthenticatedLicenseCardVaultRoute
+  AuthenticatedMembershipVaultRoute: typeof AuthenticatedMembershipVaultRoute
+  AuthenticatedMissionsRoute: typeof AuthenticatedMissionsRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedPassportRoute: typeof AuthenticatedPassportRoute
+  AuthenticatedPassportVaultRoute: typeof AuthenticatedPassportVaultRoute
+  AuthenticatedQuestsRoute: typeof AuthenticatedQuestsRoute
+  AuthenticatedRankVaultRoute: typeof AuthenticatedRankVaultRoute
+  AuthenticatedRanksRoute: typeof AuthenticatedRanksRoute
+  AuthenticatedRecognitionCoinVaultRoute: typeof AuthenticatedRecognitionCoinVaultRoute
+  AuthenticatedReputationVaultRoute: typeof AuthenticatedReputationVaultRoute
+  AuthenticatedRewardChestVaultRoute: typeof AuthenticatedRewardChestVaultRoute
+  AuthenticatedRewardsRoute: typeof AuthenticatedRewardsRoute
+  AuthenticatedRoleManagerRoute: typeof AuthenticatedRoleManagerRouteWithChildren
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedTrophiesRoute: typeof AuthenticatedTrophiesRoute
+  AuthenticatedTrophyGalleryRoute: typeof AuthenticatedTrophyGalleryRoute
+  AuthenticatedTrophyVaultRoute: typeof AuthenticatedTrophyVaultRoute
+  AuthenticatedTrustSealVaultRoute: typeof AuthenticatedTrustSealVaultRoute
+  AuthenticatedVendorProgressionRoute: typeof AuthenticatedVendorProgressionRoute
+  AuthenticatedVerificationVaultRoute: typeof AuthenticatedVerificationVaultRoute
+  AuthenticatedXpRoute: typeof AuthenticatedXpRoute
+  AuthenticatedXpCrystalVaultRoute: typeof AuthenticatedXpCrystalVaultRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedAmsIdRoute: typeof AuthenticatedAmsIdRoute
+  AuthenticatedAmsNewRoute: typeof AuthenticatedAmsNewRoute
+  AuthenticatedAwardsIdRoute: typeof AuthenticatedAwardsIdRouteWithChildren
+  AuthenticatedAwardsAuditRoute: typeof AuthenticatedAwardsAuditRoute
+  AuthenticatedAwardsCategoriesRoute: typeof AuthenticatedAwardsCategoriesRoute
+  AuthenticatedAwardsEffectsRoute: typeof AuthenticatedAwardsEffectsRoute
+  AuthenticatedAwardsNewRoute: typeof AuthenticatedAwardsNewRoute
+  AuthenticatedCollectionTypeRoute: typeof AuthenticatedCollectionTypeRoute
+  AuthenticatedMuseumShowcaseRoute: typeof AuthenticatedMuseumShowcaseRoute
+  AuthenticatedRoleShowcaseSlugRoute: typeof AuthenticatedRoleShowcaseSlugRoute
+  AuthenticatedAmsIndexRoute: typeof AuthenticatedAmsIndexRoute
+  AuthenticatedAwardsIndexRoute: typeof AuthenticatedAwardsIndexRoute
+  AuthenticatedCollectionIndexRoute: typeof AuthenticatedCollectionIndexRoute
+  AuthenticatedMuseumIndexRoute: typeof AuthenticatedMuseumIndexRoute
+  AuthenticatedRoleShowcaseIndexRoute: typeof AuthenticatedRoleShowcaseIndexRoute
+  AuthenticatedAwardsLibrariesAchievementsRoute: typeof AuthenticatedAwardsLibrariesAchievementsRoute
+  AuthenticatedAwardsLibrariesBadgesRoute: typeof AuthenticatedAwardsLibrariesBadgesRoute
+  AuthenticatedAwardsLibrariesRanksRoute: typeof AuthenticatedAwardsLibrariesRanksRoute
+  AuthenticatedAwardsLibrariesTrophiesRoute: typeof AuthenticatedAwardsLibrariesTrophiesRoute
+  AuthenticatedAwardsRulesLevelsRoute: typeof AuthenticatedAwardsRulesLevelsRoute
+  AuthenticatedAwardsRulesMilestonesRoute: typeof AuthenticatedAwardsRulesMilestonesRoute
+  AuthenticatedAwardsRulesRewardsRoute: typeof AuthenticatedAwardsRulesRewardsRoute
+  AuthenticatedAwardsRulesStreaksRoute: typeof AuthenticatedAwardsRulesStreaksRoute
+  AuthenticatedAwardsRulesXpRoute: typeof AuthenticatedAwardsRulesXpRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAchievementVaultRoute: AuthenticatedAchievementVaultRoute,
+  AuthenticatedAchievementsRoute: AuthenticatedAchievementsRoute,
+  AuthenticatedAiRoute: AuthenticatedAiRoute,
+  AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
+  AuthenticatedAuditRoute: AuthenticatedAuditRoute,
+  AuthenticatedAuthorProgressionRoute: AuthenticatedAuthorProgressionRoute,
+  AuthenticatedAwardVaultRoute: AuthenticatedAwardVaultRoute,
+  AuthenticatedBadgeVaultRoute: AuthenticatedBadgeVaultRoute,
+  AuthenticatedBadgesRoute: AuthenticatedBadgesRoute,
+  AuthenticatedCertificateVaultRoute: AuthenticatedCertificateVaultRoute,
+  AuthenticatedCertificatesRoute: AuthenticatedCertificatesRoute,
+  AuthenticatedChallengesRoute: AuthenticatedChallengesRoute,
+  AuthenticatedChatRoute: AuthenticatedChatRoute,
+  AuthenticatedClaimsRoute: AuthenticatedClaimsRoute,
+  AuthenticatedCollectionsRoute: AuthenticatedCollectionsRoute,
+  AuthenticatedDeveloperProgressionRoute:
+    AuthenticatedDeveloperProgressionRoute,
+  AuthenticatedFounderSealVaultRoute: AuthenticatedFounderSealVaultRoute,
+  AuthenticatedHallOfFameRoute: AuthenticatedHallOfFameRoute,
+  AuthenticatedHallOfFameVaultRoute: AuthenticatedHallOfFameVaultRoute,
+  AuthenticatedHonorCoinVaultRoute: AuthenticatedHonorCoinVaultRoute,
+  AuthenticatedIdentityRoute: AuthenticatedIdentityRoute,
+  AuthenticatedIdentityCardVaultRoute: AuthenticatedIdentityCardVaultRoute,
+  AuthenticatedLeaderboardsRoute: AuthenticatedLeaderboardsRoute,
+  AuthenticatedLegacyRoute: AuthenticatedLegacyRoute,
+  AuthenticatedLegacyMedalVaultRoute: AuthenticatedLegacyMedalVaultRoute,
+  AuthenticatedLevelsRoute: AuthenticatedLevelsRoute,
+  AuthenticatedLicenseCardVaultRoute: AuthenticatedLicenseCardVaultRoute,
+  AuthenticatedMembershipVaultRoute: AuthenticatedMembershipVaultRoute,
+  AuthenticatedMissionsRoute: AuthenticatedMissionsRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedPassportRoute: AuthenticatedPassportRoute,
+  AuthenticatedPassportVaultRoute: AuthenticatedPassportVaultRoute,
+  AuthenticatedQuestsRoute: AuthenticatedQuestsRoute,
+  AuthenticatedRankVaultRoute: AuthenticatedRankVaultRoute,
+  AuthenticatedRanksRoute: AuthenticatedRanksRoute,
+  AuthenticatedRecognitionCoinVaultRoute:
+    AuthenticatedRecognitionCoinVaultRoute,
+  AuthenticatedReputationVaultRoute: AuthenticatedReputationVaultRoute,
+  AuthenticatedRewardChestVaultRoute: AuthenticatedRewardChestVaultRoute,
+  AuthenticatedRewardsRoute: AuthenticatedRewardsRoute,
+  AuthenticatedRoleManagerRoute: AuthenticatedRoleManagerRouteWithChildren,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedTrophiesRoute: AuthenticatedTrophiesRoute,
+  AuthenticatedTrophyGalleryRoute: AuthenticatedTrophyGalleryRoute,
+  AuthenticatedTrophyVaultRoute: AuthenticatedTrophyVaultRoute,
+  AuthenticatedTrustSealVaultRoute: AuthenticatedTrustSealVaultRoute,
+  AuthenticatedVendorProgressionRoute: AuthenticatedVendorProgressionRoute,
+  AuthenticatedVerificationVaultRoute: AuthenticatedVerificationVaultRoute,
+  AuthenticatedXpRoute: AuthenticatedXpRoute,
+  AuthenticatedXpCrystalVaultRoute: AuthenticatedXpCrystalVaultRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAmsIdRoute: AuthenticatedAmsIdRoute,
+  AuthenticatedAmsNewRoute: AuthenticatedAmsNewRoute,
+  AuthenticatedAwardsIdRoute: AuthenticatedAwardsIdRouteWithChildren,
+  AuthenticatedAwardsAuditRoute: AuthenticatedAwardsAuditRoute,
+  AuthenticatedAwardsCategoriesRoute: AuthenticatedAwardsCategoriesRoute,
+  AuthenticatedAwardsEffectsRoute: AuthenticatedAwardsEffectsRoute,
+  AuthenticatedAwardsNewRoute: AuthenticatedAwardsNewRoute,
+  AuthenticatedCollectionTypeRoute: AuthenticatedCollectionTypeRoute,
+  AuthenticatedMuseumShowcaseRoute: AuthenticatedMuseumShowcaseRoute,
+  AuthenticatedRoleShowcaseSlugRoute: AuthenticatedRoleShowcaseSlugRoute,
+  AuthenticatedAmsIndexRoute: AuthenticatedAmsIndexRoute,
+  AuthenticatedAwardsIndexRoute: AuthenticatedAwardsIndexRoute,
+  AuthenticatedCollectionIndexRoute: AuthenticatedCollectionIndexRoute,
+  AuthenticatedMuseumIndexRoute: AuthenticatedMuseumIndexRoute,
+  AuthenticatedRoleShowcaseIndexRoute: AuthenticatedRoleShowcaseIndexRoute,
+  AuthenticatedAwardsLibrariesAchievementsRoute:
+    AuthenticatedAwardsLibrariesAchievementsRoute,
+  AuthenticatedAwardsLibrariesBadgesRoute:
+    AuthenticatedAwardsLibrariesBadgesRoute,
+  AuthenticatedAwardsLibrariesRanksRoute:
+    AuthenticatedAwardsLibrariesRanksRoute,
+  AuthenticatedAwardsLibrariesTrophiesRoute:
+    AuthenticatedAwardsLibrariesTrophiesRoute,
+  AuthenticatedAwardsRulesLevelsRoute: AuthenticatedAwardsRulesLevelsRoute,
+  AuthenticatedAwardsRulesMilestonesRoute:
+    AuthenticatedAwardsRulesMilestonesRoute,
+  AuthenticatedAwardsRulesRewardsRoute: AuthenticatedAwardsRulesRewardsRoute,
+  AuthenticatedAwardsRulesStreaksRoute: AuthenticatedAwardsRulesStreaksRoute,
+  AuthenticatedAwardsRulesXpRoute: AuthenticatedAwardsRulesXpRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  VerifyCodeRoute: VerifyCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
