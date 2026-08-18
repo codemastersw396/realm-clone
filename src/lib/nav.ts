@@ -86,6 +86,7 @@ export const navGroups: NavGroup[] = [
       { to: "/award-vault", label: "Award Vault", icon: Award },
       { to: "/badge-vault", label: "Badge Vault", icon: Shield },
       { to: "/trophy-vault", label: "Trophy Vault", icon: Trophy },
+      { to: "/trophy-stages", label: "Trophy Stages", icon: Landmark },
       { to: "/certificate-vault", label: "Certificate Vault", icon: Ribbon },
       { to: "/membership-vault", label: "Membership Vault", icon: CreditCard },
       { to: "/rank-vault", label: "Rank Vault", icon: Crown },
