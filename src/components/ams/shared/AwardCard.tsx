@@ -6,6 +6,7 @@ import { RarityBadge } from "./RarityBadge";
 import { StatusPill } from "./StatusPill";
 import { DepartmentBadge } from "./DepartmentBadge";
 import { ProceduralEmblem } from "./ProceduralEmblem";
+import { SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 import { RARITY_META, type Award } from "@/lib/ams/types";
 
 const ICON: Record<Award["type"], typeof Trophy> = {
