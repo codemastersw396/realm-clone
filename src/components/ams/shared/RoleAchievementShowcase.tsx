@@ -195,16 +195,16 @@ function SlotTile({ role, slot, label }: { role: RoleDNA; slot: Exclude<SlotKey,
   return (
     <div className="group flex flex-col items-center gap-1.5 min-w-0">
       <div
-        className="relative h-20 w-20 shrink-0 transition-transform duration-500 group-hover:-translate-y-1"
-        style={{ filter: `drop-shadow(0 10px 18px ${accent}55) drop-shadow(0 0 1px ${accent}aa)` }}
+        className="relative h-20 w-20 shrink-0 transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.04]"
+        style={{ filter: `drop-shadow(0 12px 20px color-mix(in oklab, ${accent} 45%, transparent)) drop-shadow(0 0 12px color-mix(in oklab, ${accent} 40%, transparent))` }}
       >
         <div
           className="absolute inset-0"
           style={{
             clipPath: clip, WebkitClipPath: clip,
             background: `
-              radial-gradient(120% 100% at 30% 15%, ${accent}ee 0%, ${accent}55 40%, #06070d 80%),
-              linear-gradient(160deg, ${accent}33, transparent 60%)`,
+              radial-gradient(120% 100% at 30% 15%, color-mix(in oklab, ${accent} 96%, white) 0%, ${accent} 34%, color-mix(in oklab, ${accent} 40%, var(--card)) 66%, var(--background) 88%),
+              linear-gradient(160deg, color-mix(in oklab, ${accent} 24%, transparent), transparent 60%)`,
           }}
         />
         <div
@@ -215,10 +215,14 @@ function SlotTile({ role, slot, label }: { role: RoleDNA; slot: Exclude<SlotKey,
           }}
         />
         <div className="absolute inset-0 grid place-items-center">
-          <div className="font-bold leading-none text-lg" style={{ color: "#0a0a12", textShadow: `0 1px 0 ${accent}` }}>
+          <div
+            className="font-bold leading-none text-lg"
+            style={{ color: "var(--background)", textShadow: `0 1px 0 color-mix(in oklab, ${accent} 80%, white), 0 -1px 1px rgba(0,0,0,0.45)` }}
+          >
             {glyph}
           </div>
         </div>
+
         {/* Software Vala engraved back plate + glass highlight */}
         <div
           className="pointer-events-none absolute inset-0"
