@@ -111,12 +111,12 @@ function TrophyTile({ role, unlockKey, label }: { role: RoleDNA; unlockKey: stri
         key={unlockKey}
         className="trophy-unlock relative aspect-square w-full max-w-[280px] overflow-hidden rounded-2xl border"
         style={{
-          borderColor: `${accent}55`,
+          borderColor: `color-mix(in oklab, ${accent} 45%, var(--border))`,
           background: `
-            radial-gradient(120% 80% at 50% 110%, ${accent}44 0%, ${accent}11 40%, transparent 70%),
-            radial-gradient(80% 60% at 50% 0%,   ${accent}22 0%, transparent 65%),
-            linear-gradient(180deg, #05060c, #0b0d16 60%, #05060c)`,
-          boxShadow: `inset 0 0 60px ${accent}22, 0 20px 60px -20px ${accent}66`,
+            radial-gradient(120% 80% at 50% 110%, color-mix(in oklab, ${accent} 34%, transparent) 0%, color-mix(in oklab, ${accent} 10%, transparent) 40%, transparent 70%),
+            radial-gradient(80% 60% at 50% 0%,   color-mix(in oklab, ${accent} 18%, transparent) 0%, transparent 65%),
+            linear-gradient(180deg, var(--card), color-mix(in oklab, var(--background) 82%, var(--primary)) 60%, var(--background))`,
+          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 70px color-mix(in oklab, ${accent} 16%, transparent), 0 24px 60px -24px color-mix(in oklab, ${accent} 55%, transparent)`,
         }}
       >
         {/* museum spotlight cone */}
@@ -140,11 +140,18 @@ function TrophyTile({ role, unlockKey, label }: { role: RoleDNA; unlockKey: stri
             src={TROPHY_IMG[role.slug]}
             alt={`${role.name} — ${label}`}
             loading="lazy"
-            width={512}
-            height={512}
-            className="trophy-float relative z-10 h-[86%] w-[86%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.6)]"
+            decoding="async"
+            width={2048}
+            height={2048}
+            sizes="(max-width: 768px) 60vw, 280px"
+            className="trophy-float relative z-10 h-[86%] w-[86%] object-contain"
+            style={{
+              imageRendering: "auto",
+              filter: `saturate(1.18) contrast(1.08) drop-shadow(0 22px 34px rgba(0,0,0,0.65)) drop-shadow(0 0 26px color-mix(in oklab, ${accent} 55%, transparent))`,
+            }}
           />
         </div>
+
         {/* animated shine sweep */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div
@@ -188,16 +195,16 @@ function SlotTile({ role, slot, label }: { role: RoleDNA; slot: Exclude<SlotKey,
   return (
     <div className="group flex flex-col items-center gap-1.5 min-w-0">
       <div
-        className="relative h-20 w-20 shrink-0 transition-transform duration-500 group-hover:-translate-y-1"
-        style={{ filter: `drop-shadow(0 10px 18px ${accent}55) drop-shadow(0 0 1px ${accent}aa)` }}
+        className="relative h-20 w-20 shrink-0 transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.04]"
+        style={{ filter: `drop-shadow(0 12px 20px color-mix(in oklab, ${accent} 45%, transparent)) drop-shadow(0 0 12px color-mix(in oklab, ${accent} 40%, transparent))` }}
       >
         <div
           className="absolute inset-0"
           style={{
             clipPath: clip, WebkitClipPath: clip,
             background: `
-              radial-gradient(120% 100% at 30% 15%, ${accent}ee 0%, ${accent}55 40%, #06070d 80%),
-              linear-gradient(160deg, ${accent}33, transparent 60%)`,
+              radial-gradient(120% 100% at 30% 15%, color-mix(in oklab, ${accent} 96%, white) 0%, ${accent} 34%, color-mix(in oklab, ${accent} 40%, var(--card)) 66%, var(--background) 88%),
+              linear-gradient(160deg, color-mix(in oklab, ${accent} 24%, transparent), transparent 60%)`,
           }}
         />
         <div
@@ -208,10 +215,14 @@ function SlotTile({ role, slot, label }: { role: RoleDNA; slot: Exclude<SlotKey,
           }}
         />
         <div className="absolute inset-0 grid place-items-center">
-          <div className="font-bold leading-none text-lg" style={{ color: "#0a0a12", textShadow: `0 1px 0 ${accent}` }}>
+          <div
+            className="font-bold leading-none text-lg"
+            style={{ color: "var(--background)", textShadow: `0 1px 0 color-mix(in oklab, ${accent} 80%, white), 0 -1px 1px rgba(0,0,0,0.45)` }}
+          >
             {glyph}
           </div>
         </div>
+
         {/* Software Vala engraved back plate + glass highlight */}
         <div
           className="pointer-events-none absolute inset-0"
@@ -259,9 +270,10 @@ export function RoleAchievementShowcase({
       className="relative overflow-hidden rounded-2xl border border-border/60 p-5"
       style={{
         background: `
-          radial-gradient(900px 220px at 8% -20%, ${role.accent}22, transparent 60%),
-          radial-gradient(700px 200px at 100% 0%, ${role.accent}11, transparent 55%),
-          linear-gradient(180deg, #05060c, #0a0b12)`,
+          radial-gradient(900px 220px at 8% -20%, color-mix(in oklab, ${role.accent} 16%, transparent), transparent 60%),
+          radial-gradient(700px 200px at 100% 0%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 55%),
+          linear-gradient(180deg, var(--card), var(--background))`,
+        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05), 0 26px 70px -40px color-mix(in oklab, ${role.accent} 60%, transparent)`,
       }}
     >
       <header className="flex flex-wrap items-end justify-between gap-3 mb-4">
@@ -274,7 +286,7 @@ export function RoleAchievementShowcase({
           </h2>
           <p className="text-[11px] text-muted-foreground italic mt-0.5">"{role.motto}"</p>
         </div>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1.5">
           {ROLES.map((r) => {
             const active = r.slug === role.slug;
             return (
@@ -282,12 +294,23 @@ export function RoleAchievementShowcase({
                 key={r.slug}
                 type="button"
                 onClick={() => setSlug(r.slug)}
-                className="text-[10px] uppercase tracking-[0.14em] rounded-md border px-2 py-1 transition-colors"
-                style={{
-                  borderColor: active ? r.accent : `${r.accent}44`,
-                  color: active ? "#0a0a12" : r.accent,
-                  background: active ? r.accent : `${r.accent}11`,
-                }}
+                className="group relative text-[10px] uppercase tracking-[0.14em] rounded-lg border px-2.5 py-1.5 font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                style={
+                  active
+                    ? {
+                        borderColor: `color-mix(in oklab, ${r.accent} 70%, white)`,
+                        color: "var(--background)",
+                        background: `linear-gradient(180deg, color-mix(in oklab, ${r.accent} 82%, white) 0%, ${r.accent} 48%, color-mix(in oklab, ${r.accent} 78%, black) 100%)`,
+                        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 0 rgba(0,0,0,0.35), 0 6px 14px -6px color-mix(in oklab, ${r.accent} 85%, transparent), 0 0 20px -6px ${r.accent}`,
+                        transform: "translateY(-1px)",
+                      }
+                    : {
+                        borderColor: `color-mix(in oklab, ${r.accent} 30%, var(--border))`,
+                        color: r.accent,
+                        background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 88%, ${r.accent}) 0%, var(--background) 100%)`,
+                        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px -6px rgba(0,0,0,0.7)`,
+                      }
+                }
                 aria-pressed={active}
               >
                 <span className="mr-1">{r.glyph}</span>{r.name}
@@ -296,6 +319,7 @@ export function RoleAchievementShowcase({
           })}
         </div>
       </header>
+
 
       <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
         <TrophyTile role={role} unlockKey={`${role.slug}-${unlockKey}`} label={labels.trophy} />
