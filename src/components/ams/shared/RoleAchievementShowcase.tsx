@@ -266,9 +266,10 @@ export function RoleAchievementShowcase({
       className="relative overflow-hidden rounded-2xl border border-border/60 p-5"
       style={{
         background: `
-          radial-gradient(900px 220px at 8% -20%, ${role.accent}22, transparent 60%),
-          radial-gradient(700px 200px at 100% 0%, ${role.accent}11, transparent 55%),
-          linear-gradient(180deg, #05060c, #0a0b12)`,
+          radial-gradient(900px 220px at 8% -20%, color-mix(in oklab, ${role.accent} 16%, transparent), transparent 60%),
+          radial-gradient(700px 200px at 100% 0%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 55%),
+          linear-gradient(180deg, var(--card), var(--background))`,
+        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05), 0 26px 70px -40px color-mix(in oklab, ${role.accent} 60%, transparent)`,
       }}
     >
       <header className="flex flex-wrap items-end justify-between gap-3 mb-4">
@@ -281,7 +282,7 @@ export function RoleAchievementShowcase({
           </h2>
           <p className="text-[11px] text-muted-foreground italic mt-0.5">"{role.motto}"</p>
         </div>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1.5">
           {ROLES.map((r) => {
             const active = r.slug === role.slug;
             return (
@@ -289,12 +290,23 @@ export function RoleAchievementShowcase({
                 key={r.slug}
                 type="button"
                 onClick={() => setSlug(r.slug)}
-                className="text-[10px] uppercase tracking-[0.14em] rounded-md border px-2 py-1 transition-colors"
-                style={{
-                  borderColor: active ? r.accent : `${r.accent}44`,
-                  color: active ? "#0a0a12" : r.accent,
-                  background: active ? r.accent : `${r.accent}11`,
-                }}
+                className="group relative text-[10px] uppercase tracking-[0.14em] rounded-lg border px-2.5 py-1.5 font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                style={
+                  active
+                    ? {
+                        borderColor: `color-mix(in oklab, ${r.accent} 70%, white)`,
+                        color: "var(--background)",
+                        background: `linear-gradient(180deg, color-mix(in oklab, ${r.accent} 82%, white) 0%, ${r.accent} 48%, color-mix(in oklab, ${r.accent} 78%, black) 100%)`,
+                        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 0 rgba(0,0,0,0.35), 0 6px 14px -6px color-mix(in oklab, ${r.accent} 85%, transparent), 0 0 20px -6px ${r.accent}`,
+                        transform: "translateY(-1px)",
+                      }
+                    : {
+                        borderColor: `color-mix(in oklab, ${r.accent} 30%, var(--border))`,
+                        color: r.accent,
+                        background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 88%, ${r.accent}) 0%, var(--background) 100%)`,
+                        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px -6px rgba(0,0,0,0.7)`,
+                      }
+                }
                 aria-pressed={active}
               >
                 <span className="mr-1">{r.glyph}</span>{r.name}
@@ -303,6 +315,7 @@ export function RoleAchievementShowcase({
           })}
         </div>
       </header>
+
 
       <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
         <TrophyTile role={role} unlockKey={`${role.slug}-${unlockKey}`} label={labels.trophy} />
