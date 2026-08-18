@@ -54,6 +54,7 @@ import { Route as AuthenticatedRoleManagerRouteImport } from './routes/_authenti
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedTrophiesRouteImport } from './routes/_authenticated/trophies'
 import { Route as AuthenticatedTrophyGalleryRouteImport } from './routes/_authenticated/trophy-gallery'
+import { Route as AuthenticatedTrophyStagesRouteImport } from './routes/_authenticated/trophy-stages'
 import { Route as AuthenticatedTrophyVaultRouteImport } from './routes/_authenticated/trophy-vault'
 import { Route as AuthenticatedTrustSealVaultRouteImport } from './routes/_authenticated/trust-seal-vault'
 import { Route as AuthenticatedVendorProgressionRouteImport } from './routes/_authenticated/vendor-progression'
@@ -335,6 +336,12 @@ const AuthenticatedTrophyGalleryRoute =
     path: '/trophy-gallery',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTrophyStagesRoute =
+  AuthenticatedTrophyStagesRouteImport.update({
+    id: '/trophy-stages',
+    path: '/trophy-stages',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTrophyVaultRoute =
   AuthenticatedTrophyVaultRouteImport.update({
     id: '/trophy-vault',
@@ -578,6 +585,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/trophies': typeof AuthenticatedTrophiesRoute
   '/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
+  '/trophy-stages': typeof AuthenticatedTrophyStagesRoute
   '/trophy-vault': typeof AuthenticatedTrophyVaultRoute
   '/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
   '/vendor-progression': typeof AuthenticatedVendorProgressionRoute
@@ -656,6 +664,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/trophies': typeof AuthenticatedTrophiesRoute
   '/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
+  '/trophy-stages': typeof AuthenticatedTrophyStagesRoute
   '/trophy-vault': typeof AuthenticatedTrophyVaultRoute
   '/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
   '/vendor-progression': typeof AuthenticatedVendorProgressionRoute
@@ -738,6 +747,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/trophies': typeof AuthenticatedTrophiesRoute
   '/_authenticated/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
+  '/_authenticated/trophy-stages': typeof AuthenticatedTrophyStagesRoute
   '/_authenticated/trophy-vault': typeof AuthenticatedTrophyVaultRoute
   '/_authenticated/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
   '/_authenticated/vendor-progression': typeof AuthenticatedVendorProgressionRoute
@@ -821,6 +831,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/trophies'
     | '/trophy-gallery'
+    | '/trophy-stages'
     | '/trophy-vault'
     | '/trust-seal-vault'
     | '/vendor-progression'
@@ -899,6 +910,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/trophies'
     | '/trophy-gallery'
+    | '/trophy-stages'
     | '/trophy-vault'
     | '/trust-seal-vault'
     | '/vendor-progression'
@@ -980,6 +992,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/trophies'
     | '/_authenticated/trophy-gallery'
+    | '/_authenticated/trophy-stages'
     | '/_authenticated/trophy-vault'
     | '/_authenticated/trust-seal-vault'
     | '/_authenticated/vendor-progression'
@@ -1339,6 +1352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTrophyGalleryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/trophy-stages': {
+      id: '/_authenticated/trophy-stages'
+      path: '/trophy-stages'
+      fullPath: '/trophy-stages'
+      preLoaderRoute: typeof AuthenticatedTrophyStagesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/trophy-vault': {
       id: '/_authenticated/trophy-vault'
       path: '/trophy-vault'
@@ -1653,6 +1673,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTrophiesRoute: typeof AuthenticatedTrophiesRoute
   AuthenticatedTrophyGalleryRoute: typeof AuthenticatedTrophyGalleryRoute
+  AuthenticatedTrophyStagesRoute: typeof AuthenticatedTrophyStagesRoute
   AuthenticatedTrophyVaultRoute: typeof AuthenticatedTrophyVaultRoute
   AuthenticatedTrustSealVaultRoute: typeof AuthenticatedTrustSealVaultRoute
   AuthenticatedVendorProgressionRoute: typeof AuthenticatedVendorProgressionRoute
@@ -1732,6 +1753,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTrophiesRoute: AuthenticatedTrophiesRoute,
   AuthenticatedTrophyGalleryRoute: AuthenticatedTrophyGalleryRoute,
+  AuthenticatedTrophyStagesRoute: AuthenticatedTrophyStagesRoute,
   AuthenticatedTrophyVaultRoute: AuthenticatedTrophyVaultRoute,
   AuthenticatedTrustSealVaultRoute: AuthenticatedTrustSealVaultRoute,
   AuthenticatedVendorProgressionRoute: AuthenticatedVendorProgressionRoute,
