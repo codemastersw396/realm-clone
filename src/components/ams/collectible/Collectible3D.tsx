@@ -177,14 +177,15 @@ export function Collectible3D({
                 alt={label ?? filename}
                 loading="lazy"
                 decoding="async"
-                width={1024}
-                height={1024}
+                width={2048}
+                height={2048}
                 className="h-full w-full object-contain"
                 style={{
-                  filter: `drop-shadow(0 20px 40px ${accent}aa) drop-shadow(0 0 20px ${accent}66)`,
+                  filter: `saturate(1.18) contrast(1.08) drop-shadow(0 20px 40px color-mix(in oklab, ${accent} 65%, transparent)) drop-shadow(0 0 24px color-mix(in oklab, ${accent} 45%, transparent))`,
                   backfaceVisibility: "hidden",
                 }}
               />
+
               {animate && (
                 <div
                   className="pointer-events-none absolute inset-0 trophy-shine"
