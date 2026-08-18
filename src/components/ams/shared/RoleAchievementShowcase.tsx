@@ -111,12 +111,12 @@ function TrophyTile({ role, unlockKey, label }: { role: RoleDNA; unlockKey: stri
         key={unlockKey}
         className="trophy-unlock relative aspect-square w-full max-w-[280px] overflow-hidden rounded-2xl border"
         style={{
-          borderColor: `${accent}55`,
+          borderColor: `color-mix(in oklab, ${accent} 45%, var(--border))`,
           background: `
-            radial-gradient(120% 80% at 50% 110%, ${accent}44 0%, ${accent}11 40%, transparent 70%),
-            radial-gradient(80% 60% at 50% 0%,   ${accent}22 0%, transparent 65%),
-            linear-gradient(180deg, #05060c, #0b0d16 60%, #05060c)`,
-          boxShadow: `inset 0 0 60px ${accent}22, 0 20px 60px -20px ${accent}66`,
+            radial-gradient(120% 80% at 50% 110%, color-mix(in oklab, ${accent} 34%, transparent) 0%, color-mix(in oklab, ${accent} 10%, transparent) 40%, transparent 70%),
+            radial-gradient(80% 60% at 50% 0%,   color-mix(in oklab, ${accent} 18%, transparent) 0%, transparent 65%),
+            linear-gradient(180deg, var(--card), color-mix(in oklab, var(--background) 82%, var(--primary)) 60%, var(--background))`,
+          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 70px color-mix(in oklab, ${accent} 16%, transparent), 0 24px 60px -24px color-mix(in oklab, ${accent} 55%, transparent)`,
         }}
       >
         {/* museum spotlight cone */}
@@ -140,11 +140,18 @@ function TrophyTile({ role, unlockKey, label }: { role: RoleDNA; unlockKey: stri
             src={TROPHY_IMG[role.slug]}
             alt={`${role.name} — ${label}`}
             loading="lazy"
-            width={512}
-            height={512}
-            className="trophy-float relative z-10 h-[86%] w-[86%] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.6)]"
+            decoding="async"
+            width={2048}
+            height={2048}
+            sizes="(max-width: 768px) 60vw, 280px"
+            className="trophy-float relative z-10 h-[86%] w-[86%] object-contain"
+            style={{
+              imageRendering: "auto",
+              filter: `saturate(1.18) contrast(1.08) drop-shadow(0 22px 34px rgba(0,0,0,0.65)) drop-shadow(0 0 26px color-mix(in oklab, ${accent} 55%, transparent))`,
+            }}
           />
         </div>
+
         {/* animated shine sweep */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div
