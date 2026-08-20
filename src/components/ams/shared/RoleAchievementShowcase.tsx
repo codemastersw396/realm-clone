@@ -1,82 +1,32 @@
-// Role Achievement Showcase — profession-specific luxury 3D collectibles.
-// The signature trophy is a real cinematic 3D render per role. Every role has
-// its own icon set, palette, silhouettes and label set. Nothing is reused.
+// Role Achievement Showcase — premium Software Vala presentation.
+// Every showcase item renders the project's REAL role artwork (trophies,
+// awards, badges, passports, ranks, certificates, membership, identity cards,
+// trust seals, medals, coins, crystals, chests). No glyph placeholders, no
+// repeated artwork and no repeated card design: each achievement type has its
+// own bespoke layout (museum stage, booklet, banner, parchment, credit card,
+// artifact puck).
 
 import { useEffect, useMemo, useState } from "react";
 import { ROLES, type RoleDNA, type RoleSlug } from "@/lib/ams/roles";
-import { ROLE_TROPHY as TROPHY_IMG } from "@/lib/ams/role-assets";
+import {
+  ROLE_TROPHY, ROLE_AWARD, ROLE_BADGE, ROLE_PASSPORT, ROLE_RANK,
+  ROLE_CERTIFICATE, ROLE_MEMBERSHIP, ROLE_IDENTITY_CARD, ROLE_TRUST_SEAL,
+  ROLE_LEGACY_MEDAL, ROLE_HONOR_COIN, ROLE_XP_CRYSTAL, ROLE_REWARD_CHEST,
+  ROLE_SHIELD,
+} from "@/lib/ams/role-assets";
 import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 
-type SlotKey =
-  | "trophy" | "award" | "badge" | "passport"
-  | "rank" | "level" | "membership" | "verification";
-
-// Per-role profession-specific glyphs for the non-trophy slots — never
-// reused between roles.
-const PROF_GLYPH: Record<RoleSlug, Record<Exclude<SlotKey, "trophy">, string>> = {
-  developer:  { award: "</>",   badge: "⌘",  passport: "⎇",  rank: "◈", level: "▲", membership: "◆", verification: "✓" },
-  reseller:   { award: "$",     badge: "▲$", passport: "$$", rank: "♛", level: "★", membership: "♦", verification: "✓" },
-  franchise:  { award: "◉",     badge: "⚑",  passport: "⌾",  rank: "♚", level: "☗", membership: "◈", verification: "✓" },
-  author:     { award: "✒",     badge: "❦",  passport: "❧",  rank: "♜", level: "❋", membership: "❖", verification: "✓" },
-  vendor:     { award: "🛍",    badge: "▤",  passport: "▦",  rank: "▣", level: "▧", membership: "▩", verification: "✓" },
-  affiliate:  { award: "∞",     badge: "⇌",  passport: "⇆",  rank: "⟁", level: "⌘", membership: "◇", verification: "✓" },
-  influencer: { award: "▶",     badge: "♥",  passport: "❤",  rank: "☆", level: "✧", membership: "❥", verification: "✓" },
-  creator:    { award: "✦",     badge: "❈",  passport: "✺",  rank: "❉", level: "✵", membership: "◈", verification: "✓" },
-  seo:        { award: "⌕",     badge: "↗",  passport: "⌗",  rank: "⇞", level: "△", membership: "◇", verification: "✓" },
-  support:    { award: "♥",     badge: "☏",  passport: "✚",  rank: "★", level: "✦", membership: "◈", verification: "✓" },
-  user:       { award: "❦",     badge: "❤",  passport: "◐",  rank: "☆", level: "✧", membership: "◇", verification: "✓" },
-  manager:    { award: "◑",     badge: "⌖",  passport: "◉",  rank: "▲", level: "◆", membership: "◇", verification: "✓" },
-  administrator: { award: "⌗", badge: "⬟", passport: "◈", rank: "♜", level: "▲", membership: "◆", verification: "✓" },
-  founder:    { award: "✦",     badge: "★",  passport: "❂",  rank: "♛", level: "✧", membership: "◆", verification: "✓" },
-  operator:   { award: "◎",     badge: "⚙",  passport: "◍",  rank: "▲", level: "◈", membership: "◇", verification: "✓" },
-};
-
-interface Slot { key: SlotKey; kicker: string; }
-const SLOTS: Slot[] = [
-  { key: "trophy",       kicker: "Signature Trophy" },
-  { key: "award",        kicker: "Latest Award" },
-  { key: "badge",        kicker: "Featured Badge" },
-  { key: "passport",     kicker: "Digital Passport" },
-  { key: "rank",         kicker: "Current Rank" },
-  { key: "level",        kicker: "Current Level" },
-  { key: "membership",   kicker: "Membership" },
-  { key: "verification", kicker: "Verification" },
-];
-
-const OVERRIDES: Partial<Record<RoleSlug, Partial<Record<SlotKey, string>>>> = {
-  reseller:   { trophy: "Million Dollar Club",       award: "Revenue King Crown",         badge: "Sales Diamond",         passport: "Reseller Passport" },
-  franchise:  { trophy: "Global Empire",             award: "Business Empire Award",      badge: "Leadership Crown",      passport: "Franchise Passport" },
-  author:     { trophy: "Gold Pen",                  award: "Master Publisher",           badge: "Creative Crown",        passport: "Author Passport" },
-  vendor:     { trophy: "Trusted Seller",            award: "Marketplace Excellence",     badge: "Quality Merchant",      passport: "Vendor Passport" },
-  affiliate:  { trophy: "Referral King",             award: "Conversion Champion",        badge: "Partner Excellence",    passport: "Affiliate Passport" },
-  influencer: { trophy: "Creator Diamond",           award: "Brand Ambassador",           badge: "Influence Crown",       passport: "Influencer Passport" },
-  developer:  { trophy: "Code Excellence",           award: "Architecture Master",        badge: "Elite Developer",       passport: "Developer Passport" },
-  support:    { trophy: "Customer Hero",             award: "Five Star Service",          badge: "Fast Resolution",       passport: "Support Passport" },
-  seo:        { trophy: "Search King",               award: "Organic Growth",             badge: "SEO Expert",            passport: "SEO Passport" },
-  creator:    { trophy: "Creative Master",           award: "Design Innovation",          badge: "Prism Master",          passport: "Creator Passport" },
-  user:       { trophy: "Loyalty",                   award: "Community Star",             badge: "Verified Member",       passport: "User Passport" },
-};
-
-// Different silhouettes for every slot so no two collectibles share a shape.
-const FRAME_CLIP: Record<Exclude<SlotKey, "trophy">, string> = {
-  award:        "circle(50% at 50% 50%)",
-  badge:        "polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%)",
-  passport:     "inset(6% 4% 6% 4% round 12px)",
-  rank:         "polygon(50% 0, 100% 35%, 82% 100%, 18% 100%, 0 35%)",
-  level:        "polygon(50% 4%, 62% 38%, 98% 38%, 68% 60%, 80% 96%, 50% 74%, 20% 96%, 32% 60%, 2% 38%, 38% 38%)",
-  membership:   "polygon(50% 0, 100% 35%, 50% 100%, 0 35%)",
-  verification: "path('M50,2 L92,18 L92,54 C92,78 74,94 50,100 C26,94 8,78 8,54 L8,18 Z')",
-};
+/* ────────────────────────── shared atoms ────────────────────────── */
 
 function Sparkles({ accent }: { accent: string }) {
   const dots = useMemo(
     () => Array.from({ length: 10 }, (_, i) => ({
       i,
       left: 8 + Math.random() * 84,
-      top:  8 + Math.random() * 84,
-      sx:   (Math.random() * 24 - 12).toFixed(1) + "px",
-      sy:   (Math.random() * -30 - 4).toFixed(1) + "px",
-      d:    (Math.random() * 2.6).toFixed(2) + "s",
+      top: 8 + Math.random() * 84,
+      sx: (Math.random() * 24 - 12).toFixed(1) + "px",
+      sy: (Math.random() * -30 - 4).toFixed(1) + "px",
+      d: (Math.random() * 2.6).toFixed(2) + "s",
     })),
     [],
   );
@@ -88,11 +38,10 @@ function Sparkles({ accent }: { accent: string }) {
           className="absolute h-1.5 w-1.5 rounded-full trophy-sparkle"
           style={{
             left: `${d.left}%`,
-            top:  `${d.top}%`,
+            top: `${d.top}%`,
             background: accent,
             boxShadow: `0 0 8px ${accent}, 0 0 16px ${accent}88`,
             animationDelay: d.d,
-            // consumed by keyframes
             ["--sx" as any]: d.sx,
             ["--sy" as any]: d.sy,
           }}
@@ -102,147 +51,308 @@ function Sparkles({ accent }: { accent: string }) {
   );
 }
 
-function TrophyTile({ role, unlockKey, label }: { role: RoleDNA; unlockKey: string; label: string }) {
+function Kicker({ children, accent }: { children: React.ReactNode; accent?: string }) {
+  return (
+    <div
+      className="text-[9px] uppercase tracking-[0.26em] text-muted-foreground"
+      style={accent ? { color: `color-mix(in oklab, ${accent} 55%, var(--muted-foreground))` } : undefined}
+    >
+      {children}
+    </div>
+  );
+}
+
+function artImage(src: string, alt: string, accent: string, extra = "") {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      className={`relative z-10 object-contain ${extra}`}
+      style={{
+        filter: `saturate(1.16) contrast(1.06) drop-shadow(0 14px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 18px color-mix(in oklab, ${accent} 45%, transparent))`,
+      }}
+    />
+  );
+}
+
+/* ───────────────────── 1. Signature trophy stage ───────────────────── */
+
+function TrophyStage({ role, unlockKey, label }: { role: RoleDNA; unlockKey: string; label: string }) {
   const accent = role.accent;
   return (
-    <div className="group relative flex flex-col items-center gap-2 col-span-2 row-span-2 md:col-span-2 md:row-span-2">
-      {/* Luxury presentation stage */}
+    <div
+      key={unlockKey}
+      className="trophy-unlock relative overflow-hidden rounded-2xl border min-h-[340px] lg:min-h-full"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 45%, var(--border))`,
+        background: `
+          radial-gradient(120% 80% at 50% 110%, color-mix(in oklab, ${accent} 34%, transparent) 0%, color-mix(in oklab, ${accent} 10%, transparent) 40%, transparent 70%),
+          radial-gradient(80% 60% at 50% 0%, color-mix(in oklab, ${accent} 18%, transparent) 0%, transparent 65%),
+          linear-gradient(180deg, var(--card), color-mix(in oklab, var(--background) 82%, var(--primary)) 60%, var(--background))`,
+        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 70px color-mix(in oklab, ${accent} 16%, transparent), 0 24px 60px -24px color-mix(in oklab, ${accent} 55%, transparent)`,
+      }}
+    >
       <div
-        key={unlockKey}
-        className="trophy-unlock relative aspect-square w-full max-w-[280px] overflow-hidden rounded-2xl border"
+        className="absolute inset-x-1/4 -top-6 h-40 opacity-40 blur-2xl"
+        style={{ background: `radial-gradient(50% 100% at 50% 0%, ${accent}, transparent 70%)` }}
+      />
+      <div className="absolute left-1/2 bottom-14 -translate-x-1/2 h-24 w-[70%]">
+        <div
+          className="absolute inset-0 rounded-[50%] trophy-glow"
+          style={{ background: `radial-gradient(50% 50% at 50% 50%, ${accent}66, transparent 70%)`, filter: "blur(6px)" }}
+        />
+      </div>
+      <div className="absolute inset-0 grid place-items-center px-6 pb-20 pt-10 [perspective:1200px]">
+        <img
+          src={ROLE_TROPHY[role.slug]}
+          alt={`${role.name} signature trophy — ${label}`}
+          loading="eager"
+          decoding="async"
+          width={2048}
+          height={2048}
+          className="trophy-float relative z-10 max-h-[86%] w-auto object-contain"
+          style={{
+            filter: `saturate(1.2) contrast(1.09) drop-shadow(0 26px 38px rgba(0,0,0,0.7)) drop-shadow(0 0 30px color-mix(in oklab, ${accent} 58%, transparent))`,
+          }}
+        />
+      </div>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 h-full w-1/3 trophy-shine" style={{ background: `linear-gradient(90deg, transparent, ${accent}22, transparent)` }} />
+      </div>
+      <Sparkles accent={accent} />
+      <MuseumCase accent={accent} />
+      <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5">
+        <SVSeal accent={accent} size={22} />
+        <SVMicroMark accent={accent} />
+      </div>
+      <div
+        className="absolute inset-x-4 bottom-4 z-10 rounded-lg border px-4 py-2.5 text-center backdrop-blur-sm"
+        style={{ borderColor: `${accent}66`, background: `linear-gradient(180deg, ${accent}1f, rgba(0,0,0,0.42))` }}
+      >
+        <Kicker>Signature Trophy</Kicker>
+        <div className="text-base font-semibold tracking-wide" style={{ color: accent }}>{label}</div>
+        <div className="mt-0.5 font-mono uppercase text-muted-foreground" style={{ fontSize: 8, letterSpacing: "0.22em" }}>
+          {svCollectionNumber(`${role.slug}-trophy`, role.passportPrefix)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────── 2. Award — spotlight plinth ───────────────────── */
+
+function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
+  const accent = role.accent;
+  return (
+    <div
+      className="group relative overflow-hidden rounded-xl border p-3"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
+        background: `radial-gradient(90% 70% at 50% 0%, color-mix(in oklab, ${accent} 20%, transparent), transparent 62%), linear-gradient(180deg, var(--card), var(--background))`,
+        boxShadow: `0 18px 40px -28px color-mix(in oklab, ${accent} 70%, transparent)`,
+      }}
+    >
+      <Kicker accent={accent}>Latest Award</Kicker>
+      <div className="relative mt-2 grid h-28 place-items-center">
+        <div className="absolute bottom-1 h-3 w-2/3 rounded-[50%]" style={{ background: `${accent}55`, filter: "blur(8px)" }} />
+        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.05]")}
+      </div>
+      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+    </div>
+  );
+}
+
+/* ───────────────────── 3. Badge — hex crest pad ───────────────────── */
+
+function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
+  const accent = role.accent;
+  return (
+    <div
+      className="group relative overflow-hidden rounded-xl border p-3"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 30%, var(--border))`,
+        background: `conic-gradient(from 210deg at 50% 40%, color-mix(in oklab, ${accent} 18%, transparent), transparent 42%, color-mix(in oklab, ${accent} 14%, transparent) 78%, transparent), linear-gradient(180deg, var(--card), var(--background))`,
+      }}
+    >
+      <Kicker accent={accent}>Featured Badge</Kicker>
+      <div className="relative mt-2 grid h-28 place-items-center">
+        <div
+          className="absolute h-24 w-24 rotate-6 rounded-2xl border"
+          style={{ borderColor: `${accent}44`, background: `${accent}12` }}
+        />
+        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "h-[92%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.06]")}
+      </div>
+      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+    </div>
+  );
+}
+
+/* ───────────────────── 4. Passport — booklet ───────────────────── */
+
+function PassportBooklet({ role }: { role: RoleDNA }) {
+  const accent = role.accent;
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border p-3"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
+        background: `linear-gradient(115deg, color-mix(in oklab, ${accent} 16%, var(--card)), var(--background))`,
+        boxShadow: `inset 14px 0 24px -22px ${accent}, 0 18px 40px -30px ${accent}`,
+      }}
+    >
+      <div className="absolute left-4 top-0 h-full w-px" style={{ background: `linear-gradient(180deg, transparent, ${accent}55, transparent)` }} />
+      <div className="flex gap-3">
+        <div className="relative h-32 w-24 shrink-0 overflow-hidden rounded-md">
+          {artImage(ROLE_PASSPORT[role.slug], `${role.name} digital passport`, accent, "h-full w-full")}
+        </div>
+        <div className="min-w-0 flex-1">
+          <Kicker accent={accent}>Digital Passport</Kicker>
+          <div className="mt-1 truncate text-sm font-semibold" style={{ color: accent }}>{role.name} Passport</div>
+          <dl className="mt-2 space-y-1 text-[10px] text-muted-foreground">
+            <div className="flex justify-between gap-2"><dt>Holder ID</dt><dd className="font-mono" style={{ color: accent }}>{role.passportPrefix}-00001</dd></div>
+            <div className="flex justify-between gap-2"><dt>Clearance</dt><dd className="truncate">{role.passport.verification}</dd></div>
+            <div className="flex justify-between gap-2"><dt>Signature</dt><dd className="truncate">{role.signature}</dd></div>
+          </dl>
+          <div className="mt-2 flex items-center gap-1.5">
+            <SVSeal accent={accent} size={16} />
+            <SVMicroMark accent={accent} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────── 5. Rank — vertical banner ───────────────────── */
+
+function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
+  const accent = role.accent;
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border p-3 text-center"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
+        background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 22%, var(--card)), var(--background) 75%)`,
+      }}
+    >
+      <Kicker accent={accent}>Current Rank</Kicker>
+      <div className="relative mx-auto mt-2 grid h-32 place-items-center">
+        <div className="absolute inset-x-8 top-0 h-full" style={{ background: `linear-gradient(180deg, ${accent}22, transparent 70%)` }} />
+        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "h-full w-auto")}
+      </div>
+      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+    </div>
+  );
+}
+
+/* ───────────────────── 6. Certificate — landscape parchment ───────────────────── */
+
+function CertificatePlate({ role, label }: { role: RoleDNA; label: string }) {
+  const accent = role.accent;
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border"
+      style={{ borderColor: `color-mix(in oklab, ${accent} 36%, var(--border))`, background: "var(--card)" }}
+    >
+      <div className="relative h-36 w-full overflow-hidden">
+        <img
+          src={ROLE_CERTIFICATE[role.slug]}
+          alt={`${role.name} certificate — ${label}`}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover object-center"
+          style={{ filter: "saturate(1.12) contrast(1.05)" }}
+        />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, transparent 30%, color-mix(in oklab, var(--background) 88%, transparent))` }} />
+        <div className="absolute right-2 top-2"><SVSeal accent={accent} size={20} /></div>
+      </div>
+      <div className="flex items-end justify-between gap-3 px-3 py-2">
+        <div className="min-w-0">
+          <Kicker accent={accent}>Certificate</Kicker>
+          <div className="truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+        </div>
+        <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-muted-foreground">
+          {svCollectionNumber(`${role.slug}-cert`, role.passportPrefix)}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────── 7. Membership / Identity — credit cards ───────────────────── */
+
+function CredentialCard({
+  role, src, kicker, label, tilt,
+}: { role: RoleDNA; src: string; kicker: string; label: string; tilt: number }) {
+  const accent = role.accent;
+  return (
+    <div
+      className="group relative overflow-hidden rounded-xl border p-3"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 30%, var(--border))`,
+        background: `linear-gradient(135deg, color-mix(in oklab, ${accent} 14%, var(--card)), var(--background))`,
+      }}
+    >
+      <Kicker accent={accent}>{kicker}</Kicker>
+      <div className="relative mt-2 h-24 [perspective:900px]">
+        <img
+          src={src}
+          alt={`${role.name} ${kicker}`}
+          loading="lazy"
+          decoding="async"
+          className="mx-auto h-full w-auto rounded-md object-contain transition-transform duration-500 group-hover:[transform:rotateY(0deg)]"
+          style={{
+            transform: `rotateY(${tilt}deg) rotateX(4deg)`,
+            filter: `drop-shadow(0 16px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 16px color-mix(in oklab, ${accent} 40%, transparent))`,
+          }}
+        />
+      </div>
+      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+    </div>
+  );
+}
+
+/* ───────────────────── 8. Artifact rail — small collectibles ───────────────────── */
+
+function ArtifactPuck({ role, src, kicker, label }: { role: RoleDNA; src: string; kicker: string; label: string }) {
+  const accent = role.accent;
+  return (
+    <div className="group flex min-w-0 flex-col items-center gap-1.5">
+      <div
+        className="relative grid h-20 w-20 place-items-center rounded-full border transition-transform duration-500 group-hover:-translate-y-1.5"
         style={{
-          borderColor: `color-mix(in oklab, ${accent} 45%, var(--border))`,
-          background: `
-            radial-gradient(120% 80% at 50% 110%, color-mix(in oklab, ${accent} 34%, transparent) 0%, color-mix(in oklab, ${accent} 10%, transparent) 40%, transparent 70%),
-            radial-gradient(80% 60% at 50% 0%,   color-mix(in oklab, ${accent} 18%, transparent) 0%, transparent 65%),
-            linear-gradient(180deg, var(--card), color-mix(in oklab, var(--background) 82%, var(--primary)) 60%, var(--background))`,
-          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 70px color-mix(in oklab, ${accent} 16%, transparent), 0 24px 60px -24px color-mix(in oklab, ${accent} 55%, transparent)`,
+          borderColor: `color-mix(in oklab, ${accent} 40%, var(--border))`,
+          background: `radial-gradient(70% 70% at 40% 25%, color-mix(in oklab, ${accent} 26%, transparent), transparent 70%), var(--card)`,
+          boxShadow: `inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 24px -18px ${accent}`,
         }}
       >
-        {/* museum spotlight cone */}
-        <div
-          className="absolute inset-x-1/4 -top-6 h-40 opacity-40 blur-2xl"
-          style={{ background: `radial-gradient(50% 100% at 50% 0%, ${accent}, transparent 70%)` }}
-        />
-        {/* rotating pedestal ring */}
-        <div className="absolute left-1/2 bottom-6 -translate-x-1/2 h-24 w-[70%]">
-          <div
-            className="absolute inset-0 rounded-[50%] trophy-glow"
-            style={{
-              background: `radial-gradient(50% 50% at 50% 50%, ${accent}66, transparent 70%)`,
-              filter: "blur(6px)",
-            }}
-          />
-        </div>
-        {/* the trophy itself — slow float + 3D rotate */}
-        <div className="absolute inset-0 grid place-items-center [perspective:1000px]">
-          <img
-            src={TROPHY_IMG[role.slug]}
-            alt={`${role.name} — ${label}`}
-            loading="lazy"
-            decoding="async"
-            width={2048}
-            height={2048}
-            sizes="(max-width: 768px) 60vw, 280px"
-            className="trophy-float relative z-10 h-[86%] w-[86%] object-contain"
-            style={{
-              imageRendering: "auto",
-              filter: `saturate(1.18) contrast(1.08) drop-shadow(0 22px 34px rgba(0,0,0,0.65)) drop-shadow(0 0 26px color-mix(in oklab, ${accent} 55%, transparent))`,
-            }}
-          />
-        </div>
-
-        {/* animated shine sweep */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className="absolute top-0 h-full w-1/3 trophy-shine"
-            style={{ background: `linear-gradient(90deg, transparent, ${accent}22, transparent)` }}
-          />
-        </div>
-        {/* sparkle particles */}
-        <Sparkles accent={accent} />
-        {/* Software Vala museum case + verification seal */}
-        <MuseumCase accent={accent} />
-        <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5">
-          <SVSeal accent={accent} size={22} />
-          <SVMicroMark accent={accent} />
-        </div>
-
-        {/* nameplate strip */}
-        <div
-          className="absolute inset-x-3 bottom-3 rounded-md border px-3 py-2 text-center backdrop-blur-sm"
-          style={{
-            borderColor: `${accent}66`,
-            background: `linear-gradient(180deg, ${accent}18, #00000055)`,
-          }}
-        >
-          <div className="text-[9px] uppercase tracking-[0.28em] text-muted-foreground">Signature Trophy</div>
-          <div className="text-sm font-semibold tracking-wide" style={{ color: accent }}>{label}</div>
-          <div className="mt-0.5 font-mono uppercase text-muted-foreground" style={{ fontSize: 8, letterSpacing: "0.22em" }}>
-            {svCollectionNumber(`${role.slug}-trophy`, role.passportPrefix)}
-          </div>
-        </div>
+        {artImage(src, `${role.name} ${kicker}`, accent, "h-[78%] w-[78%]")}
+      </div>
+      <div className="w-full text-center">
+        <Kicker>{kicker}</Kicker>
+        <div className="truncate text-[10px] font-semibold leading-tight" style={{ color: accent }}>{label}</div>
       </div>
     </div>
   );
 }
 
-function SlotTile({ role, slot, label }: { role: RoleDNA; slot: Exclude<SlotKey, "trophy">; label: string }) {
-  const clip = FRAME_CLIP[slot];
-  const accent = role.accent;
-  const glyph = PROF_GLYPH[role.slug][slot];
+/* ───────────────────────────── section ───────────────────────────── */
 
-  return (
-    <div className="group flex flex-col items-center gap-1.5 min-w-0">
-      <div
-        className="relative h-20 w-20 shrink-0 transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.04]"
-        style={{ filter: `drop-shadow(0 12px 20px color-mix(in oklab, ${accent} 45%, transparent)) drop-shadow(0 0 12px color-mix(in oklab, ${accent} 40%, transparent))` }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            clipPath: clip, WebkitClipPath: clip,
-            background: `
-              radial-gradient(120% 100% at 30% 15%, color-mix(in oklab, ${accent} 96%, white) 0%, ${accent} 34%, color-mix(in oklab, ${accent} 40%, var(--card)) 66%, var(--background) 88%),
-              linear-gradient(160deg, color-mix(in oklab, ${accent} 24%, transparent), transparent 60%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 mix-blend-screen opacity-70 pointer-events-none"
-          style={{
-            clipPath: clip, WebkitClipPath: clip,
-            background: `linear-gradient(180deg, ${accent}88, transparent 55%, ${accent}22 100%)`,
-          }}
-        />
-        <div className="absolute inset-0 grid place-items-center">
-          <div
-            className="font-bold leading-none text-lg"
-            style={{ color: "var(--background)", textShadow: `0 1px 0 color-mix(in oklab, ${accent} 80%, white), 0 -1px 1px rgba(0,0,0,0.45)` }}
-          >
-            {glyph}
-          </div>
-        </div>
-
-        {/* Software Vala engraved back plate + glass highlight */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            clipPath: clip, WebkitClipPath: clip,
-            background: "linear-gradient(122deg, rgba(255,255,255,0.16), transparent 34%, transparent 68%, rgba(255,255,255,0.1))",
-            mixBlendMode: "screen",
-          }}
-        />
-        <div className="pointer-events-none absolute inset-x-0 bottom-[3px] flex justify-center">
-          <span className="font-mono uppercase" style={{ fontSize: 5, letterSpacing: "0.3em", color: "#0a0a1299" }}>SV</span>
-        </div>
-      </div>
-      <div className="text-center w-full">
-        <div className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground">{SLOTS.find(s => s.key === slot)!.kicker}</div>
-        <div className="text-[11px] font-semibold leading-tight truncate" style={{ color: accent }}>{label}</div>
-      </div>
-    </div>
-  );
-}
+const OVERRIDES: Partial<Record<RoleSlug, { trophy?: string; award?: string; badge?: string }>> = {
+  reseller: { trophy: "Million Dollar Club", award: "Revenue King Crown", badge: "Sales Diamond" },
+  franchise: { trophy: "Global Empire", award: "Business Empire Award", badge: "Leadership Crown" },
+  author: { trophy: "Gold Pen", award: "Master Publisher", badge: "Creative Crown" },
+  vendor: { trophy: "Trusted Seller", award: "Marketplace Excellence", badge: "Quality Merchant" },
+  affiliate: { trophy: "Referral King", award: "Conversion Champion", badge: "Partner Excellence" },
+  influencer: { trophy: "Creator Diamond", award: "Brand Ambassador", badge: "Influence Crown" },
+  developer: { trophy: "Code Excellence", award: "Architecture Master", badge: "Elite Developer" },
+  support: { trophy: "Customer Hero", award: "Five Star Service", badge: "Fast Resolution" },
+  seo: { trophy: "Search King", award: "Organic Growth", badge: "SEO Expert" },
+  creator: { trophy: "Creative Master", award: "Design Innovation", badge: "Prism Master" },
+  user: { trophy: "Loyalty", award: "Community Star", badge: "Verified Member" },
+};
 
 export function RoleAchievementShowcase({
   defaultRole = "developer" as RoleSlug,
@@ -254,16 +364,22 @@ export function RoleAchievementShowcase({
   useEffect(() => { setUnlockKey((k) => k + 1); }, [slug]);
 
   const ov = OVERRIDES[role.slug] ?? {};
-  const labels: Record<SlotKey, string> = {
-    trophy:       ov.trophy       ?? role.trophies[3].label,
-    award:        ov.award        ?? role.awardExamples[3],
-    badge:        ov.badge        ?? role.badges[4].label,
-    passport:     ov.passport     ?? `${role.name} Passport`,
-    rank:         role.trophies[5].label,
-    level:        role.careerPath[Math.min(3, role.careerPath.length - 1)],
-    membership:   role.trophies[4].label,
-    verification: role.passport.verification,
-  };
+  const trophyLabel = ov.trophy ?? role.trophies[3].label;
+  const awardLabel = ov.award ?? role.awardExamples[3];
+  const badgeLabel = ov.badge ?? role.badges[4].label;
+  const rankLabel = role.trophies[5].label;
+  const certLabel = role.certificates[Math.min(3, role.certificates.length - 1)].label;
+  const membershipLabel = role.trophies[4].label;
+  const levelLabel = role.careerPath[Math.min(3, role.careerPath.length - 1)];
+
+  const artifacts = [
+    { src: ROLE_TRUST_SEAL[role.slug], kicker: "Trust Seal", label: role.passport.verification },
+    { src: ROLE_LEGACY_MEDAL[role.slug], kicker: "Legacy Medal", label: role.trophies[6].label },
+    { src: ROLE_HONOR_COIN[role.slug], kicker: "Honor Coin", label: role.awardExamples[5] },
+    { src: ROLE_XP_CRYSTAL[role.slug], kicker: "XP Crystal", label: role.careerPath[role.careerPath.length - 1] },
+    { src: ROLE_REWARD_CHEST[role.slug], kicker: "Reward Chest", label: role.awardExamples[1] },
+    { src: ROLE_SHIELD[role.slug], kicker: "Guardian Shield", label: role.badges[2].label },
+  ];
 
   return (
     <section
@@ -276,15 +392,15 @@ export function RoleAchievementShowcase({
         boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05), 0 26px 70px -40px color-mix(in oklab, ${role.accent} 60%, transparent)`,
       }}
     >
-      <header className="flex flex-wrap items-end justify-between gap-3 mb-4">
+      <header className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Role Achievement Showcase</div>
+          <Kicker>Role Achievement Showcase</Kicker>
           <h2 className="text-lg font-semibold tracking-tight">
             {name ? `${name} · ` : ""}
             <span style={{ color: role.accent }}>{role.name}</span>
-            <span className="text-muted-foreground text-sm font-normal"> — {role.archetype}</span>
+            <span className="text-sm font-normal text-muted-foreground"> — {role.archetype}</span>
           </h2>
-          <p className="text-[11px] text-muted-foreground italic mt-0.5">"{role.motto}"</p>
+          <p className="mt-0.5 text-[11px] italic text-muted-foreground">"{role.motto}"</p>
         </div>
         <div className="flex flex-wrap gap-1.5">
           {ROLES.map((r) => {
@@ -294,7 +410,8 @@ export function RoleAchievementShowcase({
                 key={r.slug}
                 type="button"
                 onClick={() => setSlug(r.slug)}
-                className="group relative text-[10px] uppercase tracking-[0.14em] rounded-lg border px-2.5 py-1.5 font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-pressed={active}
+                className="group relative rounded-lg border px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 style={
                   active
                     ? {
@@ -308,10 +425,9 @@ export function RoleAchievementShowcase({
                         borderColor: `color-mix(in oklab, ${r.accent} 30%, var(--border))`,
                         color: r.accent,
                         background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 88%, ${r.accent}) 0%, var(--background) 100%)`,
-                        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px -6px rgba(0,0,0,0.7)`,
+                        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px -6px rgba(0,0,0,0.7)",
                       }
                 }
-                aria-pressed={active}
               >
                 <span className="mr-1">{r.glyph}</span>{r.name}
               </button>
@@ -320,13 +436,37 @@ export function RoleAchievementShowcase({
         </div>
       </header>
 
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+        <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
 
-      <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
-        <TrophyTile role={role} unlockKey={`${role.slug}-${unlockKey}`} label={labels.trophy} />
-        <div className="col-span-4 md:col-span-4 grid grid-cols-4 gap-3">
-          {(SLOTS.slice(1) as { key: Exclude<SlotKey, "trophy">; kicker: string }[]).map((s) => (
-            <SlotTile key={s.key} role={role} slot={s.key} label={labels[s.key]} />
-          ))}
+        <div className="grid gap-3">
+          <div className="grid gap-3 sm:grid-cols-3">
+            <AwardPlinth role={role} label={awardLabel} />
+            <BadgeCrest role={role} label={badgeLabel} />
+            <RankBanner role={role} label={rankLabel} />
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <PassportBooklet role={role} />
+            <CertificatePlate role={role} label={certLabel} />
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <CredentialCard role={role} src={ROLE_MEMBERSHIP[role.slug]} kicker="Membership" label={membershipLabel} tilt={-12} />
+            <CredentialCard role={role} src={ROLE_IDENTITY_CARD[role.slug]} kicker="Identity Card" label={levelLabel} tilt={12} />
+          </div>
+
+          <div
+            className="grid grid-cols-3 gap-3 rounded-xl border p-3 sm:grid-cols-6"
+            style={{
+              borderColor: `color-mix(in oklab, ${role.accent} 22%, var(--border))`,
+              background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, ${role.accent}), var(--background))`,
+            }}
+          >
+            {artifacts.map((a) => (
+              <ArtifactPuck key={a.kicker} role={role} src={a.src} kicker={a.kicker} label={a.label} />
+            ))}
+          </div>
         </div>
       </div>
 
