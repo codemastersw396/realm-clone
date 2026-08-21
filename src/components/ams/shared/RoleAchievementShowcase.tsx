@@ -157,9 +157,9 @@ function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
       <Kicker accent={accent}>Latest Award</Kicker>
       <div className="relative mt-2 grid h-28 place-items-center">
         <div className="absolute bottom-1 h-3 w-2/3 rounded-[50%]" style={{ background: `${accent}55`, filter: "blur(8px)" }} />
-        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.05]")}
+        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "max-h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]")}
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+      <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
@@ -182,9 +182,9 @@ function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
           className="absolute h-24 w-24 rotate-6 rounded-2xl border"
           style={{ borderColor: `${accent}44`, background: `${accent}12` }}
         />
-        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "h-[92%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.06]")}
+        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "max-h-[88%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.04]")}
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+      <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
@@ -240,9 +240,9 @@ function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
       <Kicker accent={accent}>Current Rank</Kicker>
       <div className="relative mx-auto mt-2 grid h-32 place-items-center">
         <div className="absolute inset-x-8 top-0 h-full" style={{ background: `linear-gradient(180deg, ${accent}22, transparent 70%)` }} />
-        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "h-full w-auto")}
+        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "max-h-full w-auto")}
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+      <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
@@ -281,54 +281,120 @@ function CertificatePlate({ role, label }: { role: RoleDNA; label: string }) {
   );
 }
 
-/* ───────────────────── 7. Membership / Identity — credit cards ───────────────────── */
+/* ───────────────────── 7. Membership — horizontal metal card ───────────────────── */
 
-function CredentialCard({
-  role, src, kicker, label, tilt,
-}: { role: RoleDNA; src: string; kicker: string; label: string; tilt: number }) {
+function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) {
   const accent = role.accent;
   return (
     <div
       className="group relative overflow-hidden rounded-xl border p-3"
       style={{
-        borderColor: `color-mix(in oklab, ${accent} 30%, var(--border))`,
-        background: `linear-gradient(135deg, color-mix(in oklab, ${accent} 14%, var(--card)), var(--background))`,
+        borderColor: `color-mix(in oklab, ${accent} 32%, var(--border))`,
+        background: `linear-gradient(100deg, color-mix(in oklab, ${accent} 20%, var(--card)) 0%, var(--card) 45%, var(--background) 100%)`,
+        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.10), 0 18px 40px -30px ${accent}`,
       }}
     >
-      <Kicker accent={accent}>{kicker}</Kicker>
-      <div className="relative mt-2 h-24 [perspective:900px]">
-        <img
-          src={src}
-          alt={`${role.name} ${kicker}`}
-          loading="lazy"
-          decoding="async"
-          className="mx-auto h-full w-auto rounded-md object-contain transition-transform duration-500 group-hover:[transform:rotateY(0deg)]"
-          style={{
-            transform: `rotateY(${tilt}deg) rotateX(4deg)`,
-            filter: `drop-shadow(0 16px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 16px color-mix(in oklab, ${accent} 40%, transparent))`,
-          }}
-        />
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 w-1.5"
+        style={{ background: `linear-gradient(180deg, ${accent}, transparent)` }}
+      />
+      <div className="flex items-center gap-3">
+        <div className="relative h-20 w-32 shrink-0 [perspective:900px]">
+          <img
+            src={ROLE_MEMBERSHIP[role.slug]}
+            alt={`${role.name} membership card`}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain transition-transform duration-500 group-hover:[transform:none]"
+            style={{
+              transform: "rotateY(-14deg) rotateX(6deg)",
+              filter: `saturate(1.14) drop-shadow(0 16px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 16px color-mix(in oklab, ${accent} 40%, transparent))`,
+            }}
+          />
+        </div>
+        <div className="min-w-0">
+          <Kicker accent={accent}>Membership</Kicker>
+          <div className="truncate text-[13px] font-semibold" style={{ color: accent }}>{label}</div>
+          <div className="mt-1 flex gap-1">
+            {[0, 1, 2, 3].map((i) => (
+              <span key={i} className="h-1.5 w-6 rounded-full" style={{ background: `${accent}${i < 3 ? "cc" : "33"}` }} />
+            ))}
+          </div>
+          <div className="mt-1 font-mono text-[8px] uppercase tracking-[0.24em] text-muted-foreground">
+            {svCollectionNumber(`${role.slug}-member`, role.passportPrefix)}
+          </div>
+        </div>
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
 
-/* ───────────────────── 8. Artifact rail — small collectibles ───────────────────── */
+/* ───────────────────── 8. Identity — portrait clearance card ───────────────────── */
 
-function ArtifactPuck({ role, src, kicker, label }: { role: RoleDNA; src: string; kicker: string; label: string }) {
+function IdentityClearanceCard({ role, label }: { role: RoleDNA; label: string }) {
   const accent = role.accent;
+  return (
+    <div
+      className="group relative overflow-hidden rounded-xl border p-3"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 32%, var(--border))`,
+        background: `radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, ${accent} 22%, transparent), transparent 60%), linear-gradient(180deg, var(--card), var(--background))`,
+      }}
+    >
+      <div className="flex items-stretch gap-3">
+        <div className="min-w-0 flex-1">
+          <Kicker accent={accent}>Identity Card</Kicker>
+          <div className="truncate text-[13px] font-semibold" style={{ color: accent }}>{label}</div>
+          <div className="mt-2 space-y-1 text-[10px] text-muted-foreground">
+            <div>Clearance · <span style={{ color: accent }}>{role.passport.verification}</span></div>
+            <div>Archetype · {role.archetype}</div>
+          </div>
+          <div
+            className="mt-2 h-6 w-full rounded"
+            style={{
+              background: `repeating-linear-gradient(90deg, ${accent}cc 0 2px, transparent 2px 4px, ${accent}66 4px 5px, transparent 5px 9px)`,
+              opacity: 0.7,
+            }}
+          />
+        </div>
+        <div className="relative w-24 shrink-0 overflow-hidden rounded-lg border" style={{ borderColor: `${accent}44` }}>
+          {artImage(ROLE_IDENTITY_CARD[role.slug], `${role.name} identity card`, accent, "h-full w-full")}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────── 9. Artifact rail — distinct frames per artifact ───────────────────── */
+
+type FrameShape = "disc" | "hex" | "diamond" | "shield" | "capsule" | "gem";
+
+const FRAME_CSS: Record<FrameShape, { className: string; clip?: string }> = {
+  disc: { className: "rounded-full" },
+  hex: { className: "", clip: "polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0% 50%)" },
+  diamond: { className: "", clip: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" },
+  shield: { className: "", clip: "polygon(50% 0%, 100% 14%, 100% 62%, 50% 100%, 0% 62%, 0% 14%)" },
+  capsule: { className: "rounded-[36%]" },
+  gem: { className: "", clip: "polygon(30% 0%, 70% 0%, 100% 33%, 50% 100%, 0% 33%)" },
+};
+
+function ArtifactFrame({
+  role, src, kicker, label, shape,
+}: { role: RoleDNA; src: string; kicker: string; label: string; shape: FrameShape }) {
+  const accent = role.accent;
+  const f = FRAME_CSS[shape];
   return (
     <div className="group flex min-w-0 flex-col items-center gap-1.5">
       <div
-        className="relative grid h-20 w-20 place-items-center rounded-full border transition-transform duration-500 group-hover:-translate-y-1.5"
+        className={`relative grid h-20 w-20 place-items-center border transition-transform duration-500 group-hover:-translate-y-1.5 ${f.className}`}
         style={{
+          clipPath: f.clip,
           borderColor: `color-mix(in oklab, ${accent} 40%, var(--border))`,
           background: `radial-gradient(70% 70% at 40% 25%, color-mix(in oklab, ${accent} 26%, transparent), transparent 70%), var(--card)`,
           boxShadow: `inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 24px -18px ${accent}`,
         }}
       >
-        {artImage(src, `${role.name} ${kicker}`, accent, "h-[78%] w-[78%]")}
+        {artImage(src, `${role.name} ${kicker}`, accent, "h-[76%] w-[76%]")}
       </div>
       <div className="w-full text-center">
         <Kicker>{kicker}</Kicker>
@@ -337,6 +403,7 @@ function ArtifactPuck({ role, src, kicker, label }: { role: RoleDNA; src: string
     </div>
   );
 }
+
 
 /* ───────────────────────────── section ───────────────────────────── */
 
@@ -352,7 +419,14 @@ const OVERRIDES: Partial<Record<RoleSlug, { trophy?: string; award?: string; bad
   seo: { trophy: "Search King", award: "Organic Growth", badge: "SEO Expert" },
   creator: { trophy: "Creative Master", award: "Design Innovation", badge: "Prism Master" },
   user: { trophy: "Loyalty", award: "Community Star", badge: "Verified Member" },
+  manager: { trophy: "Team Commander", award: "Operational Excellence", badge: "People Leader" },
+  administrator: { trophy: "System Sovereign", award: "Governance Award", badge: "Root Authority" },
+  founder: { trophy: "Origin Stone", award: "Visionary Founder", badge: "Founding Signature" },
+  operator: { trophy: "Uptime Sentinel", award: "Mission Control", badge: "Zero Downtime" },
 };
+
+const ARTIFACT_SHAPES: FrameShape[] = ["disc", "hex", "diamond", "gem", "capsule", "shield"];
+
 
 export function RoleAchievementShowcase({
   defaultRole = "developer" as RoleSlug,
@@ -364,6 +438,10 @@ export function RoleAchievementShowcase({
   useEffect(() => { setUnlockKey((k) => k + 1); }, [slug]);
 
   const ov = OVERRIDES[role.slug] ?? {};
+  const roleIndex = ROLES.findIndex((r) => r.slug === role.slug);
+  const stageRight = roleIndex % 2 === 1;
+  const swapRow = roleIndex % 3 === 2;
+
   const trophyLabel = ov.trophy ?? role.trophies[3].label;
   const awardLabel = ov.award ?? role.awardExamples[3];
   const badgeLabel = ov.badge ?? role.badges[4].label;
@@ -436,24 +514,30 @@ export function RoleAchievementShowcase({
         </div>
       </header>
 
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
-        <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+      <div
+        className={`grid gap-3 ${
+          stageRight ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)]" : "lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]"
+        }`}
+      >
+        <div className={stageRight ? "lg:order-2" : ""}>
+          <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+        </div>
 
-        <div className="grid gap-3">
-          <div className="grid gap-3 sm:grid-cols-3">
+        <div className={`grid gap-3 ${stageRight ? "lg:order-1" : ""}`}>
+          <div className={`grid gap-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
             <AwardPlinth role={role} label={awardLabel} />
             <BadgeCrest role={role} label={badgeLabel} />
             <RankBanner role={role} label={rankLabel} />
           </div>
 
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className={`grid gap-3 md:grid-cols-2 ${swapRow ? "[&>*:last-child]:md:order-first" : ""}`}>
             <PassportBooklet role={role} />
             <CertificatePlate role={role} label={certLabel} />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <CredentialCard role={role} src={ROLE_MEMBERSHIP[role.slug]} kicker="Membership" label={membershipLabel} tilt={-12} />
-            <CredentialCard role={role} src={ROLE_IDENTITY_CARD[role.slug]} kicker="Identity Card" label={levelLabel} tilt={12} />
+            <MembershipMetalCard role={role} label={membershipLabel} />
+            <IdentityClearanceCard role={role} label={levelLabel} />
           </div>
 
           <div
@@ -463,12 +547,20 @@ export function RoleAchievementShowcase({
               background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, ${role.accent}), var(--background))`,
             }}
           >
-            {artifacts.map((a) => (
-              <ArtifactPuck key={a.kicker} role={role} src={a.src} kicker={a.kicker} label={a.label} />
+            {artifacts.map((a, i) => (
+              <ArtifactFrame
+                key={a.kicker}
+                role={role}
+                src={a.src}
+                kicker={a.kicker}
+                label={a.label}
+                shape={ARTIFACT_SHAPES[(i + roleIndex) % ARTIFACT_SHAPES.length]}
+              />
             ))}
           </div>
         </div>
       </div>
+
 
       <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
         <span>Passport · <span style={{ color: role.accent }}>{role.passportPrefix}-00001</span></span>
