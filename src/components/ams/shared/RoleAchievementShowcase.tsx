@@ -510,24 +510,30 @@ export function RoleAchievementShowcase({
         </div>
       </header>
 
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
-        <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+      <div
+        className={`grid gap-3 ${
+          stageRight ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)]" : "lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]"
+        }`}
+      >
+        <div className={stageRight ? "lg:order-2" : ""}>
+          <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+        </div>
 
-        <div className="grid gap-3">
-          <div className="grid gap-3 sm:grid-cols-3">
+        <div className={`grid gap-3 ${stageRight ? "lg:order-1" : ""}`}>
+          <div className={`grid gap-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
             <AwardPlinth role={role} label={awardLabel} />
             <BadgeCrest role={role} label={badgeLabel} />
             <RankBanner role={role} label={rankLabel} />
           </div>
 
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className={`grid gap-3 md:grid-cols-2 ${swapRow ? "[&>*:last-child]:md:order-first" : ""}`}>
             <PassportBooklet role={role} />
             <CertificatePlate role={role} label={certLabel} />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <CredentialCard role={role} src={ROLE_MEMBERSHIP[role.slug]} kicker="Membership" label={membershipLabel} tilt={-12} />
-            <CredentialCard role={role} src={ROLE_IDENTITY_CARD[role.slug]} kicker="Identity Card" label={levelLabel} tilt={12} />
+            <MembershipMetalCard role={role} label={membershipLabel} />
+            <IdentityClearanceCard role={role} label={levelLabel} />
           </div>
 
           <div
@@ -537,12 +543,20 @@ export function RoleAchievementShowcase({
               background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, ${role.accent}), var(--background))`,
             }}
           >
-            {artifacts.map((a) => (
-              <ArtifactPuck key={a.kicker} role={role} src={a.src} kicker={a.kicker} label={a.label} />
+            {artifacts.map((a, i) => (
+              <ArtifactFrame
+                key={a.kicker}
+                role={role}
+                src={a.src}
+                kicker={a.kicker}
+                label={a.label}
+                shape={ARTIFACT_SHAPES[(i + roleIndex) % ARTIFACT_SHAPES.length]}
+              />
             ))}
           </div>
         </div>
       </div>
+
 
       <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
         <span>Passport · <span style={{ color: role.accent }}>{role.passportPrefix}-00001</span></span>
