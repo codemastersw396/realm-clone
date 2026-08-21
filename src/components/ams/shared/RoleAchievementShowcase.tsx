@@ -438,6 +438,10 @@ export function RoleAchievementShowcase({
   useEffect(() => { setUnlockKey((k) => k + 1); }, [slug]);
 
   const ov = OVERRIDES[role.slug] ?? {};
+  const roleIndex = ROLES.findIndex((r) => r.slug === role.slug);
+  const stageRight = roleIndex % 2 === 1;
+  const swapRow = roleIndex % 3 === 2;
+
   const trophyLabel = ov.trophy ?? role.trophies[3].label;
   const awardLabel = ov.award ?? role.awardExamples[3];
   const badgeLabel = ov.badge ?? role.badges[4].label;
