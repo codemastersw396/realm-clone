@@ -419,7 +419,14 @@ const OVERRIDES: Partial<Record<RoleSlug, { trophy?: string; award?: string; bad
   seo: { trophy: "Search King", award: "Organic Growth", badge: "SEO Expert" },
   creator: { trophy: "Creative Master", award: "Design Innovation", badge: "Prism Master" },
   user: { trophy: "Loyalty", award: "Community Star", badge: "Verified Member" },
+  manager: { trophy: "Team Commander", award: "Operational Excellence", badge: "People Leader" },
+  administrator: { trophy: "System Sovereign", award: "Governance Award", badge: "Root Authority" },
+  founder: { trophy: "Origin Stone", award: "Visionary Founder", badge: "Founding Signature" },
+  operator: { trophy: "Uptime Sentinel", award: "Mission Control", badge: "Zero Downtime" },
 };
+
+const ARTIFACT_SHAPES: FrameShape[] = ["disc", "hex", "diamond", "gem", "capsule", "shield"];
+
 
 export function RoleAchievementShowcase({
   defaultRole = "developer" as RoleSlug,
