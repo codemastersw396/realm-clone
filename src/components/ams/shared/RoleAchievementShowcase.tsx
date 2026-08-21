@@ -157,9 +157,9 @@ function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
       <Kicker accent={accent}>Latest Award</Kicker>
       <div className="relative mt-2 grid h-28 place-items-center">
         <div className="absolute bottom-1 h-3 w-2/3 rounded-[50%]" style={{ background: `${accent}55`, filter: "blur(8px)" }} />
-        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.05]")}
+        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "max-h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]")}
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+      <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
@@ -182,9 +182,9 @@ function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
           className="absolute h-24 w-24 rotate-6 rounded-2xl border"
           style={{ borderColor: `${accent}44`, background: `${accent}12` }}
         />
-        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "h-[92%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.06]")}
+        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "max-h-[88%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.04]")}
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+      <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
@@ -240,9 +240,9 @@ function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
       <Kicker accent={accent}>Current Rank</Kicker>
       <div className="relative mx-auto mt-2 grid h-32 place-items-center">
         <div className="absolute inset-x-8 top-0 h-full" style={{ background: `linear-gradient(180deg, ${accent}22, transparent 70%)` }} />
-        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "h-full w-auto")}
+        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "max-h-full w-auto")}
       </div>
-      <div className="mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
+      <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
   );
 }
