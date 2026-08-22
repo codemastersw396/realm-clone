@@ -43,7 +43,7 @@ function Clickable({
           onOpen(item);
         }
       }}
-      className={`min-w-0 cursor-pointer rounded-xl transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${className ?? ""}`}
+      className={`group/click relative min-w-0 cursor-pointer rounded-xl outline-none ring-1 ring-transparent transition-all duration-300 hover:ring-primary/40 hover:shadow-[0_18px_40px_-28px_var(--primary)] focus-visible:ring-2 focus-visible:ring-ring ${className ?? ""}`}
     >
       {children}
     </div>
