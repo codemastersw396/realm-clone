@@ -634,6 +634,12 @@ export function RoleAchievementShowcase({
           Software Vala Collection · <span style={{ color: role.accent }}>{svCollectionNumber(role.slug, role.passportPrefix)}</span>
         </span>
       </footer>
+
+      <ShowcaseDetailDialog
+        role={role}
+        item={selected}
+        onOpenChange={(open) => { if (!open) setSelected(null); }}
+      />
     </section>
   );
 }
