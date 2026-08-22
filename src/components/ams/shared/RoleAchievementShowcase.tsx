@@ -15,6 +15,40 @@ import {
   ROLE_SHIELD,
 } from "@/lib/ams/role-assets";
 import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
+import {
+  ShowcaseDetailDialog,
+  type ShowcaseItem,
+  type ShowcaseKind,
+} from "@/components/ams/shared/ShowcaseDetailDialog";
+
+/** Wraps a showcase card so click / Enter / Space opens the detail modal. */
+function Clickable({
+  item, onOpen, children, className,
+}: {
+  item: ShowcaseItem;
+  onOpen: (item: ShowcaseItem) => void;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-haspopup="dialog"
+      aria-label={`${item.kind}: ${item.label} — view details`}
+      onClick={() => onOpen(item)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          onOpen(item);
+        }
+      }}
+      className={`min-w-0 cursor-pointer rounded-xl transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${className ?? ""}`}
+    >
+      {children}
+    </div>
+  );
+}
 
 /* ────────────────────────── shared atoms ────────────────────────── */
 
