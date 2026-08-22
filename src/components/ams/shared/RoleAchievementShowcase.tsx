@@ -554,24 +554,43 @@ export function RoleAchievementShowcase({
         }`}
       >
         <div className={stageRight ? "lg:order-2" : ""}>
-          <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+          <Clickable item={mk("Signature Trophy", trophyLabel, ROLE_TROPHY[role.slug])} onOpen={setSelected}>
+            <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+          </Clickable>
         </div>
 
         <div className={`grid gap-3 ${stageRight ? "lg:order-1" : ""}`}>
           <div className={`grid gap-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
-            <AwardPlinth role={role} label={awardLabel} />
-            <BadgeCrest role={role} label={badgeLabel} />
-            <RankBanner role={role} label={rankLabel} />
+            <Clickable item={mk("Latest Award", awardLabel, ROLE_AWARD[role.slug])} onOpen={setSelected}>
+              <AwardPlinth role={role} label={awardLabel} />
+            </Clickable>
+            <Clickable item={mk("Featured Badge", badgeLabel, ROLE_BADGE[role.slug])} onOpen={setSelected}>
+              <BadgeCrest role={role} label={badgeLabel} />
+            </Clickable>
+            <Clickable item={mk("Current Rank", rankLabel, ROLE_RANK[role.slug])} onOpen={setSelected}>
+              <RankBanner role={role} label={rankLabel} />
+            </Clickable>
           </div>
 
           <div className={`grid gap-3 md:grid-cols-2 ${swapRow ? "[&>*:last-child]:md:order-first" : ""}`}>
-            <PassportBooklet role={role} />
-            <CertificatePlate role={role} label={certLabel} />
+            <Clickable
+              item={mk("Digital Passport", `${role.name} Passport`, ROLE_PASSPORT[role.slug])}
+              onOpen={setSelected}
+            >
+              <PassportBooklet role={role} />
+            </Clickable>
+            <Clickable item={mk("Certificate", certLabel, ROLE_CERTIFICATE[role.slug])} onOpen={setSelected}>
+              <CertificatePlate role={role} label={certLabel} />
+            </Clickable>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <MembershipMetalCard role={role} label={membershipLabel} />
-            <IdentityClearanceCard role={role} label={levelLabel} />
+            <Clickable item={mk("Membership", membershipLabel, ROLE_MEMBERSHIP[role.slug])} onOpen={setSelected}>
+              <MembershipMetalCard role={role} label={membershipLabel} />
+            </Clickable>
+            <Clickable item={mk("Identity Card", levelLabel, ROLE_IDENTITY_CARD[role.slug])} onOpen={setSelected}>
+              <IdentityClearanceCard role={role} label={levelLabel} />
+            </Clickable>
           </div>
 
           <div
@@ -582,14 +601,19 @@ export function RoleAchievementShowcase({
             }}
           >
             {artifacts.map((a, i) => (
-              <ArtifactFrame
+              <Clickable
                 key={a.kicker}
-                role={role}
-                src={a.src}
-                kicker={a.kicker}
-                label={a.label}
-                shape={ARTIFACT_SHAPES[(i + roleIndex) % ARTIFACT_SHAPES.length]}
-              />
+                item={mk(a.kicker as ShowcaseKind, a.label, a.src)}
+                onOpen={setSelected}
+              >
+                <ArtifactFrame
+                  role={role}
+                  src={a.src}
+                  kicker={a.kicker}
+                  label={a.label}
+                  shape={ARTIFACT_SHAPES[(i + roleIndex) % ARTIFACT_SHAPES.length]}
+                />
+              </Clickable>
             ))}
           </div>
         </div>
