@@ -15,6 +15,40 @@ import {
   ROLE_SHIELD,
 } from "@/lib/ams/role-assets";
 import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
+import {
+  ShowcaseDetailDialog,
+  type ShowcaseItem,
+  type ShowcaseKind,
+} from "@/components/ams/shared/ShowcaseDetailDialog";
+
+/** Wraps a showcase card so click / Enter / Space opens the detail modal. */
+function Clickable({
+  item, onOpen, children, className,
+}: {
+  item: ShowcaseItem;
+  onOpen: (item: ShowcaseItem) => void;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-haspopup="dialog"
+      aria-label={`${item.kind}: ${item.label} — view details`}
+      onClick={() => onOpen(item)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          onOpen(item);
+        }
+      }}
+      className={`group/click relative min-w-0 cursor-pointer rounded-xl outline-none ring-1 ring-transparent transition-all duration-300 hover:ring-primary/40 hover:shadow-[0_18px_40px_-28px_var(--primary)] focus-visible:ring-2 focus-visible:ring-ring ${className ?? ""}`}
+    >
+      {children}
+    </div>
+  );
+}
 
 /* ────────────────────────── shared atoms ────────────────────────── */
 
@@ -435,7 +469,12 @@ export function RoleAchievementShowcase({
   const [slug, setSlug] = useState<RoleSlug>(defaultRole);
   const role = useMemo(() => ROLES.find((r) => r.slug === slug)!, [slug]);
   const [unlockKey, setUnlockKey] = useState(0);
-  useEffect(() => { setUnlockKey((k) => k + 1); }, [slug]);
+  const [selected, setSelected] = useState<ShowcaseItem | null>(null);
+  useEffect(() => { setUnlockKey((k) => k + 1); setSelected(null); }, [slug]);
+
+  const mk = (kind: ShowcaseKind, label: string, src: string): ShowcaseItem => ({
+    kind, label, src, seed: `${slug}-${kind}-${label}`,
+  });
 
   const ov = OVERRIDES[role.slug] ?? {};
   const roleIndex = ROLES.findIndex((r) => r.slug === role.slug);
@@ -520,24 +559,43 @@ export function RoleAchievementShowcase({
         }`}
       >
         <div className={stageRight ? "lg:order-2" : ""}>
-          <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+          <Clickable item={mk("Signature Trophy", trophyLabel, ROLE_TROPHY[role.slug])} onOpen={setSelected}>
+            <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
+          </Clickable>
         </div>
 
         <div className={`grid gap-3 ${stageRight ? "lg:order-1" : ""}`}>
           <div className={`grid gap-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
-            <AwardPlinth role={role} label={awardLabel} />
-            <BadgeCrest role={role} label={badgeLabel} />
-            <RankBanner role={role} label={rankLabel} />
+            <Clickable item={mk("Latest Award", awardLabel, ROLE_AWARD[role.slug])} onOpen={setSelected}>
+              <AwardPlinth role={role} label={awardLabel} />
+            </Clickable>
+            <Clickable item={mk("Featured Badge", badgeLabel, ROLE_BADGE[role.slug])} onOpen={setSelected}>
+              <BadgeCrest role={role} label={badgeLabel} />
+            </Clickable>
+            <Clickable item={mk("Current Rank", rankLabel, ROLE_RANK[role.slug])} onOpen={setSelected}>
+              <RankBanner role={role} label={rankLabel} />
+            </Clickable>
           </div>
 
           <div className={`grid gap-3 md:grid-cols-2 ${swapRow ? "[&>*:last-child]:md:order-first" : ""}`}>
-            <PassportBooklet role={role} />
-            <CertificatePlate role={role} label={certLabel} />
+            <Clickable
+              item={mk("Digital Passport", `${role.name} Passport`, ROLE_PASSPORT[role.slug])}
+              onOpen={setSelected}
+            >
+              <PassportBooklet role={role} />
+            </Clickable>
+            <Clickable item={mk("Certificate", certLabel, ROLE_CERTIFICATE[role.slug])} onOpen={setSelected}>
+              <CertificatePlate role={role} label={certLabel} />
+            </Clickable>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <MembershipMetalCard role={role} label={membershipLabel} />
-            <IdentityClearanceCard role={role} label={levelLabel} />
+            <Clickable item={mk("Membership", membershipLabel, ROLE_MEMBERSHIP[role.slug])} onOpen={setSelected}>
+              <MembershipMetalCard role={role} label={membershipLabel} />
+            </Clickable>
+            <Clickable item={mk("Identity Card", levelLabel, ROLE_IDENTITY_CARD[role.slug])} onOpen={setSelected}>
+              <IdentityClearanceCard role={role} label={levelLabel} />
+            </Clickable>
           </div>
 
           <div
@@ -548,14 +606,19 @@ export function RoleAchievementShowcase({
             }}
           >
             {artifacts.map((a, i) => (
-              <ArtifactFrame
+              <Clickable
                 key={a.kicker}
-                role={role}
-                src={a.src}
-                kicker={a.kicker}
-                label={a.label}
-                shape={ARTIFACT_SHAPES[(i + roleIndex) % ARTIFACT_SHAPES.length]}
-              />
+                item={mk(a.kicker as ShowcaseKind, a.label, a.src)}
+                onOpen={setSelected}
+              >
+                <ArtifactFrame
+                  role={role}
+                  src={a.src}
+                  kicker={a.kicker}
+                  label={a.label}
+                  shape={ARTIFACT_SHAPES[(i + roleIndex) % ARTIFACT_SHAPES.length]}
+                />
+              </Clickable>
             ))}
           </div>
         </div>
@@ -571,6 +634,12 @@ export function RoleAchievementShowcase({
           Software Vala Collection · <span style={{ color: role.accent }}>{svCollectionNumber(role.slug, role.passportPrefix)}</span>
         </span>
       </footer>
+
+      <ShowcaseDetailDialog
+        role={role}
+        item={selected}
+        onOpenChange={(open) => { if (!open) setSelected(null); }}
+      />
     </section>
   );
 }
