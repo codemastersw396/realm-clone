@@ -469,7 +469,12 @@ export function RoleAchievementShowcase({
   const [slug, setSlug] = useState<RoleSlug>(defaultRole);
   const role = useMemo(() => ROLES.find((r) => r.slug === slug)!, [slug]);
   const [unlockKey, setUnlockKey] = useState(0);
-  useEffect(() => { setUnlockKey((k) => k + 1); }, [slug]);
+  const [selected, setSelected] = useState<ShowcaseItem | null>(null);
+  useEffect(() => { setUnlockKey((k) => k + 1); setSelected(null); }, [slug]);
+
+  const mk = (kind: ShowcaseKind, label: string, src: string): ShowcaseItem => ({
+    kind, label, src, seed: `${slug}-${kind}-${label}`,
+  });
 
   const ov = OVERRIDES[role.slug] ?? {};
   const roleIndex = ROLES.findIndex((r) => r.slug === role.slug);
