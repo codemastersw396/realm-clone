@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Sparkles } from "lucide-react";
 import { TrophyStageGallery } from "@/components/ams/collectible/TrophyStageGallery";
 import { DuplicateSilhouetteChecker } from "@/components/ams/collectible/DuplicateSilhouetteChecker";
+import { RoleCredentialWall } from "@/components/ams/collectible/RoleCredentialWall";
 import { TROPHIES, ROLE_LIST } from "@/lib/ams/trophy-catalog";
 
 export const Route = createFileRoute("/_authenticated/trophy-stages")({
@@ -50,6 +51,7 @@ function Page() {
       </header>
 
       <TrophyStageGallery />
+      <RoleCredentialWall />
       <DuplicateSilhouetteChecker />
     </div>
   );
