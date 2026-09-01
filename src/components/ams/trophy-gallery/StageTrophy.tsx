@@ -115,6 +115,21 @@ export function StageTrophy({ shape, accent, id, className }: Props) {
       {halo}
       {body}
       {base}
+      {/* Permanent Software Vala maker's mark on every procedural trophy. */}
+      <g aria-label="Software Vala maker mark">
+        <rect x="82" y="202.5" width="36" height="9" rx="2" fill="#05070d" opacity="0.82" />
+        <text
+          x="100"
+          y="209.5"
+          textAnchor="middle"
+          fontSize="7"
+          fontWeight="700"
+          fill={accent}
+          style={{ fontFamily: "ui-serif, Georgia, serif" }}
+        >
+          SV
+        </text>
+      </g>
       {shine}
     </svg>
   );

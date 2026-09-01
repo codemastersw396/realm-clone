@@ -3,6 +3,7 @@ import { Volume2, Sparkles, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCelebration } from "@/components/ams/effects/Celebration";
 import { ProceduralEmblem } from "./ProceduralEmblem";
+import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 import { RARITY_META, type Award } from "@/lib/ams/types";
 
 type PreviewAward = Pick<Award, "name" | "type" | "rarity" | "media"> &
@@ -31,6 +32,17 @@ export function PreviewStage({ award }: { award: PreviewAward }) {
         className="absolute inset-0 opacity-50"
         style={{ background: `radial-gradient(ellipse at center, ${meta.hue}33, transparent 65%)` }}
       />
+      <MuseumCase accent={meta.hue} />
+      <div className="absolute left-3 top-3 z-10 flex items-center gap-2">
+        <SVSeal accent={meta.hue} size={22} />
+        <SVMicroMark accent={meta.hue} />
+      </div>
+      <div
+        className="absolute bottom-2 right-3 z-10 font-mono uppercase"
+        style={{ fontSize: 9, letterSpacing: "0.22em", color: `${meta.hue}aa` }}
+      >
+        {svCollectionNumber(emblemAward.id, award.type.slice(0, 3))}
+      </div>
       <div className="relative flex flex-col items-center gap-6">
         <div className="grid h-52 w-52 place-items-center rounded-full"
              style={{ background: `radial-gradient(circle, ${meta.glow}, transparent 70%)` }}>

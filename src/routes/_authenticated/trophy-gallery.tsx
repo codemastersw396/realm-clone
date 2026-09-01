@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Trophy, Volume2, Sparkles } from "lucide-react";
 import { ROLES } from "@/lib/ams/roles";
 import { playUnlock, type UnlockPreset } from "@/lib/ams/trophy-sounds";
+import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 
 import affiliate from "@/assets/trophies/affiliate.png";
 import author from "@/assets/trophies/author.png";
@@ -144,6 +145,17 @@ function TrophyDisplayCase({ role }: { role: (typeof ROLES)[number] }) {
           className={`h-56 w-56 object-contain trophy-float ${pulse ? "trophy-unlock" : ""}`}
           style={{ filter: `drop-shadow(0 12px 30px ${role.accent}88)` }}
         />
+        <MuseumCase accent={role.accent} />
+        <div className="absolute left-3 top-3 z-10 flex items-center gap-2">
+          <SVSeal accent={role.accent} size={22} />
+          <SVMicroMark accent={role.accent} />
+        </div>
+        <div
+          className="absolute bottom-2 right-3 z-10 font-mono uppercase"
+          style={{ fontSize: 9, letterSpacing: "0.22em", color: `${role.accent}aa` }}
+        >
+          {svCollectionNumber(`${role.slug}-${tier.key}`, role.passportPrefix)}
+        </div>
       </div>
 
       {/* engraved nameplate */}
