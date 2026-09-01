@@ -16,7 +16,10 @@ const certificates = import.meta.glob<string>("/src/assets/certificates/*.png", 
 function keyed(map: Record<string, string>, suffix: string) {
   return Object.fromEntries(
     Object.entries(map).map(([p, url]) => [
-      p.slice(p.lastIndexOf("/") + 1).replace(`-${suffix}.png`, ""),
+      p
+        .slice(p.lastIndexOf("/") + 1)
+        .replace(/\.png$/, "")
+        .replace(new RegExp(`-${suffix}$`), ""),
       url,
     ]),
   ) as Record<string, string>;
