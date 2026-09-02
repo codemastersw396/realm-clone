@@ -189,6 +189,7 @@ function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
       }}
     >
       <Kicker accent={accent}>Latest Award</Kicker>
+      <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="relative mt-2 grid h-28 place-items-center">
         <div className="absolute bottom-1 h-3 w-2/3 rounded-[50%]" style={{ background: `${accent}55`, filter: "blur(8px)" }} />
         {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "max-h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]")}
@@ -211,6 +212,7 @@ function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
       }}
     >
       <Kicker accent={accent}>Featured Badge</Kicker>
+      <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="relative mt-2 grid h-28 place-items-center">
         <div
           className="absolute h-24 w-24 rotate-6 rounded-2xl border"
@@ -272,6 +274,7 @@ function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
       }}
     >
       <Kicker accent={accent}>Current Rank</Kicker>
+      <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="relative mx-auto mt-2 grid h-32 place-items-center">
         <div className="absolute inset-x-8 top-0 h-full" style={{ background: `linear-gradient(180deg, ${accent}22, transparent 70%)` }} />
         {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "max-h-full w-auto")}
@@ -332,6 +335,7 @@ function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) 
         className="pointer-events-none absolute inset-y-0 left-0 w-1.5"
         style={{ background: `linear-gradient(180deg, ${accent}, transparent)` }}
       />
+      <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="flex items-center gap-3">
         <div className="relative h-20 w-32 shrink-0 [perspective:900px]">
           <img
@@ -376,6 +380,7 @@ function IdentityClearanceCard({ role, label }: { role: RoleDNA; label: string }
       }}
     >
       <div className="flex items-stretch gap-3">
+        <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
         <div className="min-w-0 flex-1">
           <Kicker accent={accent}>Identity Card</Kicker>
           <div className="truncate text-[13px] font-semibold" style={{ color: accent }}>{label}</div>
@@ -429,6 +434,7 @@ function ArtifactFrame({
         }}
       >
         {artImage(src, `${role.name} ${kicker}`, accent, "h-[76%] w-[76%]")}
+        <div className="absolute right-1 top-1 z-20"><SVSeal accent={accent} size={14} /></div>
       </div>
       <div className="w-full text-center">
         <Kicker>{kicker}</Kicker>

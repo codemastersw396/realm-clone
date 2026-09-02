@@ -16,10 +16,14 @@ import seo from "@/assets/trophies/seo.png";
 import support from "@/assets/trophies/support.png";
 import user from "@/assets/trophies/user.png";
 import vendor from "@/assets/trophies/vendor.png";
+import manager from "@/assets/trophy-stages/manager-01.png";
+import administrator from "@/assets/trophy-stages/administrator-01.png";
+import founder from "@/assets/trophy-stages/founder-01.png";
+import operator from "@/assets/trophy-stages/operator-01.png";
 
 const TROPHY: Record<string, string> = {
   developer, reseller, franchise, author, vendor, affiliate,
-  influencer, creator, seo, support, user,
+  influencer, creator, seo, support, user, manager, administrator, founder, operator,
 };
 
 // Museum-quality theme per role — no two identities repeat.
