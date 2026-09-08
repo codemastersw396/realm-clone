@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ShieldCheck, ScrollText } from "lucide-react";
 import { SVSeal, SVMicroMark, svCollectionNumber } from "@/components/ams/brand/SVMark";
 import { ROLE_LIST } from "@/lib/ams/trophy-catalog";
+import { Button } from "@/components/ui/button";
 
 const shields = import.meta.glob<string>("/src/assets/shields/*.png", {
   eager: true, query: "?url", import: "default",
@@ -42,7 +43,7 @@ function Credential({
   const Icon = kind === "shield" ? ShieldCheck : ScrollText;
   return (
     <figure
-      className="group relative overflow-hidden rounded-2xl border p-4"
+      className="group relative flex min-h-[292px] flex-col overflow-hidden rounded-lg border p-4 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
         background: `radial-gradient(120% 90% at 50% 0%, color-mix(in oklab, ${accent} 12%, var(--card)) 0%, var(--card) 55%, var(--background) 100%)`,
@@ -55,22 +56,22 @@ function Credential({
       <div className="pointer-events-none absolute right-3 top-4 z-10">
         <SVMicroMark accent={accent} />
       </div>
-      <div className="grid h-48 place-items-center">
+      <div className="relative grid h-48 place-items-center overflow-hidden rounded-md border border-border/40 bg-background/30 px-4 py-3">
         <img
           src={src}
           alt={`${role} ${kind}`}
           loading="lazy"
           width={1024}
           height={1024}
-          className="max-h-44 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.06]"
+          className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.025]"
           style={{
             filter: `saturate(1.16) contrast(1.06) drop-shadow(0 18px 26px rgba(0,0,0,0.55)) drop-shadow(0 0 26px color-mix(in oklab, ${accent} 40%, transparent))`,
           }}
         />
       </div>
-      <figcaption className="mt-3 flex items-end justify-between gap-2">
-        <div>
-          <div className="text-sm font-semibold text-foreground">{role}</div>
+      <figcaption className="mt-auto grid grid-cols-[minmax(0,1fr)_auto] items-end gap-2 pt-3">
+        <div className="min-w-0">
+          <div className="truncate text-sm font-semibold text-foreground">{role}</div>
           <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em]" style={{ color: `${accent}cc` }}>
             <Icon className="h-3.5 w-3.5" />
             {kind === "shield" ? "Trust Shield" : "Certificate"}
@@ -97,34 +98,35 @@ export function RoleCredentialWall() {
   );
 
   return (
-    <section className="space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
+    <div className="space-y-4">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Role Credential Wall</h2>
+          <h3 className="text-base font-semibold text-foreground">Role Credential Wall</h3>
           <p className="text-sm text-muted-foreground">
             Trust shields and certificates for all {ROLE_LIST.length} roles — every piece sealed with the Software Vala mark.
           </p>
         </div>
-        <div className="inline-flex rounded-full border border-border/60 bg-black/20 p-1">
+        <div className="inline-flex shrink-0 rounded-md border border-border/60 bg-muted/20 p-1" role="group" aria-label="Credential type">
           {(["shield", "certificate"] as Kind[]).map((k) => (
-            <button
+            <Button
               key={k}
               type="button"
               onClick={() => setKind(k)}
-              className={`rounded-full px-3 py-1.5 text-xs capitalize transition ${
-                kind === k ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
+              variant={kind === k ? "default" : "ghost"}
+              size="sm"
+              aria-pressed={kind === k}
+              className="h-7 px-3 capitalize"
             >
               {k}s
-            </button>
+            </Button>
           ))}
         </div>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 min-[540px]:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {items.map((r) => (
-          <Credential key={`${r.slug}-${kind}`} src={r.src!} role={r.role} slug={r.slug} kind={kind} accent={r.accent} />
+          r.src ? <Credential key={`${r.slug}-${kind}`} src={r.src} role={r.role} slug={r.slug} kind={kind} accent={r.accent} /> : null
         ))}
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Sparkles } from "lucide-react";
+import { Award, BadgeCheck, Sparkles, Trophy } from "lucide-react";
 import { TrophyStageGallery } from "@/components/ams/collectible/TrophyStageGallery";
 import { DuplicateSilhouetteChecker } from "@/components/ams/collectible/DuplicateSilhouetteChecker";
 import { RoleCredentialWall } from "@/components/ams/collectible/RoleCredentialWall";
@@ -28,9 +28,9 @@ export const Route = createFileRoute("/_authenticated/trophy-stages")({
 
 function Page() {
   return (
-    <div className="space-y-6 p-6 lg:p-8">
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+    <div className="space-y-10">
+      <header className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
+        <div className="min-w-0">
           <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-amber-400/80">
             Trophy Stage Vault
           </div>
@@ -42,7 +42,7 @@ function Page() {
             silhouette, sealed with the Software Vala mark and collection number.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="hidden shrink-0 items-center gap-2 text-xs text-muted-foreground sm:flex">
           <Sparkles className="h-4 w-4 text-amber-400" />
           <span>
             {ROLE_LIST.length} roles · {TROPHIES.length} stages
@@ -50,9 +50,41 @@ function Page() {
         </div>
       </header>
 
-      <TrophyStageGallery />
-      <RoleCredentialWall />
-      <DuplicateSilhouetteChecker />
+      <section aria-labelledby="trophy-collection-heading" className="space-y-5">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-border/60 pb-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-primary/30 bg-primary/10 text-primary">
+              <Trophy className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <h2 id="trophy-collection-heading" className="truncate text-lg font-semibold text-foreground">Trophy Collection</h2>
+              <p className="text-xs text-muted-foreground">Role → achievement → stage → trophy</p>
+            </div>
+          </div>
+          <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{TROPHIES.length} pieces</span>
+        </div>
+        <TrophyStageGallery />
+      </section>
+
+      <section aria-labelledby="credentials-heading" className="space-y-5">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-border/60 pb-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-accent-emerald/30 bg-accent-emerald/10 text-accent-emerald">
+              <BadgeCheck className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <h2 id="credentials-heading" className="truncate text-lg font-semibold text-foreground">Identity & Credentials</h2>
+              <p className="text-xs text-muted-foreground">Verified role shields and certificates</p>
+            </div>
+          </div>
+          <Award className="h-5 w-5 shrink-0 text-muted-foreground" />
+        </div>
+        <RoleCredentialWall />
+      </section>
+
+      <section aria-label="Collection quality controls">
+        <DuplicateSilhouetteChecker />
+      </section>
     </div>
   );
 }
