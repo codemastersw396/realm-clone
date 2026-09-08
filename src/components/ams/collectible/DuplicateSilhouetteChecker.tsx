@@ -8,6 +8,7 @@ import {
   type DuplicatePair,
   type Fingerprint,
 } from "@/lib/ams/silhouette-hash";
+import { Button } from "@/components/ui/button";
 
 const VERDICT_COPY: Record<DuplicatePair["verdict"], string> = {
   reused: "Same silhouette, same palette — reused asset",
@@ -44,25 +45,30 @@ export function DuplicateSilhouetteChecker() {
   }
 
   return (
-    <section className="space-y-4 rounded-2xl border border-border/60 bg-black/20 p-5">
-      <header className="flex flex-wrap items-center gap-3">
+    <section className="space-y-4 rounded-lg border border-border/60 bg-card/70 p-5 shadow-[var(--shadow-card)]">
+      <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+        <div className="min-w-0">
         <h2 className="text-lg font-semibold text-foreground">Duplicate Silhouette Checker</h2>
-        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
+        <span className="block truncate text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
           shape fingerprint · colour-independent
         </span>
-        <button
+        </div>
+        <Button
           type="button"
           onClick={run}
           disabled={status === "running"}
-          className="ml-auto inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-amber-400/60 hover:text-amber-300 disabled:opacity-50"
+          variant="outline"
+          size="sm"
+          loading={status === "running"}
+          className="shrink-0 text-[10px] uppercase tracking-[0.16em]"
         >
           {status === "running" ? (
-            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            null
           ) : (
             <FingerprintIcon className="h-3.5 w-3.5" />
           )}
           {status === "running" ? `Scanning ${progress}%` : "Run duplicate scan"}
-        </button>
+        </Button>
       </header>
 
       <p className="text-xs leading-relaxed text-muted-foreground">
