@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, Fingerprint as FingerprintIcon, Loader2, TriangleAlert } from "lucide-react";
+import { CheckCircle2, Fingerprint as FingerprintIcon, TriangleAlert } from "lucide-react";
 import { TROPHIES } from "@/lib/ams/trophy-catalog";
 import { stageRender } from "@/lib/ams/trophy-stage-assets";
 import {
