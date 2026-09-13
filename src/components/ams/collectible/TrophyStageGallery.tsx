@@ -184,16 +184,18 @@ export function TrophyStageGallery() {
                   {svCollectionNumber(item.id, item.roleSlug.slice(0, 3))}
                 </div>
 
-                <div className="absolute right-3 top-3 z-10 flex gap-1.5 opacity-0 transition-opacity group-hover:opacity-100">
-                  <button
+                <div className="absolute right-3 top-3 z-10 flex gap-1.5 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+                  <Button
                     type="button"
                     onClick={() => setActive(item)}
                     aria-label="Inspect in 3D"
-                    className="grid h-8 w-8 place-items-center rounded-md border bg-background/75 text-foreground shadow-sm backdrop-blur transition hover:bg-accent"
+                    variant="outline"
+                    size="icon-sm"
+                    className="bg-background/75 shadow-sm backdrop-blur"
                     style={{ borderColor: `${accent}66` }}
                   >
                     <Expand className="h-3.5 w-3.5" />
-                  </button>
+                  </Button>
                   {src && (
                     <a
                       href={src}
