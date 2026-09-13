@@ -95,7 +95,7 @@ export function DuplicateSilhouetteChecker() {
                   <div className="grid grid-cols-2 gap-3">
                     {[p.a, p.b].map((id) => (
                       <figure key={id} className="space-y-2">
-                        <div className="aspect-square overflow-hidden rounded-lg bg-black/40">
+                        <div className="aspect-square overflow-hidden rounded-lg bg-background/40">
                           <img
                             src={stageRender(id)}
                             alt={`Flagged trophy render ${id}`}
