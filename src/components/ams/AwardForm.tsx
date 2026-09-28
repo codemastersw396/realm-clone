@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MediaUploader } from "@/components/ams/shared/MediaUploader";
 import { RuleBuilder } from "@/components/ams/shared/RuleBuilder";
 import { PreviewStage } from "@/components/ams/shared/PreviewStage";
+import { AiImageSuggest } from "@/components/ams/AiImageSuggest";
 import {
   AWARD_CATEGORIES, RARITIES, DEPARTMENTS,
   type Award, type AwardCategory, type AwardRewards,
@@ -110,6 +111,16 @@ export function AwardForm({ initial, mode = "create" }: { initial?: Award | null
           </TabsList>
 
           <TabsContent value="basics" className="surface-card p-5 space-y-4 mt-4">
+            <AiImageSuggest onApply={(s) => setForm((f) => ({
+              ...f,
+              name: s.title,
+              category: s.category,
+              type: s.kind === "trophy" ? "trophy" : "badge",
+              description: s.issuer && s.issuer !== "Unknown"
+                ? `Issued by ${s.issuer}.${f.description ? " " + f.description.replace(/^Issued by [^.]*\.\s*/, "") : ""}`
+                : f.description,
+              media: { ...f.media, model3dUrl: f.media.model3dUrl ?? s.dataUrl },
+            }))} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2 space-y-1.5">
                 <Label>Name</Label>
