@@ -575,7 +575,7 @@ export function RoleAchievementShowcase({
           </Clickable>
         </div>
 
-        <div className={`grid gap-3 sm:grid-cols-3 xl:grid-rows-2 ${stageRight ? "xl:order-1" : ""}`}>
+        <div className={`grid gap-3 sm:grid-cols-3 ${stageRight ? "xl:order-1" : ""}`}>
           <div className={`grid gap-3 sm:col-span-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
             <Clickable item={mk("Latest Award", awardLabel, ROLE_AWARD[role.slug])} onOpen={setSelected}>
               <AwardPlinth role={role} label={awardLabel} />
@@ -585,18 +585,6 @@ export function RoleAchievementShowcase({
             </Clickable>
             <Clickable item={mk("Current Rank", rankLabel, ROLE_RANK[role.slug])} onOpen={setSelected}>
               <RankBanner role={role} label={rankLabel} />
-            </Clickable>
-          </div>
-
-          <div className={`grid gap-3 sm:col-span-3 sm:grid-cols-2 ${swapRow ? "[&>*:last-child]:sm:order-first" : ""}`}>
-            <Clickable
-              item={mk("Digital Passport", `${role.name} Passport`, ROLE_PASSPORT[role.slug])}
-              onOpen={setSelected}
-            >
-              <PassportBooklet role={role} />
-            </Clickable>
-            <Clickable item={mk("Certificate", certLabel, ROLE_CERTIFICATE[role.slug])} onOpen={setSelected}>
-              <CertificatePlate role={role} label={certLabel} />
             </Clickable>
           </div>
 
