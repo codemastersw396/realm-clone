@@ -20,6 +20,7 @@ import {
   type ShowcaseItem,
   type ShowcaseKind,
 } from "@/components/ams/shared/ShowcaseDetailDialog";
+import { Button } from "@/components/ui/button";
 
 /** Wraps a showcase card so click / Enter / Space opens the detail modal. */
 function Clickable({
@@ -43,7 +44,7 @@ function Clickable({
           onOpen(item);
         }
       }}
-      className={`group/click relative min-w-0 cursor-pointer rounded-xl outline-none ring-1 ring-transparent transition-all duration-300 hover:ring-primary/40 hover:shadow-[0_18px_40px_-28px_var(--primary)] focus-visible:ring-2 focus-visible:ring-ring ${className ?? ""}`}
+      className={`group/click relative h-full min-w-0 cursor-pointer rounded-xl outline-none ring-1 ring-transparent transition-all duration-300 hover:ring-primary/40 hover:shadow-[0_18px_40px_-28px_var(--primary)] focus-visible:ring-2 focus-visible:ring-ring ${className ?? ""}`}
     >
       {children}
     </div>
@@ -103,7 +104,7 @@ function artImage(src: string, alt: string, accent: string, extra = "") {
       alt={alt}
       loading="lazy"
       decoding="async"
-      className={`relative z-10 object-contain ${extra}`}
+      className={`relative z-10 block object-contain object-center ${extra}`}
       style={{
         filter: `saturate(1.16) contrast(1.06) drop-shadow(0 14px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 18px color-mix(in oklab, ${accent} 45%, transparent))`,
       }}
@@ -118,7 +119,7 @@ function TrophyStage({ role, unlockKey, label }: { role: RoleDNA; unlockKey: str
   return (
     <div
       key={unlockKey}
-      className="trophy-unlock relative overflow-hidden rounded-2xl border min-h-[340px] lg:min-h-full"
+      className="trophy-unlock relative h-[360px] overflow-hidden rounded-xl border sm:h-[400px] xl:h-full xl:min-h-[404px]"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 45%, var(--border))`,
         background: `
@@ -181,7 +182,7 @@ function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
   const accent = role.accent;
   return (
     <div
-      className="group relative overflow-hidden rounded-xl border p-3"
+      className="group relative flex h-[188px] flex-col overflow-hidden rounded-xl border p-3"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
         background: `radial-gradient(90% 70% at 50% 0%, color-mix(in oklab, ${accent} 20%, transparent), transparent 62%), linear-gradient(180deg, var(--card), var(--background))`,
@@ -190,7 +191,7 @@ function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
     >
       <Kicker accent={accent}>Latest Award</Kicker>
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
-      <div className="relative mt-2 grid h-28 place-items-center">
+      <div className="relative mt-2 grid min-h-0 flex-1 place-items-center">
         <div className="absolute bottom-1 h-3 w-2/3 rounded-[50%]" style={{ background: `${accent}55`, filter: "blur(8px)" }} />
         {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "max-h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]")}
       </div>
@@ -205,7 +206,7 @@ function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
   const accent = role.accent;
   return (
     <div
-      className="group relative overflow-hidden rounded-xl border p-3"
+      className="group relative flex h-[188px] flex-col overflow-hidden rounded-xl border p-3"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 30%, var(--border))`,
         background: `conic-gradient(from 210deg at 50% 40%, color-mix(in oklab, ${accent} 18%, transparent), transparent 42%, color-mix(in oklab, ${accent} 14%, transparent) 78%, transparent), linear-gradient(180deg, var(--card), var(--background))`,
@@ -213,7 +214,7 @@ function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
     >
       <Kicker accent={accent}>Featured Badge</Kicker>
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
-      <div className="relative mt-2 grid h-28 place-items-center">
+      <div className="relative mt-2 grid min-h-0 flex-1 place-items-center">
         <div
           className="absolute h-24 w-24 rotate-6 rounded-2xl border"
           style={{ borderColor: `${accent}44`, background: `${accent}12` }}
@@ -231,7 +232,7 @@ function PassportBooklet({ role }: { role: RoleDNA }) {
   const accent = role.accent;
   return (
     <div
-      className="relative overflow-hidden rounded-xl border p-3"
+      className="relative h-[188px] overflow-hidden rounded-xl border p-3"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
         background: `linear-gradient(115deg, color-mix(in oklab, ${accent} 16%, var(--card)), var(--background))`,
@@ -240,8 +241,8 @@ function PassportBooklet({ role }: { role: RoleDNA }) {
     >
       <div className="absolute left-4 top-0 h-full w-px" style={{ background: `linear-gradient(180deg, transparent, ${accent}55, transparent)` }} />
       <div className="flex gap-3">
-        <div className="relative h-32 w-24 shrink-0 overflow-hidden rounded-md">
-          {artImage(ROLE_PASSPORT[role.slug], `${role.name} digital passport`, accent, "h-full w-full")}
+        <div className="relative grid h-36 w-28 shrink-0 place-items-center overflow-hidden rounded-md">
+          {artImage(ROLE_PASSPORT[role.slug], `${role.name} digital passport`, accent, "max-h-full max-w-full")}
         </div>
         <div className="min-w-0 flex-1">
           <Kicker accent={accent}>Digital Passport</Kicker>
@@ -267,7 +268,7 @@ function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
   const accent = role.accent;
   return (
     <div
-      className="relative overflow-hidden rounded-xl border p-3 text-center"
+      className="relative flex h-[188px] flex-col overflow-hidden rounded-xl border p-3 text-center"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 34%, var(--border))`,
         background: `linear-gradient(180deg, color-mix(in oklab, ${accent} 22%, var(--card)), var(--background) 75%)`,
@@ -275,7 +276,7 @@ function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
     >
       <Kicker accent={accent}>Current Rank</Kicker>
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
-      <div className="relative mx-auto mt-2 grid h-32 place-items-center">
+      <div className="relative mx-auto mt-2 grid min-h-0 w-full flex-1 place-items-center">
         <div className="absolute inset-x-8 top-0 h-full" style={{ background: `linear-gradient(180deg, ${accent}22, transparent 70%)` }} />
         {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "max-h-full w-auto")}
       </div>
@@ -290,16 +291,16 @@ function CertificatePlate({ role, label }: { role: RoleDNA; label: string }) {
   const accent = role.accent;
   return (
     <div
-      className="relative overflow-hidden rounded-xl border"
+      className="relative h-[188px] overflow-hidden rounded-xl border"
       style={{ borderColor: `color-mix(in oklab, ${accent} 36%, var(--border))`, background: "var(--card)" }}
     >
-      <div className="relative h-36 w-full overflow-hidden">
+      <div className="relative grid h-[136px] w-full place-items-center overflow-hidden p-2">
         <img
           src={ROLE_CERTIFICATE[role.slug]}
           alt={`${role.name} certificate — ${label}`}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-contain object-center"
           style={{ filter: "saturate(1.12) contrast(1.05)" }}
         />
         <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, transparent 30%, color-mix(in oklab, var(--background) 88%, transparent))` }} />
@@ -324,7 +325,7 @@ function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) 
   const accent = role.accent;
   return (
     <div
-      className="group relative overflow-hidden rounded-xl border p-3"
+      className="group relative h-[188px] overflow-hidden rounded-xl border p-3"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 32%, var(--border))`,
         background: `linear-gradient(100deg, color-mix(in oklab, ${accent} 20%, var(--card)) 0%, var(--card) 45%, var(--background) 100%)`,
@@ -336,8 +337,8 @@ function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) 
         style={{ background: `linear-gradient(180deg, ${accent}, transparent)` }}
       />
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
-      <div className="flex items-center gap-3">
-        <div className="relative h-20 w-32 shrink-0 [perspective:900px]">
+      <div className="flex h-full items-center gap-3">
+        <div className="relative h-28 w-36 shrink-0 [perspective:900px]">
           <img
             src={ROLE_MEMBERSHIP[role.slug]}
             alt={`${role.name} membership card`}
@@ -373,13 +374,13 @@ function IdentityClearanceCard({ role, label }: { role: RoleDNA; label: string }
   const accent = role.accent;
   return (
     <div
-      className="group relative overflow-hidden rounded-xl border p-3"
+      className="group relative h-[188px] overflow-hidden rounded-xl border p-3"
       style={{
         borderColor: `color-mix(in oklab, ${accent} 32%, var(--border))`,
         background: `radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, ${accent} 22%, transparent), transparent 60%), linear-gradient(180deg, var(--card), var(--background))`,
       }}
     >
-      <div className="flex items-stretch gap-3">
+      <div className="flex h-full items-stretch gap-3">
         <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
         <div className="min-w-0 flex-1">
           <Kicker accent={accent}>Identity Card</Kicker>
@@ -396,8 +397,8 @@ function IdentityClearanceCard({ role, label }: { role: RoleDNA; label: string }
             }}
           />
         </div>
-        <div className="relative w-24 shrink-0 overflow-hidden rounded-lg border" style={{ borderColor: `${accent}44` }}>
-          {artImage(ROLE_IDENTITY_CARD[role.slug], `${role.name} identity card`, accent, "h-full w-full")}
+        <div className="relative grid w-32 shrink-0 place-items-center overflow-hidden rounded-lg border p-1" style={{ borderColor: `${accent}44` }}>
+          {artImage(ROLE_IDENTITY_CARD[role.slug], `${role.name} identity card`, accent, "max-h-full max-w-full")}
         </div>
       </div>
     </div>
@@ -423,7 +424,7 @@ function ArtifactFrame({
   const accent = role.accent;
   const f = FRAME_CSS[shape];
   return (
-    <div className="group flex min-w-0 flex-col items-center gap-1.5">
+    <div className="group flex h-[132px] min-w-0 flex-col items-center justify-center gap-1.5 px-1">
       <div
         className={`relative grid h-20 w-20 place-items-center border transition-transform duration-500 group-hover:-translate-y-1.5 ${f.className}`}
         style={{
@@ -473,7 +474,7 @@ export function RoleAchievementShowcase({
   name,
 }: { defaultRole?: RoleSlug; name?: string }) {
   const [slug, setSlug] = useState<RoleSlug>(defaultRole);
-  const role = useMemo(() => ROLES.find((r) => r.slug === slug)!, [slug]);
+  const role = useMemo(() => ROLES.find((r) => r.slug === slug) ?? ROLES[0], [slug]);
   const [unlockKey, setUnlockKey] = useState(0);
   const [selected, setSelected] = useState<ShowcaseItem | null>(null);
   useEffect(() => { setUnlockKey((k) => k + 1); setSelected(null); }, [slug]);
@@ -481,6 +482,8 @@ export function RoleAchievementShowcase({
   const mk = (kind: ShowcaseKind, label: string, src: string): ShowcaseItem => ({
     kind, label, src, seed: `${slug}-${kind}-${label}`,
   });
+
+  if (!role) return null;
 
   const ov = OVERRIDES[role.slug] ?? {};
   const roleIndex = ROLES.findIndex((r) => r.slug === role.slug);
@@ -515,8 +518,8 @@ export function RoleAchievementShowcase({
         boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05), 0 26px 70px -40px color-mix(in oklab, ${role.accent} 60%, transparent)`,
       }}
     >
-      <header className="mb-4 flex flex-wrap items-end justify-between gap-3">
-        <div>
+       <header className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 sm:flex sm:flex-wrap sm:justify-between">
+         <div className="min-w-0">
           <Kicker>Role Achievement Showcase</Kicker>
           <h2 className="text-lg font-semibold tracking-tight">
             {name ? `${name} · ` : ""}
@@ -525,16 +528,18 @@ export function RoleAchievementShowcase({
           </h2>
           <p className="mt-0.5 text-[11px] italic text-muted-foreground">"{role.motto}"</p>
         </div>
-        <div className="flex flex-wrap gap-1.5">
+         <div className="col-span-2 flex min-w-0 gap-1.5 overflow-x-auto pb-1 sm:col-span-1 sm:flex-wrap sm:justify-end" role="group" aria-label="Select role">
           {ROLES.map((r) => {
             const active = r.slug === role.slug;
             return (
-              <button
+              <Button
                 key={r.slug}
                 type="button"
+                variant="outline"
+                size="sm"
                 onClick={() => setSlug(r.slug)}
                 aria-pressed={active}
-                className="group relative rounded-lg border px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group relative h-8 shrink-0 rounded-lg px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
                 style={
                   active
                     ? {
@@ -553,25 +558,25 @@ export function RoleAchievementShowcase({
                 }
               >
                 <span className="mr-1">{r.glyph}</span>{r.name}
-              </button>
+              </Button>
             );
           })}
         </div>
       </header>
 
-      <div
-        className={`grid gap-3 ${
-          stageRight ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)]" : "lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]"
-        }`}
-      >
-        <div className={stageRight ? "lg:order-2" : ""}>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <Kicker>01 · Trophy & distinctions</Kicker>
+        <span className="text-[10px] text-muted-foreground">4 live collectibles</span>
+      </div>
+      <div className={`grid gap-3 xl:grid-cols-[minmax(360px,0.9fr)_minmax(0,1.6fr)] ${stageRight ? "xl:grid-cols-[minmax(0,1.6fr)_minmax(360px,0.9fr)]" : ""}`}>
+        <div className={stageRight ? "xl:order-2" : ""}>
           <Clickable item={mk("Signature Trophy", trophyLabel, ROLE_TROPHY[role.slug])} onOpen={setSelected}>
             <TrophyStage role={role} unlockKey={`${role.slug}-${unlockKey}`} label={trophyLabel} />
           </Clickable>
         </div>
 
-        <div className={`grid gap-3 ${stageRight ? "lg:order-1" : ""}`}>
-          <div className={`grid gap-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
+        <div className={`grid gap-3 sm:grid-cols-3 ${stageRight ? "xl:order-1" : ""}`}>
+          <div className={`grid gap-3 sm:col-span-3 sm:grid-cols-3 ${swapRow ? "[&>*:nth-child(3)]:sm:order-first" : ""}`}>
             <Clickable item={mk("Latest Award", awardLabel, ROLE_AWARD[role.slug])} onOpen={setSelected}>
               <AwardPlinth role={role} label={awardLabel} />
             </Clickable>
@@ -583,7 +588,14 @@ export function RoleAchievementShowcase({
             </Clickable>
           </div>
 
-          <div className={`grid gap-3 md:grid-cols-2 ${swapRow ? "[&>*:last-child]:md:order-first" : ""}`}>
+        </div>
+      </div>
+
+      <div className="mb-2 mt-5 flex items-center justify-between gap-3">
+        <Kicker>02 · Credentials & identity</Kicker>
+        <span className="text-[10px] text-muted-foreground">4 verified credentials</span>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Clickable
               item={mk("Digital Passport", `${role.name} Passport`, ROLE_PASSPORT[role.slug])}
               onOpen={setSelected}
@@ -593,19 +605,20 @@ export function RoleAchievementShowcase({
             <Clickable item={mk("Certificate", certLabel, ROLE_CERTIFICATE[role.slug])} onOpen={setSelected}>
               <CertificatePlate role={role} label={certLabel} />
             </Clickable>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
             <Clickable item={mk("Membership", membershipLabel, ROLE_MEMBERSHIP[role.slug])} onOpen={setSelected}>
               <MembershipMetalCard role={role} label={membershipLabel} />
             </Clickable>
             <Clickable item={mk("Identity Card", levelLabel, ROLE_IDENTITY_CARD[role.slug])} onOpen={setSelected}>
               <IdentityClearanceCard role={role} label={levelLabel} />
             </Clickable>
-          </div>
+      </div>
 
+      <div className="mb-2 mt-5 flex items-center justify-between gap-3">
+        <Kicker>03 · Special recognition</Kicker>
+        <span className="text-[10px] text-muted-foreground">6 collection pieces</span>
+      </div>
           <div
-            className="grid grid-cols-3 gap-3 rounded-xl border p-3 sm:grid-cols-6"
+            className="grid grid-cols-2 gap-2 rounded-xl border p-3 min-[520px]:grid-cols-3 lg:grid-cols-6"
             style={{
               borderColor: `color-mix(in oklab, ${role.accent} 22%, var(--border))`,
               background: `linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, ${role.accent}), var(--background))`,
@@ -627,8 +640,6 @@ export function RoleAchievementShowcase({
               </Clickable>
             ))}
           </div>
-        </div>
-      </div>
 
 
       <footer className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
