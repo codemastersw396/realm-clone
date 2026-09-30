@@ -97,6 +97,14 @@ function Kicker({ children, accent }: { children: React.ReactNode; accent?: stri
   );
 }
 
+function hideBadArt(e: React.SyntheticEvent<HTMLImageElement>) {
+  const img = e.currentTarget;
+  // Hide blank, broken or tiny (likely cropped) artwork instead of showing a clipped frame.
+  if (e.type === "error" || img.naturalWidth < 64 || img.naturalHeight < 64) {
+    img.style.visibility = "hidden";
+  }
+}
+
 function artImage(src: string, alt: string, accent: string, extra = "") {
   return (
     <img
@@ -104,6 +112,8 @@ function artImage(src: string, alt: string, accent: string, extra = "") {
       alt={alt}
       loading="lazy"
       decoding="async"
+      onLoad={hideBadArt}
+      onError={hideBadArt}
       className={`relative z-10 block object-contain object-center ${extra}`}
       style={{
         filter: `saturate(1.16) contrast(1.06) drop-shadow(0 14px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 18px color-mix(in oklab, ${accent} 45%, transparent))`,
@@ -145,6 +155,8 @@ function TrophyStage({ role, unlockKey, label }: { role: RoleDNA; unlockKey: str
           alt={`${role.name} signature trophy — ${label}`}
           loading="eager"
           decoding="async"
+      onLoad={hideBadArt}
+      onError={hideBadArt}
           width={2048}
           height={2048}
           className="trophy-float relative z-10 max-h-[86%] w-auto object-contain"
@@ -300,6 +312,8 @@ function CertificatePlate({ role, label }: { role: RoleDNA; label: string }) {
           alt={`${role.name} certificate — ${label}`}
           loading="lazy"
           decoding="async"
+      onLoad={hideBadArt}
+      onError={hideBadArt}
           className="h-full w-full object-contain object-center"
           style={{ filter: "saturate(1.12) contrast(1.05)" }}
         />
@@ -344,6 +358,8 @@ function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) 
             alt={`${role.name} membership card`}
             loading="lazy"
             decoding="async"
+      onLoad={hideBadArt}
+      onError={hideBadArt}
             className="h-full w-full object-contain transition-transform duration-500 group-hover:[transform:none]"
             style={{
               transform: "rotateY(-14deg) rotateX(6deg)",
