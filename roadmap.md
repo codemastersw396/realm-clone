@@ -6,4 +6,4 @@
 - [x] Audit current gallery layout and real asset/data flow
 - [x] Refine trophy collection, filters, cards, and details presentation
 - [x] Separate and refine credentials presentation
-- [ ] Verify authenticated desktop, tablet, and mobile rendering (blocked until a preview account is signed in)
+- [ ] Verify authenticated desktop, tablet, and mobile rendering (blocked until a preview account is signed in)- [ ] Sign in to preview session and inspect the real AMS Manager gallery render; hide any cropped trophies found (blocked: needs to know which auth account to use)
