@@ -21,6 +21,7 @@ import {
   type ShowcaseKind,
 } from "@/components/ams/shared/ShowcaseDetailDialog";
 import { Button } from "@/components/ui/button";
+import { Trophy } from "lucide-react";
 
 /** Wraps a showcase card so click / Enter / Space opens the detail modal. */
 function Clickable({
