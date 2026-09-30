@@ -117,6 +117,8 @@ function isCroppedArt(img: HTMLImageElement): boolean {
     const { data } = ctx.getImageData(0, 0, w, h);
     let edgeOpaque = 0;
     let edgeTotal = 0;
+    let transparent = 0;
+    const total = w * h;
     for (let x = 0; x < w; x++) {
       for (const y of [0, h - 1]) {
         edgeTotal++;
@@ -129,9 +131,14 @@ function isCroppedArt(img: HTMLImageElement): boolean {
         if (data[(y * w + x) * 4 + 3] > 40) edgeOpaque++;
       }
     }
-    // Opaque artwork (certificates, cards) fills the frame by design — only
-    // treat it as cropped when nearly the entire border is solid.
-    return edgeOpaque / edgeTotal > 0.92;
+    for (let i = 3; i < data.length; i += 4) {
+      if (data[i] <= 40) transparent++;
+    }
+    // Fully opaque art (certificates, membership cards) fills the frame by
+    // design — never cropped. Cropped trophies are transparent PNGs whose
+    // subject bleeds off the canvas, so their edges stay mostly opaque.
+    const hasTransparency = transparent / total > 0.05;
+    return hasTransparency && edgeOpaque / edgeTotal > 0.85;
   } catch {
     return false;
   }
@@ -216,16 +223,12 @@ function TrophyStage({ role, unlockKey, label }: { role: RoleDNA; unlockKey: str
         />
       </div>
       <div className="absolute inset-0 grid place-items-center px-6 pb-20 pt-10 [perspective:1200px]">
-        <img
+        <ArtImg
           src={ROLE_TROPHY[role.slug]}
           alt={`${role.name} signature trophy — ${label}`}
-          loading="eager"
-          decoding="async"
-      onLoad={hideBadArt}
-      onError={hideBadArt}
-          width={2048}
-          height={2048}
-          className="trophy-float relative z-10 max-h-[86%] w-auto object-contain"
+          accent={accent}
+          eager
+          extra="trophy-float max-h-[86%] w-auto"
           style={{
             filter: `saturate(1.2) contrast(1.09) drop-shadow(0 26px 38px rgba(0,0,0,0.7)) drop-shadow(0 0 30px color-mix(in oklab, ${accent} 58%, transparent))`,
           }}
