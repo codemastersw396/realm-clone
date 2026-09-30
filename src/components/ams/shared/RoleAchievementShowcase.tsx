@@ -376,14 +376,11 @@ function CertificatePlate({ role, label }: { role: RoleDNA; label: string }) {
       style={{ borderColor: `color-mix(in oklab, ${accent} 36%, var(--border))`, background: "var(--card)" }}
     >
       <div className="relative grid h-[136px] w-full place-items-center overflow-hidden p-2">
-        <img
+        <ArtImg
           src={ROLE_CERTIFICATE[role.slug]}
           alt={`${role.name} certificate — ${label}`}
-          loading="lazy"
-          decoding="async"
-      onLoad={hideBadArt}
-      onError={hideBadArt}
-          className="h-full w-full object-contain object-center"
+          accent={accent}
+          extra="h-full w-full"
           style={{ filter: "saturate(1.12) contrast(1.05)" }}
         />
         <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, transparent 30%, color-mix(in oklab, var(--background) 88%, transparent))` }} />
@@ -422,14 +419,11 @@ function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) 
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="flex h-full items-center gap-3">
         <div className="relative h-28 w-36 shrink-0 [perspective:900px]">
-          <img
+          <ArtImg
             src={ROLE_MEMBERSHIP[role.slug]}
             alt={`${role.name} membership card`}
-            loading="lazy"
-            decoding="async"
-      onLoad={hideBadArt}
-      onError={hideBadArt}
-            className="h-full w-full object-contain transition-transform duration-500 group-hover:[transform:none]"
+            accent={accent}
+            extra="h-full w-full transition-transform duration-500 group-hover:[transform:none]"
             style={{
               transform: "rotateY(-14deg) rotateX(6deg)",
               filter: `saturate(1.14) drop-shadow(0 16px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 16px color-mix(in oklab, ${accent} 40%, transparent))`,
