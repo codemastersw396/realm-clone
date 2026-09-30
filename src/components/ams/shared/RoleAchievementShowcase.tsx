@@ -97,29 +97,94 @@ function Kicker({ children, accent }: { children: React.ReactNode; accent?: stri
   );
 }
 
-function hideBadArt(e: React.SyntheticEvent<HTMLImageElement>) {
-  const img = e.currentTarget;
-  // Hide blank, broken or tiny (likely cropped) artwork instead of showing a clipped frame.
-  if (e.type === "error" || img.naturalWidth < 64 || img.naturalHeight < 64) {
-    img.style.visibility = "hidden";
+/**
+ * Detects blank, broken, tiny or edge-cropped artwork.
+ * Cropped art bleeds off the canvas: its opaque pixels touch the image edges.
+ * Real trophy renders are transparent PNGs whose edges are (mostly) clear.
+ */
+function isCroppedArt(img: HTMLImageElement): boolean {
+  try {
+    const w = Math.min(img.naturalWidth, 96);
+    const h = Math.min(img.naturalHeight, 96);
+    if (w < 2 || h < 2) return true;
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) return false;
+    ctx.drawImage(img, 0, 0, w, h);
+    const { data } = ctx.getImageData(0, 0, w, h);
+    let edgeOpaque = 0;
+    let edgeTotal = 0;
+    for (let x = 0; x < w; x++) {
+      for (const y of [0, h - 1]) {
+        edgeTotal++;
+        if (data[(y * w + x) * 4 + 3] > 40) edgeOpaque++;
+      }
+    }
+    for (let y = 1; y < h - 1; y++) {
+      for (const x of [0, w - 1]) {
+        edgeTotal++;
+        if (data[(y * w + x) * 4 + 3] > 40) edgeOpaque++;
+      }
+    }
+    // Opaque artwork (certificates, cards) fills the frame by design — only
+    // treat it as cropped when nearly the entire border is solid.
+    return edgeOpaque / edgeTotal > 0.92;
+  } catch {
+    return false;
   }
 }
 
-function artImage(src: string, alt: string, accent: string, extra = "") {
+function ArtImg({
+  src,
+  alt,
+  accent,
+  extra = "",
+  eager = false,
+  style,
+}: {
+  src: string;
+  alt: string;
+  accent: string;
+  extra?: string;
+  eager?: boolean;
+  style?: React.CSSProperties;
+}) {
+  const [bad, setBad] = useState(false);
+  if (bad) {
+    return (
+      <div className="relative z-10 grid h-full w-full place-items-center">
+        <div className="flex flex-col items-center gap-1.5 opacity-60">
+          <Trophy className="h-6 w-6 text-muted-foreground" />
+          <span className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground">Artwork unavailable</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <img
       src={src}
       alt={alt}
-      loading="lazy"
+      loading={eager ? "eager" : "lazy"}
       decoding="async"
-      onLoad={hideBadArt}
-      onError={hideBadArt}
+      onLoad={(e) => {
+        const img = e.currentTarget;
+        if (img.naturalWidth < 64 || img.naturalHeight < 64 || isCroppedArt(img)) setBad(true);
+      }}
+      onError={() => setBad(true)}
       className={`relative z-10 block object-contain object-center ${extra}`}
       style={{
+        imageRendering: "auto",
         filter: `saturate(1.16) contrast(1.06) drop-shadow(0 14px 22px rgba(0,0,0,0.6)) drop-shadow(0 0 18px color-mix(in oklab, ${accent} 45%, transparent))`,
+        ...style,
       }}
     />
   );
+}
+
+function artImage(src: string, alt: string, accent: string, extra = "") {
+  return <ArtImg src={src} alt={alt} accent={accent} extra={extra} />;
 }
 
 /* ───────────────────── 1. Signature trophy stage ───────────────────── */
