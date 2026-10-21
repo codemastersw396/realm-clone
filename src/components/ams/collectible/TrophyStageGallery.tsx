@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Download, Expand, Search, Trophy, X } from "lucide-react";
 import { Collectible3D } from "./Collectible3D";
 import { SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 import { TIERS, TROPHIES, ROLE_LIST, type Tier, type TrophyStage } from "@/lib/ams/trophy-catalog";
 import { stageRender, referenceForRole } from "@/lib/ams/trophy-stage-assets";
+import { listTrophyDetails } from "@/lib/ams/trophy-details.functions";
 import { getRole } from "@/lib/ams/roles";
 import { Button } from "@/components/ui/button";
 
@@ -14,15 +17,83 @@ const TIER_HUE: Record<Tier, string> = {
   Legacy: "#facc15",
 };
 
+const STATUS_HUE: Record<string, string> = {
+  active: "#4ade80",
+  pending: "#facc15",
+  archived: "#94a3b8",
+};
+
+type DetailStatus = "active" | "pending" | "archived";
+
 function accentFor(slug: string, tier: Tier) {
   return getRole(slug)?.accent ?? TIER_HUE[tier];
+}
+
+/** Card artwork with a real same-role trophy render as fallback when the
+ *  primary artwork is blank, broken or edge-cropped. */
+function StageArt({
+  item,
+  src,
+  accent,
+  className = "",
+}: {
+  item: TrophyStage;
+  src: string | undefined;
+  accent: string;
+  className?: string;
+}) {
+  const [bad, setBad] = useState(false);
+  const [fallbackBad, setFallbackBad] = useState(false);
+  const fallback = stageRender(`${item.roleSlug}-01`);
+  const usingFallback = bad && !!fallback && fallback !== src;
+  const activeSrc = usingFallback ? fallback : src;
+
+  if (!activeSrc || (usingFallback && fallbackBad)) {
+    return (
+      <div className="grid h-full place-items-center text-center text-xs text-muted-foreground">
+        <div><SVSeal accent={accent} size={34} /><span className="mt-2 block">Artwork unavailable</span></div>
+      </div>
+    );
+  }
+  return (
+    <img
+      src={activeSrc}
+      alt={`${item.role} stage ${item.stage} trophy — ${item.name}`}
+      loading="lazy"
+      decoding="async"
+      className={className}
+      style={{ imageRendering: "auto" }}
+      onLoad={(e) => {
+        const img = e.currentTarget;
+        if (img.naturalWidth < 64 || img.naturalHeight < 64) {
+          if (usingFallback) setFallbackBad(true); else setBad(true);
+        }
+      }}
+      onError={() => { if (usingFallback) setFallbackBad(true); else setBad(true); }}
+    />
+  );
 }
 
 export function TrophyStageGallery() {
   const [role, setRole] = useState<string>("all");
   const [tier, setTier] = useState<Tier | "all">("all");
+  const [category, setCategory] = useState<string>("all");
+  const [status, setStatus] = useState<DetailStatus | "all">("all");
   const [query, setQuery] = useState("");
   const [active, setActive] = useState<TrophyStage | null>(null);
+
+  const detailsQ = useQuery({ queryKey: ["trophy-details"], queryFn: () => listTrophyDetails() });
+  const detailMap = useMemo(
+    () => new Map((detailsQ.data ?? []).map((d) => [d.id, d])),
+    [detailsQ.data],
+  );
+  const categoryFor = (t: TrophyStage) => detailMap.get(t.id)?.category || t.role;
+  const statusFor = (t: TrophyStage): DetailStatus => detailMap.get(t.id)?.status ?? "active";
+
+  const categories = useMemo(
+    () => Array.from(new Set(TROPHIES.map(categoryFor))).sort((a, b) => a.localeCompare(b)),
+    [detailMap],
+  );
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -30,9 +101,11 @@ export function TrophyStageGallery() {
       (t) =>
         (role === "all" || t.roleSlug === role) &&
         (tier === "all" || t.tier === tier) &&
+        (category === "all" || categoryFor(t) === category) &&
+        (status === "all" || statusFor(t) === status) &&
         (!q || t.name.toLowerCase().includes(q) || t.role.toLowerCase().includes(q)),
     );
-  }, [role, tier, query]);
+  }, [role, tier, category, status, query, detailMap]);
 
   const activeAccent = active ? accentFor(active.roleSlug, active.tier) : "#facc15";
   const activeRender = active ? stageRender(active.id) : undefined;
@@ -45,6 +118,8 @@ export function TrophyStageGallery() {
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, [active]);
+
+  const filtersActive = role !== "all" || tier !== "all" || category !== "all" || status !== "all" || !!query;
 
   return (
     <div className="space-y-5">
@@ -89,6 +164,47 @@ export function TrophyStageGallery() {
         </div>
       </div>
 
+      <div className="rounded-lg border border-border/60 bg-card/55 p-3 shadow-[var(--shadow-card)] sm:p-4">
+        <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Filter by category</div>
+        <div className="scrollbar-thin flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter trophies by category">
+          <Button
+            variant="outline"
+            size="sm"
+            aria-pressed={category === "all"}
+            className="shrink-0 rounded-md px-3 text-[10px] uppercase tracking-[0.14em]"
+            style={
+              category === "all"
+                ? { borderColor: "var(--color-legendary)", color: "var(--color-legendary)", background: "color-mix(in oklab, var(--color-legendary) 10%, transparent)" }
+                : undefined
+            }
+            onClick={() => setCategory("all")}
+          >
+            All categories
+          </Button>
+          {categories.map((c) => {
+            const on = category === c;
+            const hue = "#22d3ee";
+            return (
+              <Button
+                key={c}
+                variant="outline"
+                size="sm"
+                aria-pressed={on}
+                className="shrink-0 rounded-md px-3 text-[10px] uppercase tracking-[0.14em]"
+                style={
+                  on
+                    ? { borderColor: hue, color: hue, background: `color-mix(in oklab, ${hue} 10%, transparent)` }
+                    : undefined
+                }
+                onClick={() => setCategory(c)}
+              >
+                {c}
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
         <div className="flex min-w-0 flex-wrap items-center gap-2" role="group" aria-label="Filter trophies by tier">
           {(["all", ...TIERS] as const).map((t) => {
@@ -112,6 +228,27 @@ export function TrophyStageGallery() {
               </Button>
             );
           })}
+          {(["all", "active", "pending"] as const).map((s) => {
+            const on = status === s;
+            const hue = s === "all" ? "#a78bfa" : STATUS_HUE[s];
+            return (
+              <Button
+                key={s}
+                variant="outline"
+                size="sm"
+                aria-pressed={on}
+                className="rounded-md px-3 text-[10px] uppercase tracking-[0.14em]"
+                style={
+                  on
+                    ? { borderColor: hue, color: hue, background: `color-mix(in oklab, ${hue} 10%, transparent)` }
+                    : undefined
+                }
+                onClick={() => setStatus(s as DetailStatus | "all")}
+              >
+                {s === "all" ? "All status" : s}
+              </Button>
+            );
+          })}
         </div>
         <label className="relative block min-w-0 sm:w-64">
           <span className="sr-only">Search stage or role</span>
@@ -127,8 +264,8 @@ export function TrophyStageGallery() {
 
       <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
         {visible.length} of {TROPHIES.length} stages shown
-        {(role !== "all" || tier !== "all" || query) && (
-          <Button variant="ghost" size="sm" className="h-7 px-2 text-[11px]" onClick={() => { setRole("all"); setTier("all"); setQuery(""); }}>
+        {filtersActive && (
+          <Button variant="ghost" size="sm" className="h-7 px-2 text-[11px]" onClick={() => { setRole("all"); setTier("all"); setCategory("all"); setStatus("all"); setQuery(""); }}>
             Clear filters
           </Button>
         )}
@@ -139,13 +276,14 @@ export function TrophyStageGallery() {
           <div>
             <Trophy className="mx-auto h-7 w-7 text-muted-foreground" />
             <div className="mt-3 text-sm font-medium text-foreground">No trophies found</div>
-            <p className="mt-1 text-xs text-muted-foreground">Adjust the current role, tier, or search filter.</p>
+            <p className="mt-1 text-xs text-muted-foreground">Adjust the current role, category, tier, status, or search filter.</p>
           </div>
         </div>
       ) : <div className="grid grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-3 min-[1480px]:grid-cols-4 min-[2200px]:grid-cols-5">
         {visible.map((item) => {
-          const src = stageRender(item.id);
+          const src = detailMap.get(item.id)?.imageUrl ?? stageRender(item.id);
           const accent = accentFor(item.roleSlug, item.tier);
+          const itemStatus = statusFor(item);
           return (
             <article
               key={item.id}
@@ -159,11 +297,10 @@ export function TrophyStageGallery() {
                 }}
               >
                 {src ? (
-                  <img
+                  <StageArt
+                    item={item}
                     src={src}
-                    alt={`${item.role} stage ${item.stage} trophy — ${item.name}`}
-                    loading="lazy"
-                    decoding="async"
+                    accent={accent}
                     className="h-full w-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.025]"
                   />
                 ) : (
@@ -184,6 +321,15 @@ export function TrophyStageGallery() {
                   {svCollectionNumber(item.id, item.roleSlug.slice(0, 3))}
                 </div>
 
+                {itemStatus !== "active" && (
+                  <div
+                    className="absolute right-3 bottom-9 z-10 rounded-sm border px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.2em]"
+                    style={{ borderColor: `${STATUS_HUE[itemStatus]}66`, color: STATUS_HUE[itemStatus], background: "rgba(0,0,0,0.4)" }}
+                  >
+                    {itemStatus}
+                  </div>
+                )}
+
                 <div className="absolute right-3 top-3 z-10 flex gap-1.5 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
                   <Button
                     type="button"
@@ -196,6 +342,15 @@ export function TrophyStageGallery() {
                   >
                     <Expand className="h-3.5 w-3.5" />
                   </Button>
+                  <Link
+                    to="/trophy-stages/$id"
+                    params={{ id: item.id }}
+                    aria-label={`Open trophy details for ${item.name}`}
+                    className="grid h-8 w-8 place-items-center rounded-md border bg-background/75 text-foreground shadow-sm backdrop-blur transition hover:bg-accent"
+                    style={{ borderColor: `${accent}66` }}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+                  </Link>
                   {src && (
                     <a
                       href={src}
@@ -217,7 +372,16 @@ export function TrophyStageGallery() {
                   </span>
                   <span className="shrink-0 rounded-sm border border-border/50 bg-muted/30 px-1.5 py-0.5" style={{ color: TIER_HUE[item.tier] }}>{item.tier}</span>
                 </div>
-                <div className="min-h-10 text-sm font-semibold leading-5 text-foreground">{item.name}</div>
+                <Link
+                  to="/trophy-stages/$id"
+                  params={{ id: item.id }}
+                  className="block min-h-10 rounded text-sm font-semibold leading-5 text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring hover:underline decoration-border underline-offset-4"
+                >
+                  {detailMap.get(item.id)?.name || item.name}
+                </Link>
+                <div className="text-[10px] font-mono uppercase tracking-[0.16em] text-muted-foreground">
+                  {categoryFor(item)}
+                </div>
               </div>
             </article>
           );
@@ -270,19 +434,19 @@ export function TrophyStageGallery() {
                 />
               )}
               <p className="mt-4 text-xs leading-relaxed text-muted-foreground">{active.brief}</p>
-              {referenceForRole(active.roleSlug) && (
-                <div className="mt-4 flex items-center gap-3">
+              <div className="mt-4 flex items-center gap-3">
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/trophy-stages/$id" params={{ id: active.id }}>Open details page</Link>
+                </Button>
+                {referenceForRole(active.roleSlug) && (
                   <img
                     src={referenceForRole(active.roleSlug)!.src}
                     alt={`${active.role} studio reference`}
                     loading="lazy"
                     className="h-16 w-16 rounded-lg border border-border/60 object-cover"
                   />
-                  <div className="text-[11px] uppercase tracking-widest text-muted-foreground">
-                    Studio reference · {active.role}
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
