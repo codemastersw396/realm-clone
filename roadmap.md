@@ -9,5 +9,7 @@
 - [ ] Verify authenticated desktop, tablet, and mobile rendering (blocked until a preview account is signed in)
 - [ ] Sign in to preview session and inspect the real AMS Manager gallery render; hide any cropped trophies found (blocked: needs to know which auth account to use)
 - [ ] Test New Award image upload and AI suggestions for title, category, and image (blocked if authenticated preview requires account selection)
-- [ ] Inspect the authenticated AMS Manager gallery at 1366, 1920, and 2560 widths; confirm cropped-trophy handling and blank states
-- [ ] Add a trophy details page showing title, category, issuer, description, original image, and a download link
+- [x] Add a trophy details page showing title, category, issuer, description, original image, and a download link
+- [x] Add title, category, description editing and artwork replacement on the trophy detail page (trophy_details table + award-assets bucket)
+- [x] Add role, category, and status (active/pending) filters to the trophy gallery and link each card to its role-wise detail page
+- [x] Replace cropped/blank showcase artwork with real trophy renders (fallback chain on ArtImg/StageArt)

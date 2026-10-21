@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep the AMS Role Achievement Showcase grouped into trophy, credential, and special-recognition sections with fixed card dimensions; this prevents mixed artwork ratios from clipping or destabilizing the gallery.
+- The 180-trophy staged catalog stays static in code; editable trophy metadata (title, category, issuer, description, status) and replaced artwork live in the `trophy_details` table and the private `award-assets` bucket (signed URLs), and the trophy gallery merges catalog entries with those overrides — never seed the table on page load.

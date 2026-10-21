@@ -206,7 +206,7 @@ function TrophyDetailPage() {
               Title
               <input
                 value={draft?.name ?? name}
-                onChange={(e) => setDraft((d) => ({ name: name, category: category, description: description, status: status, ...d, name: e.target.value }))}
+                onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), name: e.target.value }))}
                 className="mt-1 h-9 w-full rounded-md border border-border/70 bg-muted/20 px-3 text-sm text-foreground outline-none focus:border-primary/60 focus:ring-2 focus:ring-ring/30"
               />
             </label>
@@ -215,7 +215,7 @@ function TrophyDetailPage() {
               <input
                 list="trophy-category-suggestions"
                 value={draft?.category ?? category}
-                onChange={(e) => setDraft((d) => ({ name: name, category: category, description: description, status: status, ...d, category: e.target.value }))}
+                onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), category: e.target.value }))}
                 className="mt-1 h-9 w-full rounded-md border border-border/70 bg-muted/20 px-3 text-sm text-foreground outline-none focus:border-primary/60 focus:ring-2 focus:ring-ring/30"
               />
               <datalist id="trophy-category-suggestions">
@@ -227,7 +227,7 @@ function TrophyDetailPage() {
               <textarea
                 rows={4}
                 value={draft?.description ?? description}
-                onChange={(e) => setDraft((d) => ({ name: name, category: category, description: description, status: status, ...d, description: e.target.value }))}
+                onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), description: e.target.value }))}
                 className="mt-1 w-full rounded-md border border-border/70 bg-muted/20 px-3 py-2 text-sm text-foreground outline-none focus:border-primary/60 focus:ring-2 focus:ring-ring/30"
               />
             </label>
@@ -235,7 +235,7 @@ function TrophyDetailPage() {
               Status
               <select
                 value={draft?.status ?? status}
-                onChange={(e) => setDraft((d) => ({ name: name, category: category, description: description, status: status, ...d, status: e.target.value as "active" | "pending" | "archived" }))}
+                onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), status: e.target.value as "active" | "pending" | "archived" }))}
                 className="mt-1 h-9 w-full rounded-md border border-border/70 bg-muted/20 px-3 text-sm text-foreground outline-none focus:border-primary/60"
               >
                 <option value="active">Active</option>

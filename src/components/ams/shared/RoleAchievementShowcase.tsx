@@ -14,6 +14,7 @@ import {
   ROLE_LEGACY_MEDAL, ROLE_HONOR_COIN, ROLE_XP_CRYSTAL, ROLE_REWARD_CHEST,
   ROLE_SHIELD,
 } from "@/lib/ams/role-assets";
+import { stageRender } from "@/lib/ams/trophy-stage-assets";
 import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 import {
   ShowcaseDetailDialog,
@@ -151,6 +152,7 @@ function ArtImg({
   extra = "",
   eager = false,
   style,
+  fallbackSrc,
 }: {
   src: string;
   alt: string;
@@ -158,9 +160,14 @@ function ArtImg({
   extra?: string;
   eager?: boolean;
   style?: React.CSSProperties;
+  /** Real trophy render substituted when the primary artwork is blank or cropped. */
+  fallbackSrc?: string;
 }) {
   const [bad, setBad] = useState(false);
-  if (bad) {
+  const [fallbackBad, setFallbackBad] = useState(false);
+  const usingFallback = bad && !!fallbackSrc && fallbackSrc !== src;
+  const activeSrc = usingFallback ? fallbackSrc : src;
+  if (!activeSrc || (usingFallback && fallbackBad)) {
     return (
       <div className="relative z-10 grid h-full w-full place-items-center">
         <div className="flex flex-col items-center gap-1.5 opacity-60">
@@ -172,15 +179,17 @@ function ArtImg({
   }
   return (
     <img
-      src={src}
+      src={activeSrc}
       alt={alt}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       onLoad={(e) => {
         const img = e.currentTarget;
-        if (img.naturalWidth < 64 || img.naturalHeight < 64 || isCroppedArt(img)) setBad(true);
+        if (img.naturalWidth < 64 || img.naturalHeight < 64 || isCroppedArt(img)) {
+          if (usingFallback) setFallbackBad(true); else setBad(true);
+        }
       }}
-      onError={() => setBad(true)}
+      onError={() => { if (usingFallback) setFallbackBad(true); else setBad(true); }}
       className={`relative z-10 block object-contain object-center ${extra}`}
       style={{
         imageRendering: "auto",
@@ -191,8 +200,21 @@ function ArtImg({
   );
 }
 
-function artImage(src: string, alt: string, accent: string, extra = "") {
-  return <ArtImg src={src} alt={alt} accent={accent} extra={extra} />;
+/** Real staged trophy render used to replace blank or cropped artwork. */
+const FALLBACK_STAGE: Partial<Record<string, number>> = {
+  "Signature Trophy": 9, "Latest Award": 3, "Featured Badge": 2, "Current Rank": 6,
+  "Digital Passport": 1, "Certificate": 5, "Membership": 4, "Identity Card": 7,
+  "Trust Seal": 4, "Legacy Medal": 5, "Honor Coin": 3, "XP Crystal": 2,
+  "Reward Chest": 6, "Guardian Shield": 7,
+};
+
+function fallbackArt(roleSlug: string, kind: string): string | undefined {
+  const stage = FALLBACK_STAGE[kind];
+  return stage ? stageRender(`${roleSlug}-${String(stage).padStart(2, "0")}`) : undefined;
+}
+
+function artImage(src: string, alt: string, accent: string, extra = "", fallbackSrc?: string) {
+  return <ArtImg src={src} alt={alt} accent={accent} extra={extra} fallbackSrc={fallbackSrc} />;
 }
 
 /* ───────────────────── 1. Signature trophy stage ───────────────────── */
@@ -225,6 +247,7 @@ function TrophyStage({ role, unlockKey, label }: { role: RoleDNA; unlockKey: str
       <div className="absolute inset-0 grid place-items-center px-6 pb-20 pt-10 [perspective:1200px]">
         <ArtImg
           src={ROLE_TROPHY[role.slug]}
+          fallbackSrc={fallbackArt(role.slug, "Signature Trophy")}
           alt={`${role.name} signature trophy — ${label}`}
           accent={accent}
           eager
@@ -274,7 +297,7 @@ function AwardPlinth({ role, label }: { role: RoleDNA; label: string }) {
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="relative mt-2 grid min-h-0 flex-1 place-items-center">
         <div className="absolute bottom-1 h-3 w-2/3 rounded-[50%]" style={{ background: `${accent}55`, filter: "blur(8px)" }} />
-        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "max-h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]")}
+        {artImage(ROLE_AWARD[role.slug], `${role.name} award — ${label}`, accent, "max-h-full w-auto transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]", fallbackArt(role.slug, "Latest Award"))}
       </div>
       <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
@@ -300,7 +323,7 @@ function BadgeCrest({ role, label }: { role: RoleDNA; label: string }) {
           className="absolute h-24 w-24 rotate-6 rounded-2xl border"
           style={{ borderColor: `${accent}44`, background: `${accent}12` }}
         />
-        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "max-h-[88%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.04]")}
+        {artImage(ROLE_BADGE[role.slug], `${role.name} badge — ${label}`, accent, "max-h-[88%] w-auto transition-transform duration-500 group-hover:rotate-[3deg] group-hover:scale-[1.04]", fallbackArt(role.slug, "Featured Badge"))}
       </div>
       <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
@@ -323,7 +346,7 @@ function PassportBooklet({ role }: { role: RoleDNA }) {
       <div className="absolute left-4 top-0 h-full w-px" style={{ background: `linear-gradient(180deg, transparent, ${accent}55, transparent)` }} />
       <div className="flex gap-3">
         <div className="relative grid h-36 w-28 shrink-0 place-items-center overflow-hidden rounded-md">
-          {artImage(ROLE_PASSPORT[role.slug], `${role.name} digital passport`, accent, "max-h-full max-w-full")}
+          {artImage(ROLE_PASSPORT[role.slug], `${role.name} digital passport`, accent, "max-h-full max-w-full", fallbackArt(role.slug, "Digital Passport"))}
         </div>
         <div className="min-w-0 flex-1">
           <Kicker accent={accent}>Digital Passport</Kicker>
@@ -359,7 +382,7 @@ function RankBanner({ role, label }: { role: RoleDNA; label: string }) {
       <div className="absolute right-2 top-2 z-20"><SVSeal accent={accent} size={18} /></div>
       <div className="relative mx-auto mt-2 grid min-h-0 w-full flex-1 place-items-center">
         <div className="absolute inset-x-8 top-0 h-full" style={{ background: `linear-gradient(180deg, ${accent}22, transparent 70%)` }} />
-        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "max-h-full w-auto")}
+        {artImage(ROLE_RANK[role.slug], `${role.name} rank insignia — ${label}`, accent, "max-h-full w-auto", fallbackArt(role.slug, "Current Rank"))}
       </div>
       <div className="relative z-20 mt-2 truncate text-[12px] font-semibold" style={{ color: accent }}>{label}</div>
     </div>
@@ -378,6 +401,7 @@ function CertificatePlate({ role, label }: { role: RoleDNA; label: string }) {
       <div className="relative grid h-[136px] w-full place-items-center overflow-hidden p-2">
         <ArtImg
           src={ROLE_CERTIFICATE[role.slug]}
+          fallbackSrc={fallbackArt(role.slug, "Certificate")}
           alt={`${role.name} certificate — ${label}`}
           accent={accent}
           extra="h-full w-full"
@@ -421,6 +445,7 @@ function MembershipMetalCard({ role, label }: { role: RoleDNA; label: string }) 
         <div className="relative h-28 w-36 shrink-0 [perspective:900px]">
           <ArtImg
             src={ROLE_MEMBERSHIP[role.slug]}
+            fallbackSrc={fallbackArt(role.slug, "Membership")}
             alt={`${role.name} membership card`}
             accent={accent}
             extra="h-full w-full transition-transform duration-500 group-hover:[transform:none]"
@@ -477,7 +502,7 @@ function IdentityClearanceCard({ role, label }: { role: RoleDNA; label: string }
           />
         </div>
         <div className="relative grid w-32 shrink-0 place-items-center overflow-hidden rounded-lg border p-1" style={{ borderColor: `${accent}44` }}>
-          {artImage(ROLE_IDENTITY_CARD[role.slug], `${role.name} identity card`, accent, "max-h-full max-w-full")}
+          {artImage(ROLE_IDENTITY_CARD[role.slug], `${role.name} identity card`, accent, "max-h-full max-w-full", fallbackArt(role.slug, "Identity Card"))}
         </div>
       </div>
     </div>
@@ -513,7 +538,7 @@ function ArtifactFrame({
           boxShadow: `inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 24px -18px ${accent}`,
         }}
       >
-        {artImage(src, `${role.name} ${kicker}`, accent, "h-[76%] w-[76%]")}
+        {artImage(src, `${role.name} ${kicker}`, accent, "h-[76%] w-[76%]", fallbackArt(role.slug, kicker))}
         <div className="absolute right-1 top-1 z-20"><SVSeal accent={accent} size={14} /></div>
       </div>
       <div className="w-full text-center">
