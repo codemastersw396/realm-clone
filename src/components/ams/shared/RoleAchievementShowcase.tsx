@@ -14,6 +14,7 @@ import {
   ROLE_LEGACY_MEDAL, ROLE_HONOR_COIN, ROLE_XP_CRYSTAL, ROLE_REWARD_CHEST,
   ROLE_SHIELD,
 } from "@/lib/ams/role-assets";
+import { stageRender } from "@/lib/ams/trophy-stage-assets";
 import { MuseumCase, SVMicroMark, SVSeal, svCollectionNumber } from "@/components/ams/brand/SVMark";
 import {
   ShowcaseDetailDialog,
@@ -151,6 +152,7 @@ function ArtImg({
   extra = "",
   eager = false,
   style,
+  fallbackSrc,
 }: {
   src: string;
   alt: string;
@@ -158,9 +160,14 @@ function ArtImg({
   extra?: string;
   eager?: boolean;
   style?: React.CSSProperties;
+  /** Real trophy render substituted when the primary artwork is blank or cropped. */
+  fallbackSrc?: string;
 }) {
   const [bad, setBad] = useState(false);
-  if (bad) {
+  const [fallbackBad, setFallbackBad] = useState(false);
+  const usingFallback = bad && !!fallbackSrc && fallbackSrc !== src;
+  const activeSrc = usingFallback ? fallbackSrc : src;
+  if (!activeSrc || (usingFallback && fallbackBad)) {
     return (
       <div className="relative z-10 grid h-full w-full place-items-center">
         <div className="flex flex-col items-center gap-1.5 opacity-60">
@@ -172,15 +179,17 @@ function ArtImg({
   }
   return (
     <img
-      src={src}
+      src={activeSrc}
       alt={alt}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       onLoad={(e) => {
         const img = e.currentTarget;
-        if (img.naturalWidth < 64 || img.naturalHeight < 64 || isCroppedArt(img)) setBad(true);
+        if (img.naturalWidth < 64 || img.naturalHeight < 64 || isCroppedArt(img)) {
+          if (usingFallback) setFallbackBad(true); else setBad(true);
+        }
       }}
-      onError={() => setBad(true)}
+      onError={() => { if (usingFallback) setFallbackBad(true); else setBad(true); }}
       className={`relative z-10 block object-contain object-center ${extra}`}
       style={{
         imageRendering: "auto",
@@ -191,8 +200,21 @@ function ArtImg({
   );
 }
 
-function artImage(src: string, alt: string, accent: string, extra = "") {
-  return <ArtImg src={src} alt={alt} accent={accent} extra={extra} />;
+/** Real staged trophy render used to replace blank or cropped artwork. */
+const FALLBACK_STAGE: Partial<Record<string, number>> = {
+  "Signature Trophy": 9, "Latest Award": 3, "Featured Badge": 2, "Current Rank": 6,
+  "Digital Passport": 1, "Certificate": 5, "Membership": 4, "Identity Card": 7,
+  "Trust Seal": 4, "Legacy Medal": 5, "Honor Coin": 3, "XP Crystal": 2,
+  "Reward Chest": 6, "Guardian Shield": 7,
+};
+
+function fallbackArt(roleSlug: string, kind: string): string | undefined {
+  const stage = FALLBACK_STAGE[kind];
+  return stage ? stageRender(`${roleSlug}-${String(stage).padStart(2, "0")}`) : undefined;
+}
+
+function artImage(src: string, alt: string, accent: string, extra = "", fallbackSrc?: string) {
+  return <ArtImg src={src} alt={alt} accent={accent} extra={extra} fallbackSrc={fallbackSrc} />;
 }
 
 /* ───────────────────── 1. Signature trophy stage ───────────────────── */
