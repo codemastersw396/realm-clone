@@ -247,7 +247,7 @@ function TrophyDetailPage() {
               type="button"
               size="sm"
               className="gap-1.5"
-              disabled={save.isPending || !!uploading}
+              disabled={save.isPending || !!uploading || detail.isLoading}
               onClick={() => save.mutate()}
             >
               {save.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
