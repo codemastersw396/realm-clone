@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, type ErrorComponentProps } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { getCommandCenter } from "@/lib/ams/dashboard.functions";
@@ -25,8 +25,8 @@ export const Route = createFileRoute("/_authenticated/")({
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(dashOpts(getCommandCenter)),
   component: CommandCenter,
-  errorComponent: ({ error }) => (
-    <div className="p-8 text-sm text-destructive">{error.message}</div>
+  errorComponent: ({ error }: ErrorComponentProps) => (
+    <div className="p-8 text-sm text-destructive">{error instanceof Error ? error.message : String(error)}</div>
   ),
   pendingComponent: () => <div className="p-8 text-sm text-muted-foreground">Booting command center…</div>,
 });

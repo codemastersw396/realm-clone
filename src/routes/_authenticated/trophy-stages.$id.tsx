@@ -205,6 +205,7 @@ function TrophyDetailPage() {
             <label className="block text-xs text-muted-foreground">
               Title
               <input
+                disabled={detail.isLoading}
                 value={draft?.name ?? name}
                 onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), name: e.target.value }))}
                 className="mt-1 h-9 w-full rounded-md border border-border/70 bg-muted/20 px-3 text-sm text-foreground outline-none focus:border-primary/60 focus:ring-2 focus:ring-ring/30"
@@ -213,6 +214,7 @@ function TrophyDetailPage() {
             <label className="block text-xs text-muted-foreground">
               Category
               <input
+                disabled={detail.isLoading}
                 list="trophy-category-suggestions"
                 value={draft?.category ?? category}
                 onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), category: e.target.value }))}
@@ -225,6 +227,7 @@ function TrophyDetailPage() {
             <label className="block text-xs text-muted-foreground">
               Description
               <textarea
+                disabled={detail.isLoading}
                 rows={4}
                 value={draft?.description ?? description}
                 onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), description: e.target.value }))}
@@ -234,6 +237,7 @@ function TrophyDetailPage() {
             <label className="block text-xs text-muted-foreground">
               Status
               <select
+                disabled={detail.isLoading}
                 value={draft?.status ?? status}
                 onChange={(e) => setDraft((d) => ({ ...(d ?? { name, category, description, status }), status: e.target.value as "active" | "pending" | "archived" }))}
                 className="mt-1 h-9 w-full rounded-md border border-border/70 bg-muted/20 px-3 text-sm text-foreground outline-none focus:border-primary/60"
@@ -247,7 +251,7 @@ function TrophyDetailPage() {
               type="button"
               size="sm"
               className="gap-1.5"
-              disabled={save.isPending || !!uploading}
+              disabled={save.isPending || !!uploading || detail.isLoading}
               onClick={() => save.mutate()}
             >
               {save.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}

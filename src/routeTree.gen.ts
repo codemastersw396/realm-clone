@@ -79,6 +79,7 @@ import { Route as AuthenticatedRoleManagerIndexRouteImport } from './routes/_aut
 import { Route as AuthenticatedRoleManagerSlugRouteImport } from './routes/_authenticated/role-manager.$slug'
 import { Route as AuthenticatedRoleShowcaseIndexRouteImport } from './routes/_authenticated/role-showcase.index'
 import { Route as AuthenticatedRoleShowcaseSlugRouteImport } from './routes/_authenticated/role-showcase.$slug'
+import { Route as AuthenticatedTrophyStagesIndexRouteImport } from './routes/_authenticated/trophy-stages.index'
 import { Route as AuthenticatedTrophyStagesIdRouteImport } from './routes/_authenticated/trophy-stages.$id'
 import { Route as AuthenticatedAwardsIdEditRouteImport } from './routes/_authenticated/awards.$id.edit'
 import { Route as AuthenticatedAwardsLibrariesAchievementsRouteImport } from './routes/_authenticated/awards.libraries.achievements'
@@ -480,6 +481,12 @@ const AuthenticatedRoleShowcaseSlugRoute =
     path: '/role-showcase/$slug',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTrophyStagesIndexRoute =
+  AuthenticatedTrophyStagesIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedTrophyStagesRoute,
+  } as any)
 const AuthenticatedTrophyStagesIdRoute =
   AuthenticatedTrophyStagesIdRouteImport.update({
     id: '/$id',
@@ -618,6 +625,7 @@ export interface FileRoutesByFullPath {
   '/museum/': typeof AuthenticatedMuseumIndexRoute
   '/role-manager/': typeof AuthenticatedRoleManagerIndexRoute
   '/role-showcase/': typeof AuthenticatedRoleShowcaseIndexRoute
+  '/trophy-stages/': typeof AuthenticatedTrophyStagesIndexRoute
   '/awards/$id/edit': typeof AuthenticatedAwardsIdEditRoute
   '/awards/libraries/achievements': typeof AuthenticatedAwardsLibrariesAchievementsRoute
   '/awards/libraries/badges': typeof AuthenticatedAwardsLibrariesBadgesRoute
@@ -672,7 +680,6 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/trophies': typeof AuthenticatedTrophiesRoute
   '/trophy-gallery': typeof AuthenticatedTrophyGalleryRoute
-  '/trophy-stages': typeof AuthenticatedTrophyStagesRouteWithChildren
   '/trophy-vault': typeof AuthenticatedTrophyVaultRoute
   '/trust-seal-vault': typeof AuthenticatedTrustSealVaultRoute
   '/vendor-progression': typeof AuthenticatedVendorProgressionRoute
@@ -699,6 +706,7 @@ export interface FileRoutesByTo {
   '/museum': typeof AuthenticatedMuseumIndexRoute
   '/role-manager': typeof AuthenticatedRoleManagerIndexRoute
   '/role-showcase': typeof AuthenticatedRoleShowcaseIndexRoute
+  '/trophy-stages': typeof AuthenticatedTrophyStagesIndexRoute
   '/awards/$id/edit': typeof AuthenticatedAwardsIdEditRoute
   '/awards/libraries/achievements': typeof AuthenticatedAwardsLibrariesAchievementsRoute
   '/awards/libraries/badges': typeof AuthenticatedAwardsLibrariesBadgesRoute
@@ -783,6 +791,7 @@ export interface FileRoutesById {
   '/_authenticated/museum/': typeof AuthenticatedMuseumIndexRoute
   '/_authenticated/role-manager/': typeof AuthenticatedRoleManagerIndexRoute
   '/_authenticated/role-showcase/': typeof AuthenticatedRoleShowcaseIndexRoute
+  '/_authenticated/trophy-stages/': typeof AuthenticatedTrophyStagesIndexRoute
   '/_authenticated/awards/$id/edit': typeof AuthenticatedAwardsIdEditRoute
   '/_authenticated/awards/libraries/achievements': typeof AuthenticatedAwardsLibrariesAchievementsRoute
   '/_authenticated/awards/libraries/badges': typeof AuthenticatedAwardsLibrariesBadgesRoute
@@ -867,6 +876,7 @@ export interface FileRouteTypes {
     | '/museum/'
     | '/role-manager/'
     | '/role-showcase/'
+    | '/trophy-stages/'
     | '/awards/$id/edit'
     | '/awards/libraries/achievements'
     | '/awards/libraries/badges'
@@ -921,7 +931,6 @@ export interface FileRouteTypes {
     | '/settings'
     | '/trophies'
     | '/trophy-gallery'
-    | '/trophy-stages'
     | '/trophy-vault'
     | '/trust-seal-vault'
     | '/vendor-progression'
@@ -948,6 +957,7 @@ export interface FileRouteTypes {
     | '/museum'
     | '/role-manager'
     | '/role-showcase'
+    | '/trophy-stages'
     | '/awards/$id/edit'
     | '/awards/libraries/achievements'
     | '/awards/libraries/badges'
@@ -1031,6 +1041,7 @@ export interface FileRouteTypes {
     | '/_authenticated/museum/'
     | '/_authenticated/role-manager/'
     | '/_authenticated/role-showcase/'
+    | '/_authenticated/trophy-stages/'
     | '/_authenticated/awards/$id/edit'
     | '/_authenticated/awards/libraries/achievements'
     | '/_authenticated/awards/libraries/badges'
@@ -1540,6 +1551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRoleShowcaseSlugRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/trophy-stages/': {
+      id: '/_authenticated/trophy-stages/'
+      path: '/'
+      fullPath: '/trophy-stages/'
+      preLoaderRoute: typeof AuthenticatedTrophyStagesIndexRouteImport
+      parentRoute: typeof AuthenticatedTrophyStagesRoute
+    }
     '/_authenticated/trophy-stages/$id': {
       id: '/_authenticated/trophy-stages/$id'
       path: '/$id'
@@ -1638,11 +1656,13 @@ const AuthenticatedRoleManagerRouteWithChildren =
 
 interface AuthenticatedTrophyStagesRouteChildren {
   AuthenticatedTrophyStagesIdRoute: typeof AuthenticatedTrophyStagesIdRoute
+  AuthenticatedTrophyStagesIndexRoute: typeof AuthenticatedTrophyStagesIndexRoute
 }
 
 const AuthenticatedTrophyStagesRouteChildren: AuthenticatedTrophyStagesRouteChildren =
   {
     AuthenticatedTrophyStagesIdRoute: AuthenticatedTrophyStagesIdRoute,
+    AuthenticatedTrophyStagesIndexRoute: AuthenticatedTrophyStagesIndexRoute,
   }
 
 const AuthenticatedTrophyStagesRouteWithChildren =
